@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="generator" content="Polymer Starter Kit" />
+	<title>Polymer Starter Kit</title>
+	<!-- Place favicon.ico in the `app/` directory -->
+
+	<!-- Chrome for Android theme color -->
+	<meta name="theme-color" content="#2E3AA1">
+
+	<!-- Web Application Manifest -->
+	<link rel="manifest" href="manifest.json">
+
+	<!-- Tile color for Win8 -->
+	<meta name="msapplication-TileColor" content="#3372DF">
+
+	<!-- Add to homescreen for Chrome on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="application-name" content="PSK">
+	<link rel="icon" sizes="192x192" href="/polymer-starter-kit/app/images/touch/chrome-touch-icon-192x192.png">
+
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
+	<link rel="apple-touch-icon" href="/images/touch/apple-touch-icon.png">
+
+	<!-- Tile icon for Win8 (144x144) -->
+	<meta name="msapplication-TileImage" content="/polymer-starter-kit/app/images/touch/ms-touch-icon-144x144-precomposed.png">
+
+	<!-- build:css assets/styles/main.css -->
+	<link rel="stylesheet" href="/polymer-starter-kit/app/styles/main.css">
+	<!-- endbuild-->
+
+	<!-- build:js /bower_components/webcomponentsjs/webcomponents-lite.min.js -->
+	<script src="/polymer-starter-kit/app/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<!-- endbuild -->
+
+	<!-- will be replaced with elements/elements.vulcanized.html -->
+	<link rel="import" href="/polymer-starter-kit/app/elements/elements.html">
+	<!-- endreplace-->
+
+	<!-- For shared styles, shared-styles.html import in elements.html -->
+	<style is="custom-style" include="shared-styles"></style>
+
+	<!-- Viewport mobile tag for sensible mobile support 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+-->
+
+	<!--  
+        Stylesheets and Preprocessors
+        ==============================
+
+        You can always bring in CSS files manually with `<link>` tags, or asynchronously
+        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
+        of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+        By default, stylesheets from your `assets/styles` folder are included
+        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
+        are supported. In production, your styles will be minified and concatenated into
+        a single file.
+        
+        To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+        For example, here are a few things you could do:
+            
+            + Change the order of your CSS files
+            + Import stylesheets from other directories
+            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
+    -->
+
+	<!--STYLES-->
+	<link rel="stylesheet" href="/styles/importer.css">
+	<!--STYLES END-->
+</head>
+
+<body unresolved class="fullbleed layout vertical">
+	<span id="browser-sync-binding"></span>
+	<template is="dom-bind" id="app">
+
+		<paper-drawer-panel id="paperDrawerPanel">
+			<!-- Drawer Scroll Header Panel -->
+			<paper-scroll-header-panel drawer fixed>
+
+				<!-- Drawer Toolbar -->
+				<paper-toolbar id="drawerToolbar">
+					<span class="paper-font-title">Menu</span>
+				</paper-toolbar>
+
+				<!-- Drawer Content -->
+				<paper-menu class="list" attr-for-selected="data-route" selected="[[route]]">
+					
+					<a data-route="home" href="/" on-click="onDataRouteClick">
+						<iron-icon icon="home"></iron-icon>
+						<span>Home</span>
+					</a>
+
+					<a data-route="home" href="/content/view?id=1" on-click="onDataRouteClick">
+						<iron-icon icon="home"></iron-icon>
+						<span>Home</span>
+					</a>
+
+					<a data-route="contact" href="/contact" on-click="onDataRouteClick">
+						<iron-icon icon="mail"></iron-icon>
+						<span>Contact</span>
+					</a>
+				</paper-menu>
+			</paper-scroll-header-panel>
+			<!-- Main Area -->
+			<paper-scroll-header-panel main condenses keep-condensed-header>
+
+				<!-- Main Toolbar -->
+				<paper-toolbar id="mainToolbar" class="tall">
+					<paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
+					<span class="flex"></span>
+
+					<!-- Toolbar icons -->
+					<paper-icon-button icon="refresh"></paper-icon-button>
+					<paper-icon-button icon="search"></paper-icon-button>
+
+					<!-- Application name -->
+					<div class="middle middle-container center horizontal layout">
+						<div class="app-name">Polymer Starter Kit</div>
+					</div>
+
+					<!-- Application sub title -->
+					<div class="bottom bottom-container center horizontal layout">
+						<div class="bottom-title paper-font-subhead">The future of the web today</div>
+					</div>
+				</paper-toolbar>
+
+				<!-- Main Content -->
+				<div class="content">
+					<iron-pages attr-for-selected="data-route" selected="{{route}}">
+							
+						<section data-route="home">
+							<paper-material elevation="1">
+								<%- body %>
+							</paper-material>
+						</section>
+
+						<section data-route="contact">
+							<paper-material elevation="1">
+								<h2 class="page-title">Contact</h2>
+								<p>This is the contact section</p>
+							</paper-material>
+						</section>
+
+					</iron-pages>
+				</div>
+			</paper-scroll-header-panel>
+		</paper-drawer-panel>
+
+		<!-- Uncomment next block to enable Service Worker support (1/2) -->
+		<!--
+<paper-toast id="caching-complete"
+duration="6000"
+text="Caching complete! This app will work offline.">
+</paper-toast>
+
+<platinum-sw-register auto-register
+clients-claim
+skip-waiting
+on-service-worker-installed="displayInstalledToast">
+<platinum-sw-cache default-cache-strategy="fastest"
+cache-config-file="cache-config.json">
+</platinum-sw-cache>
+</platinum-sw-register>
+-->
+
+	</template>
+
+	<!-- build:js js/app.js -->
+	<script src="/polymer-starter-kit/app/scripts/app.js"></script>
+	<!-- endbuild-->
+
+	
+
+
+
+		<!--
+Client-side Templates
+========================
+
+HTML templates are important prerequisites of modern, rich client applications.
+To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
+that you load these templates client-side.
+
+By default, your Gruntfile is configured to automatically load and precompile
+client-side JST templates in your `assets/templates` folder, then
+include them here automatically (between TEMPLATES and TEMPLATES END).
+
+To customize this behavior to fit your needs, just edit `tasks/pipeline.js`.
+For example, here are a few things you could do:
+
++ Import templates from other directories
++ Use a different template engine (handlebars, jade, dust, etc.)
++ Internationalize your client-side templates using a server-side
+stringfile before they're served.
+-->
+
+		<!--TEMPLATES-->
+		
+		<!--TEMPLATES END-->
+
+
+		<!--
+
+Client-side Javascript
+========================
+
+You can always bring in JS files manually with `script` tags, or asynchronously
+on the client using a solution like AMD (RequireJS).  Or, if you like, you can 
+take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
+
+By default, files in your `assets/js` folder are included here
+automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
+CoffeeScript (.coffee) are supported. In production, your scripts will be minified
+and concatenated into a single file.
+
+To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
+For example, here are a few things you could do:
+
++ Change the order of your scripts
++ Import scripts from other directories
++ Use a different preprocessor, like TypeScript
+
+-->
+
+		<!--SCRIPTS-->
+		<script src="/js/dependencies/sails.io.js"></script>
+		<!--SCRIPTS END-->
+		
+</body>
+
+</html>
