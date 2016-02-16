@@ -55,6 +55,23 @@ module.exports = {
         }, cb);
     },
 
+    getContentTypes: function(req, res) {
+
+        var query =  'MATCH (a:ContentType)'
+                    +' RETURN a as contentType'
+        var params = {
+            "id": ''
+        };
+        var cb = function(err, data) {
+            console.log(data);
+            return res.json(data);
+        }
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },    
+
     /**
      * `ContentController.create()`
      */

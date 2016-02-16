@@ -21,7 +21,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
 
+    <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
+    <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <h2>Create a New Item</h2>
+      <div>
+        <iron-ajax
+          auto
+          url="/content/getContentTypes"
+          params=''
+          handle-as="json"
+          last-response="{{contenttypes}}"
+          debounce-duration="300"></iron-ajax>
+
+        <form is="iron-form" id="formPost" method="post" action="/content/create">
+          <paper-input name="parentId" label="parentId" value="{{identityNode._id}}"></paper-input>
+          <paper-dropdown-menu label="Content Type">
+          <paper-menu class="dropdown-content" name="contenttype" value="Folder">
+              <template is="dom-repeat" items="[[contenttypes]]">
+                <paper-item>[[item.contentType.properties.name]]</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          <paper-input name="name" label="Name" required></paper-input>
+          <br>
+          <paper-textarea name="description" label="Description"></paper-textarea>
+          <br>
+          <paper-button raised on-click="clickHandler">Submit</paper-button>
+        </form>
+      </div>
+    </paper-dialog>
+
     <iron-ajax
+      id="getChildren"
       auto
       url="/content/getChildren/{{identityNode._id}}"
       params=''
@@ -36,19 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <h4><a href="/content/view?id={{item.identityNode._id}}" target="_blank">[[item.identityNode.properties.name]]</a></h4>
         <p>[[item.versionNode.properties.description]]</p>
       </div>
-    </template>
-
-    <h3>Add a Child Folder</h3>
-
-    <form is="iron-form" id="formPost" method="post" action="/content/create">
-      <paper-input name="parentId" label="parentId" value="{{identityNode._id}}"></paper-input>
-      <paper-input name="contenttype" label="contenttype" value="Folder"></paper-input>
-      <paper-input name="name" label="Name" required></paper-input>
-      <br>
-      <paper-textarea name="description" label="Description"></paper-textarea>
-      <br>
-      <paper-button raised on-click="clickHandler">Submit</paper-button>
-    </form>
+    </template>   
 
   </template>
   <script>
@@ -77,8 +96,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       clickHandler: function(event) {
-        //document.getElementById('form').submit();
         event.target.parentElement.submit();
+        this.$.getChildren.generateRequest();
+        this.$.newDialog.close();
+        console.log(this.$.getChildren);
+      },
+
+      openDialog: function(event) {
+        var button = event.target;
+        while (!button.hasAttribute('data-dialog') && button !== document.body) {
+          button = button.parentElement;
+        }
+        if (!button.hasAttribute('data-dialog')) {
+          return;
+        }
+        var id = button.getAttribute('data-dialog');
+        var dialog = document.getElementById(id);
+        if (dialog) {
+          dialog.open();
+        }
       }
 
     });
