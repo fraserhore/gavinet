@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
+    <br/>
 
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
     <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
@@ -58,14 +59,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       params=''
       handle-as="json"
       last-response="{{children}}"
+      on-response="responseTest"
       debounce-duration="300"></iron-ajax>
 
-    <h2>Children</h2>
+    <iron-ajax
+      id="deleteRequest"
+      auto
+      url=""
+      handle-as="json"
+      on-response="deleteResponse"
+      debounce-duration="300"></iron-ajax>
 
     <template is="dom-repeat" items="[[children]]">
       <div class="horizontal-section">
-        <h4><a href="/content/view?id={{item.identityNode._id}}" target="_blank">[[item.identityNode.properties.name]]</a></h4>
+        <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
         <p>[[item.versionNode.properties.description]]</p>
+        <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
+        <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
       </div>
     </template>   
 
@@ -115,6 +125,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if (dialog) {
           dialog.open();
         }
+      },
+
+      edit: function(event) {
+        console.log(event.model.item.identityNode._id);
+        
+      },
+
+      delete: function(event) {
+        console.log(event.model.item.identityNode._id);
+        this.$.deleteRequest.url = "/content/delete";
+        this.$.deleteRequest.params = {"id": event.model.item.identityNode._id};
+        this.$.deleteRequest.generateRequest();
+        this.$.getChildren.generateRequest();
+      },
+
+      deleteResponse: function(request) {
+        console.log(request.detail.response);
+        console.log(this.$.deleteRequest.lastResponse);
+      },
+
+      responseTest: function(event) {
+        console.log(event);
       }
 
     });

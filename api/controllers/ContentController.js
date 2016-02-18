@@ -70,7 +70,28 @@ module.exports = {
             query: query,
             params: params
         }, cb);
-    },    
+    },
+
+    getSiblings: function(req, res) {
+
+        var query =  'MATCH (a)<-[r:CONTAINS {to:9223372036854775807}]-(parent)'
+                    +' WHERE id(a) = {id}'
+                    +' WITH parent'
+                    +' MATCH (parent)-[:CONTAINS {to:9223372036854775807}]->(c)'
+                    +' RETURN c as siblingNode'
+        var params = {
+            "id": parseInt(req.param('id'))
+        };
+        var cb = function(err, data) {
+            console.log(data);
+            return res.json(data);
+        }
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
 
     /**
      * `ContentController.create()`
@@ -90,7 +111,31 @@ module.exports = {
         var cb = function(err, data) {
             console.log(err);
             console.log(data);
+            return res.json(data);
+        };
+        db.cypher({
+            query: query, 
+            params: params
+        }, cb);
+    },
 
+    /**
+     * `ContentController.delete()`
+     */
+    delete: function(req, res) {
+
+        var query =  'MATCH (child)<-[relationship:CONTAINS {to:9223372036854775807}]-(parent)'
+                    +' WHERE id(child) = {id}'
+                    +' SET relationship.to = timestamp()'
+                    +' RETURN parent, child';
+        var params = {
+            "id": parseInt(req.param('id'))
+        };
+        
+        var cb = function(err, data) {
+            console.log(err);
+            console.log(data);
+            return res.json(data);
         };
         db.cypher({
             query: query, 
