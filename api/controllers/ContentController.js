@@ -24,11 +24,15 @@ module.exports = {
      */
     view: function(req, res) {
 
-        var query = 'MATCH (a)-[version:VERSION]->(b) WHERE id(a) = {id} AND version.to = 9223372036854775807 AND version.lang = "en-gb" RETURN a as identityNode, version as version, b as versionNode'
+        var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
+                    +' WHERE id(identityNode) = {id} AND version.to = 9223372036854775807 AND version.lang = "en-gb"'
+                    +' RETURN identityNode, version, versionNode, authorNode'
+
         var params = {
             "id": parseInt(req.param('id'))
         };
         var cb = function(err, data) {
+            console.log(data);
             return res.view("full", data[0]);
         }
         db.cypher({
@@ -46,7 +50,7 @@ module.exports = {
             "id": parseInt(req.param('id'))
         };
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.json(data);
         }
         db.cypher({
@@ -83,7 +87,7 @@ module.exports = {
             "id": parseInt(req.param('id'))
         };
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.json(data);
         }
         db.cypher({
@@ -98,9 +102,21 @@ module.exports = {
      */
     create: function(req, res) {
 
-        var query = 'MATCH (parent) WHERE id(parent)={parentId} CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(childidentity:IdentityNode:ContentObject)-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(childversion:Version) SET childidentity:' + req.body.contenttype + ' SET childversion = {properties} SET childidentity.name = childversion.name RETURN parent,childidentity,childversion';
+        var query =   'MATCH (parent), (author)'
+                    +' WHERE id(parent)={parentId} AND id(author)={authorId}'
+                    +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
+                    +       '(childidentity:IdentityNode:ContentObject {contentType:{contenttype}})'
+                    +       '-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
+                    +       '(childversion:Version)'
+                    +' CREATE author-[:CREATED {timestamp:timestamp()}]->childidentity'
+                    +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
+                    +' SET childidentity:' + req.body.contenttype 
+                    +' SET childversion = {properties}'
+                    +' SET childidentity.name = childversion.name'
+                    +' RETURN parent,childidentity,childversion';
         var params = {
             "parentId": parseInt(req.body.parentId),
+            "authorId": parseInt(req.body.authorId),
             "contenttype": req.body.contenttype,
             "properties": {
                 "name": req.body.name,

@@ -36,6 +36,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <form is="iron-form" id="formPost" method="post" action="/content/create">
           <paper-input name="parentId" label="parentId" value="{{identityNode._id}}"></paper-input>
+          <paper-input name="authorId" label="authorId" value="{{authorNode._id}}"></paper-input>
+          <paper-input name="contenttype" label="contentType" value=""></paper-input>
           <paper-dropdown-menu label="Content Type">
           <paper-menu class="dropdown-content" name="contenttype" value="Folder">
               <template is="dom-repeat" items="[[contenttypes]]">
@@ -94,6 +96,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         },
         versionNode: {
+          type: Object,
+          value: function() { return {}; },
+          notify: true
+        },
+        authorNode: {
           type: Object,
           value: function() { return {}; },
           notify: true
