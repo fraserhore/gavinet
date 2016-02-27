@@ -18,9 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     
-    <h2>Create a New Item</h2>
-
-    <iron-ajax
+    <iron-ajax id="getContentTypes"
       auto
       url="/content/getContentTypes"
       params=''
@@ -28,19 +26,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       last-response="{{contenttypes}}"
       debounce-duration="300"></iron-ajax>
 
+    <iron-ajax id="getContentTypeSchema"
+      auto
+      url="/content/getContentTypeSchema"
+      params='{"contentType": "user"}'
+      handle-as="json"
+      last-response="{{dataSchema}}"
+      debounce-duration="300"></iron-ajax>
+
     <form is="iron-form" id="formPost" method="post" action="/content/create">
-      <paper-input name="parentId" label="parentId" value="{{identityNode._id}}"></paper-input>
+      <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
+      <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
+      <paper-input name="contenttype" label="contentType" value="" on-change="updateContentType"></paper-input>
       <paper-dropdown-menu label="Content Type">
-      <paper-menu class="dropdown-content" name="contenttype" value="Folder">
+        <paper-menu class="dropdown-content" name="contenttype" value="Folder" on-change="updateContentType">
           <template is="dom-repeat" items="[[contenttypes]]">
             <paper-item>[[item.contentType.properties.name]]</paper-item>
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-      <paper-input name="name" label="Name" required></paper-input>
-      <br>
-      <paper-textarea name="description" label="Description"></paper-textarea>
-      <br>
+      <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
+        <template is="dom-if" if="{{item.type='string'}}">
+          <paper-input name="properties[[[item.name]]]" label="{{item.name}}" value="{{formData.properties['[[item.name]]']}}"></paper-input>
+        </template>
+      </template>
       <paper-button raised on-click="clickHandler">Submit</paper-button>
     </form>
 
@@ -53,34 +62,112 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'content-edit',
 
       properties: {
-        schema: {
+        dataSchema: {
           type: Object,
-          value: function() { return {}; },
+          value: function() { 
+            return {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "description": "A representation of a person, company, organization, or place",
+                "type": "object",
+                "required": ["familyName", "givenName"],
+                "properties": {
+                    "fn": {
+                        "description": "Formatted Name",
+                        "type": "string"
+                    },
+                    "familyName": { "type": "string" },
+                    "givenName": { "type": "string" },
+                    "additionalName": { "type": "array", "items": { "type": "string" } },
+                    "honorificPrefix": { "type": "array", "items": { "type": "string" } },
+                    "honorificSuffix": { "type": "array", "items": { "type": "string" } },
+                    "nickname": { "type": "string" },
+                    "url": { "type": "string", "format": "uri" },
+                    "email": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string" },
+                            "value": { "type": "string", "format": "email" }
+                        }
+                    },
+                    "tel": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "type": "string" },
+                            "value": { "type": "string", "format": "phone" }
+                        }
+                    },
+                    "adr": { "$ref": "http://json-schema.org/address" },
+                    "geo": { "$ref": "http://json-schema.org/geo" },
+                    "tz": { "type": "string" },
+                    "photo": { "type": "string" },
+                    "logo": { "type": "string" },
+                    "sound": { "type": "string" },
+                    "bday": { "type": "string", "format": "date" },
+                    "title": { "type": "string" },
+                    "role": { "type": "string" },
+                    "org": {
+                        "type": "object",
+                        "properties": {
+                            "organizationName": { "type": "string" },
+                            "organizationUnit": { "type": "string" }
+                        }
+                    }
+                }
+            }; 
+          },
           notify: true
         },
         uiSchema: {
           type: Object,
-          value: function() { return {}; },
+          value: function() { 
+            return {
+
+            }; 
+          },
           notify: true
         },
         formData: {
           type: Object,
-          value: function() { return {}; },
+          value: function() { 
+            return {
+              "parentId": 357,
+              "authorId": 365,
+              "properties": {
+                "givenName": "Fraser",
+                "familyName": "Hore"
+              }
+            }; 
+          },
           notify: true
         }
       },
 
       clickHandler: function(event) {
+        //console.log(event.target.parentElement.serialize())
         event.target.parentElement.submit();
-        this.$.getChildren.generateRequest();
-        this.$.newDialog.close();
-        console.log(this.$.getChildren);
       },
 
 
       edit: function(event) {
         console.log(event.model.item.identityNode._id);
         
+      },
+
+      updateContentType: function(event) {
+        this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
+        this.$.getContentTypeSchema.params = {"contentType": event.target.value};
+        this.$.getContentTypeSchema.generateRequest();
+        console.log(this.$.getContentTypeSchema);
+      },
+
+      _toArray: function(obj) {
+        console.log(obj);
+        return Object.keys(obj).map(function(key) {
+            return {
+                name: key,
+                value: obj[key]
+            };
+        });
       }
 
     });

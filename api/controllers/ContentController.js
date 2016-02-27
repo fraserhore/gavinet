@@ -43,7 +43,7 @@ module.exports = {
 
     getChildren: function(req, res) {
 
-        var query =  'MATCH (a)-[r:CONTAINS {to:9223372036854775807}]->(b)-[:VERSION {to:9223372036854775807}]->(c)'
+        var query =  'MATCH (a)-[r {to:9223372036854775807}]->(b)-[:VERSION {to:9223372036854775807}]->(c)'
                     +' WHERE id(a) = {id}'
                     +' RETURN b as identityNode, c as versionNode'
         var params = {
@@ -96,12 +96,30 @@ module.exports = {
         }, cb);
     },
 
+    getContentTypeSchema: function(req, res) {
+
+        var query =  'MATCH (a:ContentType)-[]->(b:Version {identifier:{contentType}})'
+                    +' RETURN a as contentType, b as version'
+        var params = {
+            "contentType": req.param('contentType')
+        };
+        console.log(req.param('contentType'));
+        var cb = function(err, data) {
+            console.log(data);
+            return res.json(data);
+        }
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
 
     /**
      * `ContentController.create()`
      */
     create: function(req, res) {
-
+        console.log(req.body.properties);
         var query =   'MATCH (parent), (author)'
                     +' WHERE id(parent)={parentId} AND id(author)={authorId}'
                     +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
@@ -118,10 +136,7 @@ module.exports = {
             "parentId": parseInt(req.body.parentId),
             "authorId": parseInt(req.body.authorId),
             "contenttype": req.body.contenttype,
-            "properties": {
-                "name": req.body.name,
-                "description": req.body.description
-            }
+            "properties": req.body.properties
         };
         
         var cb = function(err, data) {

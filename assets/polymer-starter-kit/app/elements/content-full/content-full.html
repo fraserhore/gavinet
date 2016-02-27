@@ -23,35 +23,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <br/>
 
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
-    <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+    <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
       <h2>Create a New Item</h2>
-      <div>
-        <iron-ajax
-          auto
-          url="/content/getContentTypes"
-          params=''
-          handle-as="json"
-          last-response="{{contenttypes}}"
-          debounce-duration="300"></iron-ajax>
-
-        <form is="iron-form" id="formPost" method="post" action="/content/create">
-          <paper-input name="parentId" label="parentId" value="{{identityNode._id}}"></paper-input>
-          <paper-input name="authorId" label="authorId" value="{{authorNode._id}}"></paper-input>
-          <paper-input name="contenttype" label="contentType" value=""></paper-input>
-          <paper-dropdown-menu label="Content Type">
-          <paper-menu class="dropdown-content" name="contenttype" value="Folder">
-              <template is="dom-repeat" items="[[contenttypes]]">
-                <paper-item>[[item.contentType.properties.name]]</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-          <paper-input name="name" label="Name" required></paper-input>
-          <br>
-          <paper-textarea name="description" label="Description"></paper-textarea>
-          <br>
-          <paper-button raised on-click="clickHandler">Submit</paper-button>
-        </form>
-      </div>
+      <paper-dialog-scrollable>
+        <content-edit dataSchema="" uiSchema="" data=""></content-edit>
+      </paper-dialog-scrollable>
     </paper-dialog>
 
     <iron-ajax
@@ -75,6 +51,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <template is="dom-repeat" items="[[children]]">
       <div class="horizontal-section">
         <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
+        <template is="dom-repeat" items="[[_toArray(item.versionNode.properties)]]">
+          <template is="dom-if" if="{{item.value}}">
+            <p>[[item.name]]: [[item.value]]</p>
+          </template>
+        </template>
+        
         <p>[[item.versionNode.properties.description]]</p>
         <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
         <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
@@ -154,6 +136,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       responseTest: function(event) {
         console.log(event);
+      },
+
+      _toArray: function(obj) {
+        console.log(obj);
+        return Object.keys(obj).map(function(key) {
+            return {
+                name: key,
+                value: obj[key]
+            };
+        });
       }
 
     });
