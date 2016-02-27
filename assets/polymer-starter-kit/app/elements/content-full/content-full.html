@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
       <h2>Create a New Item</h2>
       <paper-dialog-scrollable>
-        <content-edit dataSchema="" uiSchema="" data=""></content-edit>
+        <content-edit dataSchema="" uiSchema="" formData="{{formData}}"></content-edit>
       </paper-dialog-scrollable>
     </paper-dialog>
 
@@ -57,7 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
         </template>
         
-        <p>[[item.versionNode.properties.description]]</p>
         <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
         <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
       </div>
@@ -86,7 +85,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           value: function() { return {}; },
           notify: true
+        },
+        formData: {
+          type: Object,
+          value: function() { return {}; },
+          notify: true
         }
+      },
+
+      ready: function() {
+        this.formData['authorId'] = this.authorNode._id;
+        this.formData['parentId'] = this.identityNode._id;
+        this.formData['properties'] = this.versionNode.properties;
+        console.log(this.formData);
       },
 
       children: function(event) {

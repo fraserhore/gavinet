@@ -37,14 +37,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <form is="iron-form" id="formPost" method="post" action="/content/create">
       <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
       <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
-      <paper-input name="contenttype" label="contentType" value="" on-change="updateContentType"></paper-input>
-      <paper-dropdown-menu label="Content Type">
-        <paper-menu class="dropdown-content" name="contenttype" value="Folder" on-change="updateContentType">
+      <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}">
+        <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="[[contenttypes]]">
-            <paper-item>[[item.contentType.properties.name]]</paper-item>
+            <paper-item value="[[item.contentType.properties.name]]">[[item.contentType.properties.name]]</paper-item>
           </template>
         </paper-menu>
       </paper-dropdown-menu>
+      <input is="iron-input" name="contentType" type="hidden" value$="[[selectedItem.value]]" on-change="updateContentType">
       <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
         <template is="dom-if" if="{{item.type='string'}}">
           <paper-input name="properties[[[item.name]]]" label="{{item.name}}" value="{{formData.properties['[[item.name]]']}}"></paper-input>
