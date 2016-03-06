@@ -26,17 +26,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       last-response="{{contenttypes}}"
       debounce-duration="300"></iron-ajax>
 
-    <iron-ajax id="getContentTypeSchema"
+    <!-- <iron-ajax id="getContentTypeSchema"
       auto
       url="/content/getContentTypeSchema"
       params='{"contentType": formData.contentType}'
       handle-as="json"
       last-response="{{dataSchema}}"
-      debounce-duration="300"></iron-ajax>  
+      debounce-duration="300"></iron-ajax>   -->
 
     <form is="iron-form" id="formPost" method="post" action="/content/create">
-      <paper-input name="parentId" label="parentId" bind-value="{{formData.parentId}}"></paper-input>
-      <paper-input name="authorId" label="authorId" bind-value="{{formData.authorId}}"></paper-input>
+      <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
+      <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
       <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}">
         <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="[[contenttypes]]">
@@ -44,10 +44,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-      <input is="iron-input" name="contentType" type="hidden" value$="[[selectedItem.value]]" on-change="updateContentType">
+      <input is="iron-input" name="contenttype" type="hidden" value$="[[selectedItem.value]]"></input>
+      <!-- Create an identity node name using the pattern defined in the schema -->
+      <paper-input name="identityNamePattern" label="identityNamePattern" value="childversion.name"></paper-input>
       <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
         <template is="dom-if" if="{{item.type='string'}}">
-          <paper-input name="properties[[[item.name]]]" label="{{item.name}}" value="{{formData.properties['[[item.name]]']}}"></paper-input>
+          <paper-input name="properties[[[item.name]]]" label="{{item.name}}" value="{{_getFormDataProperty(item.name)}}"></paper-input>
         </template>
       </template>
       <paper-button raised on-click="clickHandler">Submit</paper-button>
@@ -136,12 +138,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function() {
-        console.log('formData')
-        console.log(this.formData);
+        console.log('dataSchema')
+        console.log(this.dataSchema);
       },
 
       clickHandler: function(event) {
-        //console.log(event.target.parentElement.serialize())
+        console.log(event.target.parentElement.serialize());
         event.target.parentElement.submit();
       },
 
@@ -152,9 +154,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       updateContentType: function(event) {
-        this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
-        this.$.getContentTypeSchema.params = {"contentType": event.target.value};
-        this.$.getContentTypeSchema.generateRequest();
+        // this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
+        // this.$.getContentTypeSchema.params = {"contentType": event.target.value};
+        // this.$.getContentTypeSchema.generateRequest();
         //console.log(this.$.getContentTypeSchema);
       },
 
@@ -167,6 +169,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 value: obj[key]
             };
         });
+      },
+      _getFormDataProperty: function(property) {
+        console.log(this.formData.properties['name']);
+        return this.formData.properties[property];
       }
 
     });

@@ -32,7 +32,7 @@ module.exports = {
             "id": parseInt(req.param('id'))
         };
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.view("full", data[0]);
         }
         db.cypher({
@@ -67,7 +67,7 @@ module.exports = {
             "id": ''
         };
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.json(data);
         }
         db.cypher({
@@ -103,9 +103,9 @@ module.exports = {
         var params = {
             "contentType": req.param('contentType')
         };
-        console.log(req.param('contentType'));
+        //console.log(req.param('contentType'));
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.json(data);
         }
         db.cypher({
@@ -119,7 +119,7 @@ module.exports = {
      * `ContentController.create()`
      */
     create: function(req, res) {
-        console.log(req.body.properties);
+        console.log(req.body);
         var query =   'MATCH (parent), (author)'
                     +' WHERE id(parent)={parentId} AND id(author)={authorId}'
                     +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
@@ -130,18 +130,19 @@ module.exports = {
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
                     +' SET childidentity:' + req.body.contenttype 
                     +' SET childversion = {properties}'
-                    +' SET childidentity.name = childversion.name'
+                    +' SET childidentity.name = ' + req.body.identityNamePattern
                     +' RETURN parent,childidentity,childversion';
         var params = {
             "parentId": parseInt(req.body.parentId),
             "authorId": parseInt(req.body.authorId),
             "contenttype": req.body.contenttype,
+            "identityNamePattern": req.body.identityNamePattern,
             "properties": req.body.properties
         };
         
         var cb = function(err, data) {
-            console.log(err);
-            console.log(data);
+            //console.log(err);
+            //console.log(data);
             return res.json(data);
         };
         db.cypher({
@@ -164,8 +165,8 @@ module.exports = {
         };
         
         var cb = function(err, data) {
-            console.log(err);
-            console.log(data);
+            //console.log(err);
+            //console.log(data);
             return res.json(data);
         };
         db.cypher({

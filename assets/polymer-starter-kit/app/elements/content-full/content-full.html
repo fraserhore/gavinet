@@ -20,14 +20,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
-    Test {{formData.contentType}}
+
+    
     <br/>
 
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
     <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
       <h2>Create a New Item</h2>
       <paper-dialog-scrollable>
-        <content-edit dataSchema="" uiSchema="" formData="{{formData}}"></content-edit>
+        <content-edit ui-schema="" form-data="{{formData}}"></content-edit>
       </paper-dialog-scrollable>
     </paper-dialog>
 
@@ -86,17 +87,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           value: function() { return {}; },
           notify: true
+        },
+        formData: {
+          type: Object,
+          value: function() { 
+            return {
+              "authorId": 11111,
+              "parentId": 22222,
+              "contentType": "GlossaryTerm"
+            }; 
+          },
+          notify: true
         }
       },
 
       ready: function() {
-      	this.formData = {};
-        this.formData['authorId'] = this.authorNode._id;
-        this.formData['parentId'] = this.identityNode._id;
-        this.formData['contentType'] = this.identityNode.properties.contentType;
-        this.formData['properties'] = this.versionNode.properties;
-        console.log(this.identityNode);
-        console.log(this.formData);
+        //console.log('default formData');
+        //console.log(this.formData);
+        this.set('formData.authorId', this.authorNode._id);
+        this.set('formData.parentId', this.identityNode._id);
+        this.set('formData.contentType', this.identityNode.properties.contentType);
+        this.set('formData.properties', this.versionNode.properties);
+      	//console.log('update formData');
+        //console.log(this.formData);
       },
 
       children: function(event) {
