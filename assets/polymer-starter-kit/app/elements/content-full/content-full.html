@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
+    Test {{formData.contentType}}
     <br/>
 
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
@@ -85,31 +86,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Object,
           value: function() { return {}; },
           notify: true
-        },
-        formData: {
-          type: Object,
-          value: function() { return {}; },
-          notify: true
         }
       },
 
       ready: function() {
+      	this.formData = {};
         this.formData['authorId'] = this.authorNode._id;
         this.formData['parentId'] = this.identityNode._id;
+        this.formData['contentType'] = this.identityNode.properties.contentType;
         this.formData['properties'] = this.versionNode.properties;
+        console.log(this.identityNode);
         console.log(this.formData);
       },
 
       children: function(event) {
-        console.log('test');
-        console.log(event);
+        //console.log(event);
       },
 
       clickHandler: function(event) {
         event.target.parentElement.submit();
         this.$.getChildren.generateRequest();
         this.$.newDialog.close();
-        console.log(this.$.getChildren);
+        //console.log(this.$.getChildren);
       },
 
       openDialog: function(event) {
@@ -128,12 +126,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       edit: function(event) {
-        console.log(event.model.item.identityNode._id);
+        //console.log(event.model.item.identityNode._id);
         
       },
 
       delete: function(event) {
-        console.log(event.model.item.identityNode._id);
+        //console.log(event.model.item.identityNode._id);
         this.$.deleteRequest.url = "/content/delete";
         this.$.deleteRequest.params = {"id": event.model.item.identityNode._id};
         this.$.deleteRequest.generateRequest();
@@ -141,16 +139,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       deleteResponse: function(request) {
-        console.log(request.detail.response);
-        console.log(this.$.deleteRequest.lastResponse);
+        //console.log(request.detail.response);
+        //console.log(this.$.deleteRequest.lastResponse);
       },
 
       responseTest: function(event) {
-        console.log(event);
+        //console.log(event);
       },
 
       _toArray: function(obj) {
-        console.log(obj);
+        //console.log(obj);
+        if(!obj) return;
         return Object.keys(obj).map(function(key) {
             return {
                 name: key,

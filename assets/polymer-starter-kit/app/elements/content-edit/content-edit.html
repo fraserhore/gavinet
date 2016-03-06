@@ -29,14 +29,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax id="getContentTypeSchema"
       auto
       url="/content/getContentTypeSchema"
-      params='{"contentType": "user"}'
+      params='{"contentType": formData.contentType}'
       handle-as="json"
       last-response="{{dataSchema}}"
-      debounce-duration="300"></iron-ajax>
+      debounce-duration="300"></iron-ajax>  
 
     <form is="iron-form" id="formPost" method="post" action="/content/create">
-      <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
-      <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
+      <paper-input name="parentId" label="parentId" bind-value="{{formData.parentId}}"></paper-input>
+      <paper-input name="authorId" label="authorId" bind-value="{{formData.authorId}}"></paper-input>
       <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}">
         <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="[[contenttypes]]">
@@ -129,17 +129,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         formData: {
           type: Object,
           value: function() { 
-            return {
-              "parentId": 357,
-              "authorId": 365,
-              "properties": {
-                "givenName": "Fraser",
-                "familyName": "Hore"
-              }
-            }; 
+            return {};
           },
           notify: true
         }
+      },
+
+      ready: function() {
+        console.log('formData')
+        console.log(this.formData);
       },
 
       clickHandler: function(event) {
@@ -149,7 +147,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       edit: function(event) {
-        console.log(event.model.item.identityNode._id);
+        //console.log(event.model.item.identityNode._id);
         
       },
 
@@ -157,11 +155,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
         this.$.getContentTypeSchema.params = {"contentType": event.target.value};
         this.$.getContentTypeSchema.generateRequest();
-        console.log(this.$.getContentTypeSchema);
+        //console.log(this.$.getContentTypeSchema);
       },
 
       _toArray: function(obj) {
-        console.log(obj);
+        //console.log(obj);
+        if(!obj) return;
         return Object.keys(obj).map(function(key) {
             return {
                 name: key,
