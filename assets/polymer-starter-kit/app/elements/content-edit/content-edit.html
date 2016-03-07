@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    
+
     <iron-ajax id="getContentTypes"
       auto
       url="/content/getContentTypes"
@@ -66,7 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         dataSchema: {
           type: Object,
-          value: function() { 
+          value: function() {
             return {
                 "$schema": "http://json-schema.org/draft-04/schema#",
                 "description": "A representation of a person, company, organization, or place",
@@ -115,22 +115,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         }
                     }
                 }
-            }; 
+            };
           },
           notify: true
         },
         uiSchema: {
           type: Object,
-          value: function() { 
+          value: function() {
             return {
 
-            }; 
+            };
           },
           notify: true
         },
         formData: {
           type: Object,
-          value: function() { 
+          value: function() {
             return {};
           },
           notify: true
@@ -150,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       edit: function(event) {
         //console.log(event.model.item.identityNode._id);
-        
+
       },
 
       updateContentType: function(event) {
@@ -172,7 +172,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       _getFormDataProperty: function(property) {
         console.log(this.formData.properties['name']);
-        return this.formData.properties[property];
+        var propertyData = this.formData.properties[property] || "";
+        return propertyData;
       }
 
     });
