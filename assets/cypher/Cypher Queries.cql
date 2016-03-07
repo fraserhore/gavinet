@@ -216,5 +216,11 @@ MERGE user-[:CREATED {timestamp:timestamp()}]->version
 // Return the newly created nodes 
 RETURN user, identity, version
 
+// LOGICAL MODEL
+MATCH (n)-[r]->(m)
+WHERE NOT (n)-[r:CREATED|VERSION]->(m)
+RETURN n,r,m
+
 //DELETE ALL NODES AND RELATIONSHIPS
 MATCH (n)-[r]-() DELETE n,r
+

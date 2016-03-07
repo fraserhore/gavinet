@@ -98,14 +98,15 @@ module.exports = {
 
     getContentTypeSchema: function(req, res) {
 
-        var query =  'MATCH (a:ContentType)-[]->(b:Version {identifier:{contentType}})'
-                    +' RETURN a as contentType, b as version'
+        var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION]->(contentTypeVersion:Version {identifier:{contenttype}}),'
+                    + ' (contentTypeIdentity)-[:PROPERTY]->(propertyIdentity:Property)-[:VERSION]->(propertyVersion:Version)'
+                    + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity), collect(propertyVersion) as Properties'
         var params = {
-            "contentType": req.param('contentType')
+            "contenttype": req.param('contenttype')
         };
         //console.log(req.param('contentType'));
         var cb = function(err, data) {
-            //console.log(data);
+            console.log(data);
             return res.json(data);
         }
         db.cypher({
