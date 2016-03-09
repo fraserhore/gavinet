@@ -6,19 +6,19 @@ MATCH (parent)
 WHERE id(parent)=19
 // Create the new child content object's identity and version nodes and their relationships
 CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(childidentity:IdentityNode:ContentObject)-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(childversion:Version)
-// Set the content object's type as a label on the identity node 
+// Set the content object's type as a label on the identity node
 SET childidentity:Folder
 // Set the content object's properties
 SET childversion = {name:"Folder Name", description:"This is a description"}
 // Set the identity node name
 SET childidentity.name = childversion.name
-// Return the newly created nodes 
+// Return the newly created nodes
 RETURN parent,childidentity,childversion
 
 // UPDATE (CONTENT) - Add a Version node
 MATCH (identitynode)-[currentversionrelationship:VERSION {to:9223372036854775807}]->(currentversion)
 WHERE id(identitynode)=3 AND currentversionrelationship.lang = "en-gb"
-// Update the current version relationship to end validity 
+// Update the current version relationship to end validity
 SET currentversionrelationship.to = timestamp()
 // Create the new version relationship and node
 CREATE identitynode-[newversionrelationship:VERSION {from:timestamp(), to:9223372036854775807}]->(newversion:Version)
@@ -45,7 +45,7 @@ WHERE id(currentparent)=19 AND id(child)=31 AND id(newparent)=25
 SET relationship.to = timestamp()
 // Create the new parent->child relationship
 CREATE newparent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(child)
-// Return the newly created nodes 
+// Return the newly created nodes
 RETURN currentparent, newparent, child
 
 // UPDATE (LOCATION - ADD) - Add a location / parent node
@@ -54,7 +54,7 @@ MATCH (parent),(child)
 WHERE id(parent)=19 AND id(child)=31
 // Create the new parent->child relationship
 CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(child)
-// Return the newly created nodes 
+// Return the newly created nodes
 RETURN parent,child
 
 // DELETE - Remove a location / parent node
@@ -63,12 +63,12 @@ MATCH (parent)-[relationship:CONTAINS]->(child)
 WHERE id(parent)=29 AND id(child)=31
 // End validity of relationship
 SET relationship.to = timestamp()
-// Return the newly created nodes 
+// Return the newly created nodes
 RETURN parent,child
 
 // Delete a Node (and its relationships)
 // Since you can’t have relationships that don’t either start or end with a node, you have to remove relationships before you remove a node.
-MATCH (n) 
+MATCH (n)
 WHERE id(n) = id_of_node_to_delete
 OPTIONAL MATCH (n)-[r]-() DELETE n,r
 
@@ -107,7 +107,7 @@ RETURN b as IdentityNode, c as VersionNode
 
 // READ - Get Subtree
 MATCH (a)-[r:CONTAINS* {to:9223372036854775807}]->(b), b-[:VERSION {to:9223372036854775807}]-(c)
-WHERE id(a) = 1 
+WHERE id(a) = 1
 RETURN a,b,c
 
 // READ - Get Subtree 2
@@ -122,7 +122,7 @@ RETURN path
 
 // READ - Get Subtree 4
 MATCH (a)-[r:CONTAINS* {to:9223372036854775807}]->(b)
-WHERE id(a) = 1 
+WHERE id(a) = 1
 WITH b
 MATCH (a)-[r:CONTAINS {to:9223372036854775807}]->b-[:VERSION {to:9223372036854775807}]-(c)
 RETURN a,b,c
@@ -188,8 +188,13 @@ CREATE contenttypes-[:CONTAINS {from:timestamp(), to:9223372036854775807, versio
 
 // Create properties and datatypes
 // Content type
-CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Name"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Name", identifier:"name"})
-CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Identifier"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Identifier", identifier:"identifier"})
+CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Name"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Name", identifier:"name", description:"", type:"string"})
+CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Identifier"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Identifier", identifier:"identifier", description:"", type:"string"})
+CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Title"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Title", identifier:"title", description:"", type:"string"})
+CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Description"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Description", identifier:"description", description:"", type:"string"})
+CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Type"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Type", identifier:"type", description:"", type:"string"})
+CREATE contenttypecontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Required"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Required", identifier:"required", description:"", type:"array"})
+
 // Property (JSON Schema)
 CREATE propertycontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Name"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Name", identifier:"name"})
 CREATE propertycontenttype-[:PROPERTY {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(:Identity:Property {uuid:"", contentType:"property", name:"Identifier"})-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Identifier", identifier:"identifier"})
@@ -209,11 +214,11 @@ CREATE user-[:MEMBER_OF {from:timestamp(), to:9223372036854775807, versionNumber
 
 // Create created relationships
 WITH user
-MATCH (identity:Identity), (version:Version) 
+MATCH (identity:Identity), (version:Version)
 MERGE user-[:CREATED {timestamp:timestamp()}]->identity
 MERGE user-[:CREATED {timestamp:timestamp()}]->version
 
-// Return the newly created nodes 
+// Return the newly created nodes
 RETURN user, identity, version
 
 // LOGICAL MODEL
@@ -223,4 +228,3 @@ RETURN n,r,m
 
 //DELETE ALL NODES AND RELATIONSHIPS
 MATCH (n)-[r]-() DELETE n,r
-
