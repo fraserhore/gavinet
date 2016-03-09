@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <form is="iron-form" id="formPost" method="post" action="/content/create">
       <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
       <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
-      <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="updateContentType">
+      <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="_updateContentType">
         <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="[[contenttypes]]">
             <paper-item value="[[item.contentType.properties.name]]">[[item.contentType.properties.name]]</paper-item>
@@ -153,14 +153,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-      updateContentType: function(event) {
-        
+      _updateContentType: function(event) {
         var selectedItem = event.target.selectedItem;
         if(selectedItem) {
           console.log(selectedItem.innerText);
+          this.$.getContentTypeSchema.params = {"contenttype": selectedItem.innerText.toLowerCase()};
           this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
-          this.$.getContentTypeSchema.params = {"contenttype": selectedItem.innerText};
-          this.$.getContentTypeSchema.generateRequest();
+          //this.$.getContentTypeSchema.generateRequest();
         }
       },
 

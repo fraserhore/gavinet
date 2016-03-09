@@ -106,9 +106,10 @@ module.exports = {
         };
         //console.log(req.param('contentType'));
         var cb = function(err, data) {
-            
+            console.log(data);
             if(!data) return;
             if(!data[0]) return;
+            console.log(err);
 
             var contentTypeVersionProperties = data[0].contentTypeVersion.properties,
                 propertyVersions = data[0].propertyVersions,
