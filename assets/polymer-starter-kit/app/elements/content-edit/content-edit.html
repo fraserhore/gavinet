@@ -26,18 +26,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       last-response="{{contenttypes}}"
       debounce-duration="300"></iron-ajax>
 
-    <!-- <iron-ajax id="getContentTypeSchema"
+    <iron-ajax id="getContentTypeSchema"
       auto
       url="/content/getContentTypeSchema"
-      params='{"contentType": formData.contentType}'
+      params='{"contenttype": formData.contenttype}'
       handle-as="json"
       last-response="{{dataSchema}}"
-      debounce-duration="300"></iron-ajax>   -->
+      debounce-duration="300"></iron-ajax>  
 
     <form is="iron-form" id="formPost" method="post" action="/content/create">
       <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
       <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
-      <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}">
+      <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="updateContentType">
         <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="[[contenttypes]]">
             <paper-item value="[[item.contentType.properties.name]]">[[item.contentType.properties.name]]</paper-item>
@@ -154,10 +154,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       updateContentType: function(event) {
-        // this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
-        // this.$.getContentTypeSchema.params = {"contentType": event.target.value};
-        // this.$.getContentTypeSchema.generateRequest();
-        //console.log(this.$.getContentTypeSchema);
+        
+        var selectedItem = event.target.selectedItem;
+        if(selectedItem) {
+          console.log(selectedItem.innerText);
+          this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
+          this.$.getContentTypeSchema.params = {"contenttype": selectedItem.innerText};
+          this.$.getContentTypeSchema.generateRequest();
+        }
       },
 
       _toArray: function(obj) {

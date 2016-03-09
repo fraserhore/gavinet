@@ -100,14 +100,30 @@ module.exports = {
 
         var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION]->(contentTypeVersion:Version {identifier:{contenttype}}),'
                     + ' (contentTypeIdentity)-[:PROPERTY]->(propertyIdentity:Property)-[:VERSION]->(propertyVersion:Version)'
-                    + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity), collect(propertyVersion) as Properties'
+                    + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity) as propertyIdentities, collect(propertyVersion) as propertyVersions'
         var params = {
             "contenttype": req.param('contenttype')
         };
         //console.log(req.param('contentType'));
         var cb = function(err, data) {
-            console.log(data);
-            return res.json(data);
+            
+            if(!data) return;
+            if(!data[0]) return;
+
+            var contentTypeVersionProperties = data[0].contentTypeVersion.properties,
+                propertyVersions = data[0].propertyVersions,
+                schema = {};
+
+            //schema["$schema"] = "http://json-schema.org/draft-04/schema#";
+            schema = data[0].contentTypeVersion.properties;
+            schema["properties"] = {};
+
+            console.log[schema];
+
+            for (var i = 0; i < propertyVersions.length; i++) {
+                schema.properties[propertyVersions[i].properties.identifier] = propertyVersions[i].properties;
+            };
+            return res.json(schema);
         }
         db.cypher({
             query: query,
