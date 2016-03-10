@@ -35,12 +35,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"></iron-ajax>  
 
     <form is="iron-form" id="formPost" method="post" action="/content/create">
-      <paper-input name="parentId" label="parentId" value="{{formData.parentId}}"></paper-input>
-      <paper-input name="authorId" label="authorId" value="{{formData.authorId}}"></paper-input>
+      <input is="iron-input" name="parentId" label="parentId" type="hidden" value="{{formData.parentId}}"></input>
+      <input is="iron-input" name="authorId" label="authorId" type="hidden" value="{{formData.authorId}}"></input>
       <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="_updateContentType">
         <paper-menu class="dropdown-content">
           <template is="dom-repeat" items="[[contenttypes]]">
-            <paper-item value="[[item.contentType.properties.name]]">[[item.contentType.properties.name]]</paper-item>
+            <paper-item value="[[item.contentTypeVersion.properties.identifier]]">[[item.contentTypeVersion.properties.name]]</paper-item>
           </template>
         </paper-menu>
       </paper-dropdown-menu>
@@ -48,8 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Create an identity node name using the pattern defined in the schema -->
       <paper-input name="identityNamePattern" label="identityNamePattern" value="childversion.name"></paper-input>
       <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
-        <template is="dom-if" if="{{item.type='string'}}">
-          <paper-input name="properties[[[item.name]]]" label="{{item.name}}" value="{{_getFormDataProperty(item.name)}}"></paper-input>
+        <template is="dom-if" if="{{item.object.type = 'string'}}">
+          <paper-input name="properties[[[item.key]]]" label="{{item.object.name}}" value="{{_getFormDataProperty(item.key)}}"></paper-input>
         </template>
       </template>
       <paper-button raised on-click="clickHandler">Submit</paper-button>
@@ -156,8 +156,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _updateContentType: function(event) {
         var selectedItem = event.target.selectedItem;
         if(selectedItem) {
-          console.log(selectedItem.innerText);
-          this.$.getContentTypeSchema.params = {"contenttype": selectedItem.innerText.toLowerCase()};
+          console.log(selectedItem.value);
+          this.$.getContentTypeSchema.params = {"contenttype": selectedItem.value};
           this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
           //this.$.getContentTypeSchema.generateRequest();
         }
@@ -168,12 +168,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(!obj) return;
         return Object.keys(obj).map(function(key) {
             return {
-                name: key,
-                value: obj[key]
+                key: key,
+                object: obj[key]
             };
         });
       },
       _getFormDataProperty: function(property) {
+        if(!property) return;
         console.log(this.formData.properties['name']);
         var propertyData = this.formData.properties[property] || "";
         return propertyData;

@@ -61,8 +61,8 @@ module.exports = {
 
     getContentTypes: function(req, res) {
 
-        var query =  'MATCH (a:ContentType)'
-                    +' RETURN a as contentType'
+        var query =  'MATCH (a:ContentType)-[:VERSION]->(b:Version)'
+                    +' RETURN a as contentTypeIdentity, b as contentTypeVersion'
         var params = {
             "id": ''
         };
@@ -99,7 +99,7 @@ module.exports = {
     getContentTypeSchema: function(req, res) {
 
         var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION]->(contentTypeVersion:Version {identifier:{contenttype}}),'
-                    + ' (contentTypeIdentity)-[:PROPERTY]->(propertyIdentity:Property)-[:VERSION]->(propertyVersion:Version)'
+                    + ' (contentTypeIdentity)-[:PROPERTY|CONTAINS]->(propertyIdentity:Property)-[:VERSION]->(propertyVersion:Version)'
                     + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity) as propertyIdentities, collect(propertyVersion) as propertyVersions'
         var params = {
             "contenttype": req.param('contenttype')
@@ -146,7 +146,7 @@ module.exports = {
                     +       '(childversion:Version)'
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childidentity'
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
-                    +' SET childidentity:' + req.body.contenttype 
+                    +' SET childidentity:' + this.pascalize(req.body.contenttype) 
                     +' SET childversion = {properties}'
                     +' SET childidentity.name = ' + req.body.identityNamePattern
                     +' RETURN parent,childidentity,childversion';
@@ -191,6 +191,42 @@ module.exports = {
             query: query, 
             params: params
         }, cb);
+    },
+
+    // Utilities
+    separateWords: function(string, options) {
+        options = options || {};
+        var separator = options.separator || '_';
+        var split = options.split || /(?=[A-Z])/;
+
+        return string.split(split).join(separator);
+    },
+
+    camelize: function(string) {
+        if (this._isNumerical(string)) {
+          return string;
+        }
+        string = string.replace(/[\-_\s]+(.)?/g, function(match, chr) {
+          return chr ? chr.toUpperCase() : '';
+        });
+        // Ensure 1st char is always lowercase
+        return string.substr(0, 1).toLowerCase() + string.substr(1);
+    },
+
+    pascalize: function(string) {
+        var camelized = this.camelize(string);
+        // Ensure 1st char is always uppercase
+        return camelized.substr(0, 1).toUpperCase() + camelized.substr(1);
+    },
+
+    decamelize: function(string, options) {
+        return this.separateWords(string, options).toLowerCase();
+    },
+
+    // Performant way to determine if obj coerces to a number
+    _isNumerical: function(obj) {
+        obj = obj - 0;
+        return obj === obj;
     }
 
     // var isDefined = function(value, path) {
