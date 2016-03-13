@@ -170,6 +170,32 @@ module.exports = {
     },
 
     /**
+     * `ContentController.createRelationship()`
+     */
+    createRelationship: function(req, res) {
+        console.log(req.body);
+        var query =   'MATCH (from), (to)'
+                    +' WHERE id(from)={fromId} AND id(to)={toId}'
+                    +' CREATE from-[r:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->to'
+                    +' RETURN from, r, to';
+        var params = {
+            "fromId": parseInt(req.body.fromId),
+            "relationshipName": req.body.relationshipName,
+            "toId": parseInt(req.body.toId)
+        };
+        
+        var cb = function(err, data) {
+            //console.log(err);
+            //console.log(data);
+            return res.json(data);
+        };
+        db.cypher({
+            query: query, 
+            params: params
+        }, cb);
+    },
+
+    /**
      * `ContentController.delete()`
      */
     delete: function(req, res) {

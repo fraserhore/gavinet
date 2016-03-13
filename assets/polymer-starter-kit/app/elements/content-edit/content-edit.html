@@ -48,8 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Create an identity node name using the pattern defined in the schema -->
       <paper-input name="identityNamePattern" label="identityNamePattern" value="childversion.name"></paper-input>
       <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
-        <template is="dom-if" if="{{item.object.type = 'string'}}">
-          <paper-input name="properties[[[item.key]]]" label="{{item.object.name}}" value="{{_getFormDataProperty(item.key)}}"></paper-input>
+        <template is="dom-if" if="{{_eq(item.object.type, 'string')}}">
+          <paper-input name="properties[[[item.key]]]" label="{{item.object.type}}" value="{{_getFormDataProperty(item.key)}}"></paper-input>
         </template>
       </template>
       <paper-button raised on-click="clickHandler">Submit</paper-button>
@@ -174,10 +174,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       },
       _getFormDataProperty: function(property) {
-        if(!property) return;
-        console.log(this.formData.properties['name']);
+        if(!property || !this.formData.properties) return;
+        //console.log(this.formData.properties['name']);
         var propertyData = this.formData.properties[property] || "";
         return propertyData;
+      },
+
+      _eq: function(a, b) {
+        return a === b;
       }
 
     });

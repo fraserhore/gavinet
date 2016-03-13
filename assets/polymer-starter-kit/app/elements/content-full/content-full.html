@@ -21,8 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
 
-    
-    <br/>
+
+    <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Create Relationship</paper-button>
+    <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
+      <h2>Create Relationship</h2>
+      <paper-dialog-scrollable>
+        <content-relationship reference-node="{{identityNode}}" relationship-name="{{relationshipName}}" related-node-id="{{identityNode._id}}" direction="" parent-node-id="{{identityNode._id}}"></content-relationship>
+      </paper-dialog-scrollable>
+    </paper-dialog>
 
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
     <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
