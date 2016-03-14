@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
       <h2>Create Relationship</h2>
       <paper-dialog-scrollable>
-        <content-relationship reference-node="{{identityNode}}" relationship-name="{{relationshipName}}" related-node-id="{{identityNode._id}}" direction="" parent-node-id="{{identityNode._id}}"></content-relationship>
+        <content-relationship reference-node-id="{{identityNode._id}}" direction="outbound" parent-node-id="{{identityNode._id}}"></content-relationship>
       </paper-dialog-scrollable>
     </paper-dialog>
 
@@ -67,6 +67,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
         <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
+      </div>
+    </template>   
+
+    <iron-ajax
+      id="getRelated"
+      auto
+      url="/content/getRelated/{{identityNode._id}}"
+      params=''
+      handle-as="json"
+      last-response="{{related}}"
+      debounce-duration="300"></iron-ajax>
+
+    <h2>Related</h2>
+    <template is="dom-repeat" items="[[related]]">
+      <div class="horizontal-section">
+        <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
+        <p>Relationship: [[item.relationship.type]]</p>
+        <template is="dom-repeat" items="[[_toArray(item.versionNode.properties)]]">
+          <template is="dom-if" if="{{item.value}}">
+            <p>[[item.name]]: [[item.value]]</p>
+          </template>
+        </template>
       </div>
     </template>   
 

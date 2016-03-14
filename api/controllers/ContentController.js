@@ -59,6 +59,22 @@ module.exports = {
         }, cb);
     },
 
+    getRelated: function(req, res) {
+        var query =  'MATCH (a)-[r]-(b), (b)-[:VERSION {to:9223372036854775807}]->(c)'
+                    +' WHERE id(a) = {id} AND NOT (a)-[r:VERSION|:CREATED|:CONTAINS]-(b)'
+                    +' RETURN b as identityNode, r as relationship, c as versionNode'
+        var params = {
+            "id": parseInt(req.param('id'))
+        };
+        var cb = function(err, data) {
+            return res.json(data);
+        }
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
     getContentTypes: function(req, res) {
 
         var query =  'MATCH (a:ContentType)-[:VERSION]->(b:Version)'
@@ -106,10 +122,10 @@ module.exports = {
         };
         //console.log(req.param('contentType'));
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             if(!data) return;
             if(!data[0]) return;
-            console.log(err);
+            //console.log(err);
 
             var contentTypeVersionProperties = data[0].contentTypeVersion.properties,
                 propertyVersions = data[0].propertyVersions,
@@ -119,7 +135,7 @@ module.exports = {
             schema = data[0].contentTypeVersion.properties;
             schema["properties"] = {};
 
-            console.log[schema];
+            //console.log[schema];
 
             for (var i = 0; i < propertyVersions.length; i++) {
                 schema.properties[propertyVersions[i].properties.identifier] = propertyVersions[i].properties;
@@ -137,7 +153,7 @@ module.exports = {
      * `ContentController.create()`
      */
     create: function(req, res) {
-        console.log(req.body);
+        //console.log(req.body);
         var query =   'MATCH (parent), (author)'
                     +' WHERE id(parent)={parentId} AND id(author)={authorId}'
                     +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
@@ -173,17 +189,18 @@ module.exports = {
      * `ContentController.createRelationship()`
      */
     createRelationship: function(req, res) {
-        console.log(req.body);
+        //console.log(req.body);
         var query =   'MATCH (from), (to)'
                     +' WHERE id(from)={fromId} AND id(to)={toId}'
-                    +' CREATE from-[r:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->to'
+                    +' CREATE from-[r:' 
+                    + req.body.relationshipName.split(' ').join('_').toUpperCase()
+                    + ' {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->to'
                     +' RETURN from, r, to';
         var params = {
-            "fromId": parseInt(req.body.fromId),
-            "relationshipName": req.body.relationshipName,
-            "toId": parseInt(req.body.toId)
+            "fromId": req.body.direction === 'Inbound' ? parseInt(req.body.relatedNodeId) : parseInt(req.body.referenceNodeId),
+            "relationshipName": req.body.relationshipName.split(' ').join('_').toUpperCase(),
+            "toId": req.body.direction === 'Outbound' ? parseInt(req.body.relatedNodeId) : parseInt(req.body.referenceNodeId)
         };
-        
         var cb = function(err, data) {
             //console.log(err);
             //console.log(data);

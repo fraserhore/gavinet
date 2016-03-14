@@ -27,8 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       last-response="{{nodes}}"
       debounce-duration="300"></iron-ajax>
     <form is="iron-form" id="formPost" method="post" action="/content/createRelationship">
-      <input is="iron-input" name="referenceNodeId" type="" value="[[referenceNode._id]]"></input>
-      <paper-input name="relationshipName" label="Relationship Name" value=""></paper-input>
+      <input is="iron-input" name="referenceNodeId" type="hidden" value="[[referenceNodeId]]"></input>
+      <paper-input name="relationshipName" label="Relationship Name" value="{{relationshipName}}"></paper-input>
       <paper-dropdown-menu label="Related Node" selected-item="{{selectedNode}}" selected-item-label="{{selected}}">
         <paper-menu class="dropdown-content" selected="0">
           <template is="dom-repeat" items="[[nodes]]">
@@ -37,13 +37,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </paper-menu>
       </paper-dropdown-menu>
       <input is="iron-input" name="relatedNodeId" type="hidden" value$="[[selectedNode.value]]"></input>
-      <paper-dropdown-menu label="Direction" selected-item="{{selectedItem}}" selected-item-label="{{selected}}">
+      <paper-dropdown-menu label="Direction" selected-item="{{selectedDirection}}" selected-item-label="{{selectedDirectionLabel}}">
         <paper-menu class="dropdown-content" selected="0">
           <paper-item value="outbound">Outbound</paper-item>
           <paper-item value="inbound">Inbound</paper-item>
         </paper-menu>
       </paper-dropdown-menu>
-      <input is="iron-input" name="direction" type="hidden" value$="[[selectedItem.value]]"></input>
+      <input is="iron-input" name="direction" type="hidden" value$="[[selectedDirectionLabel]]"></input>
       <br/>
       <paper-button raised on-click="clickHandler">Submit</paper-button>
     </form>
@@ -57,18 +57,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'content-relationship',
 
       properties: {
-        referenceNode: {
-          type: Object,
-          value: function() {
-            return {
-
-            };
-          },
+        referenceNodeId: {
+          type: Number,
+          value: 0,
           notify: true
         },
         relationshipName: {
-          type: Number,
-          value: 0,
+          type: String,
+          value: "RELATED_TO",
           notify: true
         },
         relatedNodeId: {
@@ -79,6 +75,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         parentNodeId: {
           type: Number,
           value: 0,
+          notify: true
+        },
+        direction: {
+          type: String,
+          value: "outbound",
           notify: true
         }
       },

@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-input name="identityNamePattern" label="identityNamePattern" value="childversion.name"></paper-input>
       <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
         <template is="dom-if" if="{{_eq(item.object.type, 'string')}}">
-          <paper-input name="properties[[[item.key]]]" label="{{item.object.type}}" value="{{_getFormDataProperty(item.key)}}"></paper-input>
+          <paper-input name="properties[[[item.key]]]" label="{{item.object.name}}" value="{{_getFormDataProperty(item.key)}}"></paper-input>
         </template>
       </template>
       <paper-button raised on-click="clickHandler">Submit</paper-button>
