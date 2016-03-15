@@ -61,7 +61,7 @@ module.exports = {
 
     getRelated: function(req, res) {
         var query =  'MATCH (a)-[r]-(b), (b)-[:VERSION {to:9223372036854775807}]->(c)'
-                    +' WHERE id(a) = {id} AND NOT (a)-[r:VERSION|:CREATED|:CONTAINS]-(b)'
+                    +' WHERE id(a) = {id} AND NOT (a)-[r:VERSION|:CREATED|:CONTAINS]->(b) AND NOT (a)<-[r:VERSION|:CREATED|:CONTAINS]-(b)'
                     +' RETURN b as identityNode, r as relationship, c as versionNode'
         var params = {
             "id": parseInt(req.param('id'))
@@ -85,6 +85,24 @@ module.exports = {
         var cb = function(err, data) {
             //console.log(data);
             return res.json(data);
+        }
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
+    getParent: function(req, res) {
+
+        var query =  'MATCH (a)<-[r:CONTAINS {to:9223372036854775807}]-(parentNode)'
+                    +' WHERE id(a) = {id}'
+                    +' RETURN parentNode'
+        var params = {
+            "id": parseInt(req.param('id'))
+        };
+        var cb = function(err, data) {
+            console.log(data);
+            return res.json(data[0]);
         }
         db.cypher({
             query: query,

@@ -84,13 +84,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      ready: function() {
-        console.log('referenceNode')
-        console.log(this.parentNodeId);
-      },
-
       clickHandler: function(event) {
-        console.log(event.target.parentElement.serialize());
         event.target.parentElement.submit();
       }
 

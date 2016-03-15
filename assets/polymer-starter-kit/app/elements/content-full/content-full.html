@@ -20,7 +20,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
-
+    <br/>
+    
+    <iron-ajax
+      id="deleteRequest"
+      url=""
+      handle-as="json"
+      on-response="deleteResponse"
+      debounce-duration="300"></iron-ajax>
 
     <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Create Relationship</paper-button>
     <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
@@ -38,59 +45,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog-scrollable>
     </paper-dialog>
 
-    <iron-ajax
-      id="getChildren"
-      auto
-      url="/content/getChildren/{{identityNode._id}}"
-      params=''
-      handle-as="json"
-      last-response="{{children}}"
-      on-response="responseTest"
-      debounce-duration="300"></iron-ajax>
+    <h3>Child Content</h3>
+    <content-children identity-node-id="{{identityNode._id}}"></content-children>
 
-    <iron-ajax
-      id="deleteRequest"
-      auto
-      url=""
-      handle-as="json"
-      on-response="deleteResponse"
-      debounce-duration="300"></iron-ajax>
-
-    <template is="dom-repeat" items="[[children]]">
-      <div class="horizontal-section">
-        <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
-        <template is="dom-repeat" items="[[_toArray(item.versionNode.properties)]]">
-          <template is="dom-if" if="{{item.value}}">
-            <p>[[item.name]]: [[item.value]]</p>
-          </template>
-        </template>
-        
-        <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
-        <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
-      </div>
-    </template>   
-
-    <iron-ajax
-      id="getRelated"
-      auto
-      url="/content/getRelated/{{identityNode._id}}"
-      params=''
-      handle-as="json"
-      last-response="{{related}}"
-      debounce-duration="300"></iron-ajax>
-
-    <h2>Related</h2>
-    <template is="dom-repeat" items="[[related]]">
-      <div class="horizontal-section">
-        <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
-        <p>Relationship: [[item.relationship.type]]</p>
-        <template is="dom-repeat" items="[[_toArray(item.versionNode.properties)]]">
-          <template is="dom-if" if="{{item.value}}">
-            <p>[[item.name]]: [[item.value]]</p>
-          </template>
-        </template>
-      </div>
-    </template>   
+    <h3>Related Content</h3>
+    <content-related identity-node-id="{{identityNode._id}}"></content-related>
 
   </template>
   <script>
@@ -140,10 +99,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //console.log(this.formData);
       },
 
-      children: function(event) {
-        //console.log(event);
-      },
-
       clickHandler: function(event) {
         event.target.parentElement.submit();
         this.$.getChildren.generateRequest();
@@ -172,20 +127,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       delete: function(event) {
-        //console.log(event.model.item.identityNode._id);
         this.$.deleteRequest.url = "/content/delete";
         this.$.deleteRequest.params = {"id": event.model.item.identityNode._id};
         this.$.deleteRequest.generateRequest();
-        this.$.getChildren.generateRequest();
       },
 
       deleteResponse: function(request) {
         //console.log(request.detail.response);
         //console.log(this.$.deleteRequest.lastResponse);
-      },
-
-      responseTest: function(event) {
-        //console.log(event);
       },
 
       _toArray: function(obj) {

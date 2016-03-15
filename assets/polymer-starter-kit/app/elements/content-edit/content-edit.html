@@ -138,12 +138,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function() {
-        console.log('dataSchema')
-        console.log(this.dataSchema);
+        //console.log('dataSchema')
+        //console.log(this.dataSchema);
       },
 
       clickHandler: function(event) {
-        console.log(event.target.parentElement.serialize());
+        //console.log(event.target.parentElement.serialize());
         event.target.parentElement.submit();
       },
 
@@ -156,7 +156,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _updateContentType: function(event) {
         var selectedItem = event.target.selectedItem;
         if(selectedItem) {
-          console.log(selectedItem.value);
+          //console.log(selectedItem.value);
           this.$.getContentTypeSchema.params = {"contenttype": selectedItem.value};
           this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
           //this.$.getContentTypeSchema.generateRequest();
