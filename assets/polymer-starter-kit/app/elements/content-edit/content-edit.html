@@ -32,29 +32,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       params='{"contenttype": formData.contenttype}'
       handle-as="json"
       last-response="{{dataSchema}}"
-      debounce-duration="300"></iron-ajax>  
+      debounce-duration="300"></iron-ajax>
 
-    <form is="iron-form" id="formPost" method="post" action="/content/create">
-      <input is="iron-input" name="parentId" label="parentId" type="hidden" value="{{formData.parentId}}"></input>
-      <input is="iron-input" name="authorId" label="authorId" type="hidden" value="{{formData.authorId}}"></input>
-      <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="_updateContentType">
-        <paper-menu class="dropdown-content">
-          <template is="dom-repeat" items="[[contenttypes]]">
-            <paper-item value="[[item.contentTypeVersion.properties.identifier]]">[[item.contentTypeVersion.properties.name]]</paper-item>
+    <iron-ajax id="postData"
+      url="/content/create"
+      content-type="application/json"
+      method="POST"
+      body="{{formData}}"
+      handle-as="json"
+      last-response="{{res}}"
+      debounce-duration="300"></iron-ajax>
+
+    <paper-dialog id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
+      <h2>Create a New Item</h2>
+      <paper-dialog-scrollable>
+        <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="_updateContentType">
+          <paper-menu class="dropdown-content">
+            <template is="dom-repeat" items="[[contenttypes]]">
+              <paper-item value="[[item.contentTypeVersion.properties.identifier]]">[[item.contentTypeVersion.properties.name]]</paper-item>
+            </template>
+          </paper-menu>
+        </paper-dropdown-menu>
+        <!-- Create an identity node name using the pattern defined in the schema -->
+        <paper-input name="identityNamePattern" label="identityNamePattern" value="{{formData.identityNamePattern}}"></paper-input>
+        <div id="properties"></div>
+
+        <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
+          <template is="dom-if" if="{{_eq(item.object.type, 'string')}}">
+            <paper-input name="properties[[[item.key]]]" label="{{item.object.title}}" value="[[_getFormDataProperty(item.key)]]" on-value-changed="_updateProperty"></paper-input>
           </template>
-        </paper-menu>
-      </paper-dropdown-menu>
-      <input is="iron-input" name="contenttype" type="hidden" value$="[[selectedItem.value]]"></input>
-      <!-- Create an identity node name using the pattern defined in the schema -->
-      <paper-input name="identityNamePattern" label="identityNamePattern" value="childversion.name"></paper-input>
-      <template is="dom-repeat" items="{{_toArray(dataSchema.properties)}}">
-        <template is="dom-if" if="{{_eq(item.object.type, 'string')}}">
-          <paper-input name="properties[[[item.key]]]" label="{{item.object.name}}" value="{{_getFormDataProperty(item.key)}}"></paper-input>
+          <template is="dom-if" if="{{_eq(item.object.type, 'relationship')}}">
+            <br/>
+            <label>{{item.object.title}}</label>
+            <template is="dom-repeat" items="{{formData.properties.relationships}}">
+              <paper-item>-[{{item.relationshipName}}]-> {{item.relatedNode.properties.name}}</paper-item>
+            </template>
+            <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Add [[item.object.title]]</paper-button>
+            <content-relationship id="relationshipDialog" reference-node-id="{{identityNode._id}}"  relationship-name="{{item.object.identifier}}" direction="{{item.object.direction}}" parent-node-id="158" related-node-id="{{relatedNodeId}}" related-node="{{relatedNode}}" on-related-node-changed="_addRelationship"></content-relationship>
+          </template>
         </template>
-      </template>
-      <paper-button raised on-click="clickHandler">Submit</paper-button>
-    </form>
-
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button raised on-click="_submit">Submit</paper-button>
+      </div>
+    </paper-dialog>
   </template>
   <script>
   (function() {
@@ -128,7 +150,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           notify: true
         },
+        relationships: {
+          type: Array,
+          value: [],
+          notify: true
+        },
         formData: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+          notify: true
+        },
+        data: {
           type: Object,
           value: function() {
             return {};
@@ -138,13 +172,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function() {
-        //console.log('dataSchema')
+        // Configure the formData properties and relationships based on the dataSchema if they are not already provided
         //console.log(this.dataSchema);
+        console.log(this.formData);
+        var dataSchemaKeys = Object.keys(this.dataSchema);
+        if(!this.formData.properties) {
+          this.formData.properties = [];
+        }
+        if(!this.formData.relationships) {
+          this.formData.relationships = [];
+        }
+        for (var i = 0; i < dataSchemaKeys.length; i++) {
+          var key = dataSchemaKeys[i];
+          if(!this.formData.properties[key] && !this.formData.relationships[key]) {
+            switch(this.dataSchema[key].type) {
+              case 'String':
+                this.formData.properties[key] = '';
+                break;
+              case 'Array':
+                this.formData.properties[key] = [];
+                break;
+              case 'Object':
+                this.formData.properties[key] = {};
+                break;
+              case 'Relationship':
+                this.formData.relationships[key] = [];
+                break;
+              case 'relationship':
+                this.formData.relationships[key] = [];
+                break;
+              default:
+                this.formData.properties[key] = undefined;
+                break;       
+            }
+          }
+        };
+        console.log(this.formData);
       },
 
-      clickHandler: function(event) {
-        //console.log(event.target.parentElement.serialize());
-        event.target.parentElement.submit();
+      open: function() {
+        this.$.editDialog.open();
+      },
+
+      _submit: function() {
+        this.$.postData.generateRequest();
       },
 
 
@@ -153,9 +224,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
+      openDialog: function(event) {
+        var button = event.target;
+        while (!button.hasAttribute('data-dialog') && button !== document.body) {
+          button = button.parentElement;
+        }
+        if (!button.hasAttribute('data-dialog')) {
+          return;
+        }
+        var id = button.getAttribute('data-dialog');
+        var dialog = document.getElementById(id);
+        if (dialog) {
+          dialog.open();
+        }
+      },
+
+      _addRelationship: function(event) {
+        if(!event.model.item) return;
+        var relationship = {};
+        relationship[event.model.item.object.identifier] = {
+          "referenceNodeId": 0,
+          "relationshipName": event.model.item.object.identifier,
+          "direction": event.model.item.object.direction,
+          "relatedNode": this.relatedNode,
+          "relatedNodeId": this.relatedNodeId
+        };
+        this.push('formData.relationships', relationship);
+      },
+
       _updateContentType: function(event) {
         var selectedItem = event.target.selectedItem;
         if(selectedItem) {
+          this.formData.contenttype = selectedItem.value;
           //console.log(selectedItem.value);
           this.$.getContentTypeSchema.params = {"contenttype": selectedItem.value};
           this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
@@ -180,11 +280,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         return propertyData;
       },
 
+      _getFormDataPropertyByKey: function(change, key, path) {
+        // first argument is the change record for the array change,
+        // change.base is the array specified in the binding
+        // this.get(path, root) returns a value for a path
+        // relative to a root object.
+        return this.get(path, change.base[index]);
+      },
+
+      _updateProperty: function(event) {
+        console.log(event);
+        if(!event.model.item) return;
+        this.set(['formData', 'properties', event.model.item.key], event.detail.value);
+        //this.formData.properties[event.model.item.key] = event.detail.value;
+        console.log(this.formData.properties)
+      },
+
       _eq: function(a, b) {
         return a === b;
+      },
+
+      _stringify: function(obj) {
+        console.log(obj);
+        return JSON.stringify(obj);
       }
 
     });
   })();
   </script>
 </dom-module>
+  

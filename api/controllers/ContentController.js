@@ -101,7 +101,7 @@ module.exports = {
             "id": parseInt(req.param('id'))
         };
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.json(data[0]);
         }
         db.cypher({
@@ -133,12 +133,12 @@ module.exports = {
     getContentTypeSchema: function(req, res) {
 
         var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION]->(contentTypeVersion:Version {identifier:{contenttype}}),'
-                    + ' (contentTypeIdentity)-[:PROPERTY|CONTAINS]->(propertyIdentity:Property)-[:VERSION]->(propertyVersion:Version)'
+                    + ' (contentTypeIdentity)-[:PROPERTY|RELATIONSHIP]->(propertyIdentity)-[:VERSION]->(propertyVersion:Version)'
                     + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity) as propertyIdentities, collect(propertyVersion) as propertyVersions'
         var params = {
             "contenttype": req.param('contenttype')
         };
-        //console.log(req.param('contentType'));
+        //console.log(req.param('contenttype'));
         var cb = function(err, data) {
             //console.log(data);
             if(!data) return;
@@ -171,15 +171,42 @@ module.exports = {
      * `ContentController.create()`
      */
     create: function(req, res) {
-        //console.log(req.body);
-        var query =   'MATCH (parent), (author)'
-                    +' WHERE id(parent)={parentId} AND id(author)={authorId}'
+        console.log(req.body);
+
+        var relationships = req.body,
+            matchRelated = '',
+            whereRelated = '',
+            createRelationships = '';
+
+        // if(relationships) {
+        //     for (var i = relationships.length - 1; i >= 0; i--) {
+        //         console.log(relationships[i]);
+        //         console.log(JSON.stringify(relationships[i]));
+        //         var relationshipName = relationships[i].relationshipName,
+        //             direction = relationships[i].direction,
+        //             inboundSymbol = direction === 'inbound' ? '<' : '',
+        //             outboundSymbol = direction === 'outbound' ? '>' : '',
+        //             relatedNode = relationships[i].relatedNode,
+        //             relatedNodeId = relatedNode,
+        //             relatedIdentifier = 'node' + relatedNode;
+
+        //         matchRelated += ', (' + relatedIdentifier + ')';
+        //         whereRelated += 'AND id(' + relatedIdentifier + ') = ' + relatedNodeId;
+        //         createRelationships += ' CREATE (childidentity)' + inboundSymbol + '-[' + relationshipName + ']-' + outboundSymbol + '(' + relatedIdentifier + ')';
+
+        //         //console.log(matchRelated);
+        //     };
+        // }
+
+        var query =   'MATCH (parent), (author)' + matchRelated
+                    +' WHERE id(parent)={parentId} AND id(author)={authorId}' + whereRelated
                     +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
                     +       '(childidentity:IdentityNode:ContentObject {contentType:{contenttype}})'
                     +       '-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
                     +       '(childversion:Version)'
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childidentity'
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
+                    +
                     +' SET childidentity:' + this.pascalize(req.body.contenttype) 
                     +' SET childversion = {properties}'
                     +' SET childidentity.name = ' + req.body.identityNamePattern
@@ -192,6 +219,8 @@ module.exports = {
             "properties": req.body.properties
         };
         
+        //console.log(query);
+
         var cb = function(err, data) {
             //console.log(err);
             //console.log(data);

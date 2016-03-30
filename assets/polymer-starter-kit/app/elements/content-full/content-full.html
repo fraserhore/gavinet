@@ -29,22 +29,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
-    <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Create Relationship</paper-button>
+    <!-- <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Create Relationship</paper-button>
     <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
       <h2>Create Relationship</h2>
       <paper-dialog-scrollable>
         <content-relationship reference-node-id="{{identityNode._id}}" direction="outbound" parent-node-id="{{identityNode._id}}"></content-relationship>
       </paper-dialog-scrollable>
-    </paper-dialog>
+    </paper-dialog> -->
 
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
-    <paper-dialog id="newDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
-      <h2>Create a New Item</h2>
-      <paper-dialog-scrollable>
-        <content-edit ui-schema="" form-data="{{formData}}"></content-edit>
-      </paper-dialog-scrollable>
-    </paper-dialog>
-
+    <content-edit id="newDialog" ui-schema="" form-data="{{formData}}"></content-edit>
+      
     <h3>Child Content</h3>
     <content-children identity-node-id="{{identityNode._id}}"></content-children>
 
@@ -73,17 +68,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         authorNode: {
           type: Object,
           value: function() { return {}; },
-          notify: true
-        },
-        formData: {
-          type: Object,
-          value: function() { 
-            return {
-              "authorId": 11111,
-              "parentId": 22222,
-              "contentType": "GlossaryTerm"
-            }; 
-          },
           notify: true
         }
       },
@@ -135,17 +119,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       deleteResponse: function(request) {
         //console.log(request.detail.response);
         //console.log(this.$.deleteRequest.lastResponse);
-      },
-
-      _toArray: function(obj) {
-        //console.log(obj);
-        if(!obj) return;
-        return Object.keys(obj).map(function(key) {
-            return {
-                name: key,
-                value: obj[key]
-            };
-        });
       }
 
     });

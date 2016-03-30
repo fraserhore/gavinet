@@ -26,27 +26,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handle-as="json"
       last-response="{{nodes}}"
       debounce-duration="300"></iron-ajax>
-    <form is="iron-form" id="formPost" method="post" action="/content/createRelationship">
-      <input is="iron-input" name="referenceNodeId" type="hidden" value="[[referenceNodeId]]"></input>
-      <paper-input name="relationshipName" label="Relationship Name" value="{{relationshipName}}"></paper-input>
-      <paper-dropdown-menu label="Related Node" selected-item="{{selectedNode}}" selected-item-label="{{selected}}">
-        <paper-menu class="dropdown-content" selected="0">
-          <template is="dom-repeat" items="[[nodes]]">
-            <paper-item value="[[item.identityNode._id]]">[[item.identityNode.properties.name]]</paper-item>
-          </template>
-        </paper-menu>
-      </paper-dropdown-menu>
-      <input is="iron-input" name="relatedNodeId" type="hidden" value$="[[selectedNode.value]]"></input>
-      <paper-dropdown-menu label="Direction" selected-item="{{selectedDirection}}" selected-item-label="{{selectedDirectionLabel}}">
-        <paper-menu class="dropdown-content" selected="0">
-          <paper-item value="outbound">Outbound</paper-item>
-          <paper-item value="inbound">Inbound</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
-      <input is="iron-input" name="direction" type="hidden" value$="[[selectedDirectionLabel]]"></input>
-      <br/>
-      <paper-button raised on-click="clickHandler">Submit</paper-button>
-    </form>
+
+    <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
+      <h2>Add [[item.object.title]]</h2>
+      <paper-dialog-scrollable>
+
+        <paper-tabs selected="{{selected}}">
+          <paper-tab>Select Related</paper-tab>
+          <paper-tab>Search</paper-tab>
+          <paper-tab>Relationship</paper-tab>
+        </paper-tabs>
+
+        <iron-pages selected="{{selected}}">
+          <section id="select-related">
+            <paper-toolbar>
+              <paper-icon-button icon="arrow-back" on-tap="_back"></paper-icon-button>
+              <div class="spacer title">todo: Add Parent Node Name</div>
+            </paper-toolbar>
+            <paper-listbox selected-item="{{selectedNode}}">
+              <template is="dom-repeat" items="[[nodes]]">
+                <paper-item value="[[item.identityNode]]">[[item.identityNode.properties.name]]<paper-button><iron-icon icon="chevron-right" on-tap="_openFolder"></iron-icon><paper-button></paper-item>
+              </template>
+            </paper-listbox>
+          </section>
+          <section id="search">
+            <paper-input name="search" label="Search"></paper-input>
+          </section>
+          <section id="relationship">
+            <input is="iron-input" name="referenceNodeId" type="hidden" value="[[referenceNodeId]]"></input>
+            <paper-input name="relationshipName" label="Relationship Name" value="{{relationshipName}}"></paper-input>
+            <paper-dropdown-menu label="Direction" selected-item="{{selectedDirection}}">
+              <paper-menu class="dropdown-content">
+                <paper-item value="outbound">Outbound</paper-item>
+                <paper-item value="inbound">Inbound</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </section>
+        </iron-pages>
+
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button on-click="_confirmSelection" disabled?="{{selectedNode}}">Add</paper-button>
+      </div>
+    </paper-dialog>
 
   </template>
   <script>
@@ -60,32 +83,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         referenceNodeId: {
           type: Number,
           value: 0,
-          notify: true
+          notify: true,
+          reflectToAttribute: true
         },
         relationshipName: {
           type: String,
           value: "RELATED_TO",
-          notify: true
+          notify: true,
+          reflectToAttribute: true
+        },
+        relatedNode: {
+          type: Object,
+          value: function() {
+            return {};
+          },
+          notify: true,
+          reflectToAttribute: true
         },
         relatedNodeId: {
           type: Number,
           value: 0,
-          notify: true
+          notify: true,
+          reflectToAttribute: true
         },
         parentNodeId: {
           type: Number,
           value: 0,
-          notify: true
+          notify: true,
+          reflectToAttribute: true
         },
         direction: {
           type: String,
           value: "outbound",
-          notify: true
+          notify: true,
+          reflectToAttribute: true
         }
       },
 
-      clickHandler: function(event) {
-        event.target.parentElement.submit();
+      ready: function() {
+        this.selected = 0;
+      },
+
+      open: function() {
+        this.$.relationshipDialog.open();
+      },
+
+      _openFolder: function(event) {
+        this.previousParentNodeId = this.parentNodeId;
+        this.parentNodeId = event.model.item.identityNode._id;
+      },
+
+      _back: function() {
+        this.parentNodeId = this.previousParentNodeId || this.parentNodeId;
+      },
+
+      _confirmSelection: function(event) {
+        this.relatedNodeId = this.selectedNode.value._id;
+        this.relatedNode = this.selectedNode.value;
+        this.$.relationshipDialog.close();
       }
 
 
