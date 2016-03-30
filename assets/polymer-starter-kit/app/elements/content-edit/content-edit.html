@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-dropdown-menu label="Content Type" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="_updateContentType">
           <paper-menu class="dropdown-content">
             <template is="dom-repeat" items="[[contenttypes]]">
-              <paper-item value="[[item.contentTypeVersion.properties.identifier]]">[[item.contentTypeVersion.properties.name]]</paper-item>
+              <paper-item value="[[item.contentTypeVersion.properties.identifier]]">[[item.contentTypeIdentity.properties.name]]</paper-item>
             </template>
           </paper-menu>
         </paper-dropdown-menu>
@@ -64,11 +64,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <template is="dom-if" if="{{_eq(item.object.type, 'relationship')}}">
             <br/>
             <label>{{item.object.title}}</label>
-            <template is="dom-repeat" items="{{formData.properties.relationships}}">
+            <template is="dom-repeat" items="{{formData.relationships}}">
               <paper-item>-[{{item.relationshipName}}]-> {{item.relatedNode.properties.name}}</paper-item>
             </template>
             <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Add [[item.object.title]]</paper-button>
-            <content-relationship id="relationshipDialog" reference-node-id="{{identityNode._id}}"  relationship-name="{{item.object.identifier}}" direction="{{item.object.direction}}" parent-node-id="158" related-node-id="{{relatedNodeId}}" related-node="{{relatedNode}}" on-related-node-changed="_addRelationship"></content-relationship>
+            <content-relationship id="relationshipDialog" reference-node-id="{{identityNode._id}}"  relationship-name="{{item.object.identifier}}" direction="{{item.object.direction}}" parent-node-id="1206" related-node-id="{{relatedNodeId}}" related-node="{{relatedNode}}" on-related-node-changed="_addRelationship"></content-relationship>
           </template>
         </template>
       </paper-dialog-scrollable>
@@ -89,64 +89,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         dataSchema: {
           type: Object,
           value: function() {
-            return {
-                "$schema": "http://json-schema.org/draft-04/schema#",
-                "description": "A representation of a person, company, organization, or place",
-                "type": "object",
-                "required": ["familyName", "givenName"],
-                "properties": {
-                    "fn": {
-                        "description": "Formatted Name",
-                        "type": "string"
-                    },
-                    "familyName": { "type": "string" },
-                    "givenName": { "type": "string" },
-                    "additionalName": { "type": "array", "items": { "type": "string" } },
-                    "honorificPrefix": { "type": "array", "items": { "type": "string" } },
-                    "honorificSuffix": { "type": "array", "items": { "type": "string" } },
-                    "nickname": { "type": "string" },
-                    "url": { "type": "string", "format": "uri" },
-                    "email": {
-                        "type": "object",
-                        "properties": {
-                            "type": { "type": "string" },
-                            "value": { "type": "string", "format": "email" }
-                        }
-                    },
-                    "tel": {
-                        "type": "object",
-                        "properties": {
-                            "type": { "type": "string" },
-                            "value": { "type": "string", "format": "phone" }
-                        }
-                    },
-                    "adr": { "$ref": "http://json-schema.org/address" },
-                    "geo": { "$ref": "http://json-schema.org/geo" },
-                    "tz": { "type": "string" },
-                    "photo": { "type": "string" },
-                    "logo": { "type": "string" },
-                    "sound": { "type": "string" },
-                    "bday": { "type": "string", "format": "date" },
-                    "title": { "type": "string" },
-                    "role": { "type": "string" },
-                    "org": {
-                        "type": "object",
-                        "properties": {
-                            "organizationName": { "type": "string" },
-                            "organizationUnit": { "type": "string" }
-                        }
-                    }
-                }
-            };
+            return {};
           },
           notify: true
         },
         uiSchema: {
           type: Object,
           value: function() {
-            return {
-
-            };
+            return {};
           },
           notify: true
         },
@@ -177,14 +127,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(this.formData);
         var dataSchemaKeys = Object.keys(this.dataSchema);
         if(!this.formData.properties) {
-          this.formData.properties = [];
+          this.formData.properties = {};
         }
         if(!this.formData.relationships) {
           this.formData.relationships = [];
         }
         for (var i = 0; i < dataSchemaKeys.length; i++) {
           var key = dataSchemaKeys[i];
-          if(!this.formData.properties[key] && !this.formData.relationships[key]) {
+          if(!this.formData.properties[key]) {
             switch(this.dataSchema[key].type) {
               case 'String':
                 this.formData.properties[key] = '';
@@ -196,10 +146,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 this.formData.properties[key] = {};
                 break;
               case 'Relationship':
-                this.formData.relationships[key] = [];
                 break;
               case 'relationship':
-                this.formData.relationships[key] = [];
                 break;
               default:
                 this.formData.properties[key] = undefined;
@@ -241,8 +189,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _addRelationship: function(event) {
         if(!event.model.item) return;
-        var relationship = {};
-        relationship[event.model.item.object.identifier] = {
+        var relationship = {
           "referenceNodeId": 0,
           "relationshipName": event.model.item.object.identifier,
           "direction": event.model.item.object.direction,
@@ -285,7 +232,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         // change.base is the array specified in the binding
         // this.get(path, root) returns a value for a path
         // relative to a root object.
-        return this.get(path, change.base[index]);
+        return this.get(path, change.base[key]);
       },
 
       _updateProperty: function(event) {
@@ -293,7 +240,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(!event.model.item) return;
         this.set(['formData', 'properties', event.model.item.key], event.detail.value);
         //this.formData.properties[event.model.item.key] = event.detail.value;
-        console.log(this.formData.properties)
+        console.log(this.formData)
       },
 
       _eq: function(a, b) {
