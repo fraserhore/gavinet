@@ -30,7 +30,8 @@
   },
   "scripts": {
     "test": "gulp test:local",
-    "start": "gulp serve"
+    "start": "gulp serve",
+    "postinstall": "bower cache clean && bower install"
   },
   "engines": {
     "node": ">=0.10.0"
