@@ -321,3 +321,14 @@ RETURN n,r,m
 
 //DELETE ALL NODES AND RELATIONSHIPS
 MATCH (n)-[r]-() DELETE n,r
+
+// Import Glossary Terms
+LOAD CSV WITH HEADERS FROM "file:///C:/Users/fhore/OneDrive%20-%20Gavi/Gavi%20glossary.csv" AS csvLine
+MATCH (contentRoot:Content:Identity {name: 'Content', contentType: 'content'})
+CREATE (contentRoot)-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(glossaryIdentity:ContentObject:Folder:Identity {name:"Glossary", contentType:"folder"})
+CREATE (glossaryIdentity)-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(:Version {name:"Glossary", description:"Gavi glossary of terms"})
+CREATE (glossaryIdentity)-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->(glossaryTermIdentity:ContentObject:GlossaryTerm:Identity {name:csvLine.Term, contentType:"glossary_term"})
+CREATE (glossaryTermIdentity)-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->(glossaryTermVersion:Version {term:csvLine.Term, acronym:csvLine.Acronym, synonym:csvLine.Synonym, description:csvLine.Description, link:csvLine.Link, category:csvLine.Category, french:csvLine.French, spanish:csvLine.Spanish, russian:csvLine.Russian})
+RETURN glossaryTermIdentity, glossaryTermVersion
+
+MATCH (glossary:Identity {name:"Glossary"})
