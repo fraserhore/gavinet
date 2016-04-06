@@ -37,6 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog-scrollable>
     </paper-dialog> -->
 
+    <paper-button raised on-click="edit" data-dialog="newDialog">Edit</paper-button>
     <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
     <content-edit id="newDialog" ui-schema="" form-data="{{formData}}"></content-edit>
       
@@ -106,7 +107,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       edit: function(event) {
-        //console.log(event.model.item.identityNode._id);
+        //console.log('default formData');
+        //console.log(this.formData);
+        this.set('formData.authorId', this.authorNode._id);
+        this.set('formData.parentId', undefined);
+        this.set('formData.contentType', this.identityNode.properties.contentType);
+        this.set('formData.properties', this.versionNode.properties);
+      	console.log('update formData');
+        console.log(this.formData);
+        var dialog = document.getElementById(id);
+        if (dialog) {
+          dialog.open();
+        }
         
       },
 
