@@ -115,10 +115,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.set('formData.properties', this.versionNode.properties);
       	console.log('update formData');
         console.log(this.formData);
-        var dialog = document.getElementById(id);
-        if (dialog) {
-          dialog.open();
-        }
+        this.openDialog(event);
         
       },
 
