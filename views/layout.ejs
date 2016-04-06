@@ -95,6 +95,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <!-- Toolbar icons -->
           <paper-icon-button icon="refresh"></paper-icon-button>
+          
+          
+          <iron-ajax
+            id="getChildren"
+            auto
+            url="/content/getChildren/144"
+            params=''
+            handle-as="json"
+            last-response="{{glossaryterms}}"
+            on-response="_updateChildren"
+            debounce-duration="300"></iron-ajax>
+
+          <paper-dropdown-menu label="Search Glossary" selected-item="{{selectedItem}}" selected-item-label="{{selected}}" on-iron-select="">
+            <paper-menu class="dropdown-content">
+              <template is="dom-repeat" items="[[glossaryterms]]">
+                <paper-item value="[[item.versionNode._id]]">[[item.versionNode.properties.term]]</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+
           <paper-icon-button icon="search"></paper-icon-button>
 
           <!-- Application name -->

@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       params=''
       handle-as="json"
       last-response="{{children}}"
+      on-response="_updateChildren"
       debounce-duration="300"></iron-ajax>
 
     <iron-ajax
@@ -33,6 +34,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handle-as="json"
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
+
+    <vaadin-grid id="childrenGrid">
+      <table>
+        <colgroup>
+          <col name="versionNode.properties.name">
+          <col name="versionNode.properties.term">
+          <col name="versionNode.properties.description">
+        </colgroup>
+      </table>
+    </vaadin-grid>
 
     <template is="dom-repeat" items="[[children]]">
       <div class="horizontal-section">
@@ -64,6 +75,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      grid: document.querySelector('vaadin-grid'),
+
+      ready: function() {
+        this.grid = this.grid || this.$.childrenGrid;
+        this.grid.items = this.children || [];
+      },
+
       clickHandler: function(event) {
         event.target.parentElement.submit();
       },
@@ -77,6 +95,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       deleteResponse: function(request) {
         //console.log(request.detail.response);
         //console.log(this.$.deleteRequest.lastResponse);
+      },
+
+      _updateChildren: function(event) {
+        this.grid = this.grid || this.$.childrenGrid;
+        this.grid.items = this.children;
+        this.grid.size = this.children.length;
+        this.grid.refreshItems();
       },
 
       _toArray: function(obj) {
