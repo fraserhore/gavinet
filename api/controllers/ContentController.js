@@ -35,7 +35,11 @@ module.exports = {
         };
         var cb = function(err, data) {
             //console.log(data);
-            return res.view("full", data[0]);
+            if(err) {
+                console.log(err);
+            } else {
+                return res.view("full", data[0]);
+            }
         }
         db.cypher({
             query: query,
