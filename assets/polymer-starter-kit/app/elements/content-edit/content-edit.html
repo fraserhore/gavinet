@@ -68,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-item>-[{{item.relationshipName}}]-> {{item.relatedNode.properties.name}}</paper-item>
             </template>
             <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Add [[item.object.title]]</paper-button>
-            <content-relationship id="relationshipDialog" reference-node-id="{{identityNode._id}}"  relationship-name="{{item.object.identifier}}" direction="{{item.object.direction}}" parent-node-id="1206" related-node-id="{{relatedNodeId}}" related-node="{{relatedNode}}" on-related-node-changed="_addRelationship"></content-relationship>
+            <content-relationship id="relationshipDialog" reference-node-id="{{identityNode._id}}"  relationship-name="{{item.object.identifier}}" direction="{{item.object.direction}}" parent-node-id="138" related-node-id="{{relatedNodeId}}" related-node="{{relatedNode}}" on-related-node-changed="_addRelationship"></content-relationship>
           </template>
         </template>
       </paper-dialog-scrollable>
