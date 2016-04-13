@@ -68,7 +68,8 @@ module.exports = {
 
         var query =  'MATCH (a)-[r {to:9223372036854775807}]->(b)-[:VERSION {to:9223372036854775807}]->(c)'
                     +' WHERE id(a) = {id}'
-                    +' RETURN b as identityNode, c as versionNode'
+                    +' RETURN b as identityNode, c as versionNode' 
+                    +' ORDER BY identityNode.properties.name'
         var params = {
             "id": parseInt(req.param('id'))
         };
