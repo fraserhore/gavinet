@@ -1,0 +1,13 @@
+{
+  "C:/apps/gavinet/api/controllers/ContentController - Copy.js": [ "C:/apps/gavinet/node_modules/neo4j/lib-new/exports.js", "C:/apps/gavinet/node_modules/request/index.js" ],
+  "C:/apps/gavinet/api/controllers/ContentController.js": [ "C:/apps/gavinet/node_modules/neo4j/lib-new/exports.js", "C:/apps/gavinet/node_modules/request/index.js" ],
+  "C:/apps/gavinet/api/controllers/UserController.js": [ ],
+  "C:/apps/gavinet/api/models/User.js": [ ],
+  "C:/apps/gavinet/api/policies/sessionAuth.js": [ ],
+  "C:/apps/gavinet/api/responses/badRequest.js": [ ],
+  "C:/apps/gavinet/api/responses/forbidden.js": [ ],
+  "C:/apps/gavinet/api/responses/notFound.js": [ ],
+  "C:/apps/gavinet/api/responses/ok.js": [ ],
+  "C:/apps/gavinet/api/responses/serverError.js": [ ],
+  "C:/apps/gavinet/api/services/CypherService/CypherService.js": [ "C:/apps/gavinet/node_modules/request/index.js" ]
+}

@@ -1,0 +1,81 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="gavi-sp-calendar">
+  <style>
+    :host {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      h1.paper-font-display1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+  <template>
+    <iron-ajax
+      auto
+      url="https://gavinet.sharepoint.com/sites/km/_api/Web/Lists/getByTitle('Calendar')/items"
+      method="get"
+      headers = '{"Accept": "application/json;odata=verbose"}'
+      last-response="{{myMeetings}}"
+      debounce-duration="300"></iron-ajax>
+
+    <iron-ajax
+      auto
+      url="https://gavinet.sharepoint.com/sites/km/_api/Web/Lists/getByTitle('Calendar')/items"
+      method="get"
+      headers = '{"Accept": "application/json;odata=verbose"}'
+      last-response="{{teamMeetings}}"
+      debounce-duration="300"></iron-ajax>
+
+      <h2>My Upcoming Meetings</h2>
+      <template id="t" is="dom-repeat" items="{{myMeetings.d.results}}">
+          <h3>{{item.Title}}</h3>
+          <div>From: <span>{{item.EventDate}}</span> To: <span>{{item.EventDate}}</span></div>
+      </template>
+      <h2>My Team's Upcoming Meetings</h2>
+      <template id="t" is="dom-repeat" items="{{teamMeetings.d.results}}">
+        <h3>{{item.Title}}</h3>
+        <div>From: <span>{{item.EventDate}}</span> To: <span>{{item.EventDate}}</span></div>
+      </template>
+  </template>
+</dom-module>
+<script>
+(function() {
+  Polymer({
+    is: 'gavi-sp-calendar',
+
+    properties: {
+      myMeetings: {
+        type: Array,
+        value: [],
+        notify: true
+      },
+      teamMeetings: {
+        type: Array,
+        value: [],
+        notify: true
+      }
+    }
+  });
+})();
+</script>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head>
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">GAVI-28-1832</mso:_dlc_DocId>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://gavinet.sharepoint.com/sites/km/_layouts/15/DocIdRedir.aspx?ID=GAVI-28-1832, GAVI-28-1832</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>

@@ -1,3 +1,9 @@
+/**
+ * @module          services/CypherService
+ * @description     A service to use the neo4j REST API
+ * @author          Fraser Hore
+ */
+
 module.exports = {
   cypher: function(query,params,cb) {
 var r=require("request");

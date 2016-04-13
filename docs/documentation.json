@@ -1,0 +1,5779 @@
+[
+    {
+        "comment": "/**\r\n * @module controllers/ContentController - copy\r\n *\r\n * @description :: Server-side logic for managing contents\r\n * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers\r\n */",
+        "meta": {
+            "range": [
+                0,
+                202
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 1,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {}
+        },
+        "kind": "module",
+        "name": "controllers/ContentController - copy",
+        "description": ":: Server-side logic for managing contents",
+        "tags": [
+            {
+                "originalTitle": "help",
+                "title": "help",
+                "text": ":: See http://sailsjs.org/#!/documentation/concepts/Controllers",
+                "value": ":: See http://sailsjs.org/#!/documentation/concepts/Controllers"
+            }
+        ],
+        "longname": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                227,
+                251
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 9,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000002",
+                "name": "neo4j",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "neo4j",
+        "longname": "module:controllers/ContentController - copy~neo4j",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                258,
+                668
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 10,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000008",
+                "name": "db",
+                "type": "NewExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "db",
+        "longname": "module:controllers/ContentController - copy~db",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                561,
+                619
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 15,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000015",
+                "name": "url",
+                "type": "Literal",
+                "value": "http://gavigraph.sb06.stations.graphenedb.com:24789"
+            }
+        },
+        "undocumented": true,
+        "name": "url",
+        "longname": "module:controllers/ContentController - copy~url",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                626,
+                664
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 16,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000017",
+                "name": "auth",
+                "type": "Literal",
+                "value": "GaviGraph:DNWxlYkxIFzktTxSDGGS"
+            }
+        },
+        "undocumented": true,
+        "name": "auth",
+        "longname": "module:controllers/ContentController - copy~auth",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                675,
+                703
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 18,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000020",
+                "name": "request",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "request",
+        "longname": "module:controllers/ContentController - copy~request",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                708,
+                4627
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 20,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000026",
+                "name": "module.exports",
+                "type": "ObjectExpression",
+                "value": "{\"view\":\"\",\"create\":\"\"}",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "module:controllers/ContentController - copy",
+        "longname": "module:controllers/ContentController - copy",
+        "kind": "member"
+    },
+    {
+        "comment": "/**\r\n     * `ContentController.view()`\r\n     */",
+        "meta": {
+            "range": [
+                787,
+                2571
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 25,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000031",
+                "name": "view",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "username": "module:controllers/ContentController - copy.view~username",
+                "password": "module:controllers/ContentController - copy.view~password",
+                "txUrl": "module:controllers/ContentController - copy.view~txUrl",
+                "cypher": "module:controllers/ContentController - copy.view~cypher",
+                "query": "module:controllers/ContentController - copy.view~query",
+                "params": "module:controllers/ContentController - copy.view~params",
+                "isDefined": "module:controllers/ContentController - copy.view~isDefined",
+                "": null,
+                "cb": "module:controllers/ContentController - copy.view~cb"
+            }
+        },
+        "description": "`ContentController.view()`",
+        "name": "view",
+        "longname": "module:controllers/ContentController - copy.view",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                827,
+                849
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 26,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000037",
+                "name": "username",
+                "type": "Literal",
+                "value": "GaviGraph"
+            }
+        },
+        "undocumented": true,
+        "name": "username",
+        "longname": "module:controllers/ContentController - copy.view~username",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                864,
+                897
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 27,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000041",
+                "name": "password",
+                "type": "Literal",
+                "value": "DNWxlYkxIFzktTxSDGGS"
+            }
+        },
+        "undocumented": true,
+        "name": "password",
+        "longname": "module:controllers/ContentController - copy.view~password",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                912,
+                1034
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 28,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000045",
+                "name": "txUrl",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "txUrl",
+        "longname": "module:controllers/ContentController - copy.view~txUrl",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1047,
+                1487
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 30,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000056",
+                "name": "cypher",
+                "type": "FunctionDeclaration",
+                "paramnames": [
+                    "query",
+                    "params",
+                    "cb"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "cypher",
+        "longname": "module:controllers/ContentController - copy.view~cypher",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1133,
+                1143
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 32,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000068",
+                "name": "uri",
+                "type": "Identifier",
+                "value": "txUrl"
+            }
+        },
+        "undocumented": true,
+        "name": "uri",
+        "longname": "module:controllers/ContentController - copy~uri",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1166,
+                1359
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 33,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000070",
+                "name": "json",
+                "type": "ObjectExpression",
+                "value": "{\"statements\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "json",
+        "longname": "module:controllers/ContentController - copy~json",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1199,
+                1336
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 34,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000072",
+                "name": "statements",
+                "type": "ArrayExpression",
+                "value": "[\"{\\\"statement\\\":\\\"\\\",\\\"parameters\\\":\\\"\\\"}\"]"
+            }
+        },
+        "undocumented": true,
+        "name": "statements",
+        "longname": "module:controllers/ContentController - copy~json.statements",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy~json",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1243,
+                1259
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 35,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000075",
+                "name": "statement",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "statement",
+        "longname": "module:controllers/ContentController - copy~statement",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1290,
+                1308
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 36,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000077",
+                "name": "parameters",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "parameters",
+        "longname": "module:controllers/ContentController - copy~parameters",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1503,
+                1691
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 45,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000091",
+                "name": "query",
+                "type": "Literal",
+                "value": "MATCH (a)-[version:VERSION]->(b) WHERE id(a) = {id} AND version.to = 9223372036854775807 AND version.lang = \"en-gb\" RETURN a as IdentityNode, version as Version, b as VersionNode"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController - copy.view~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1705,
+                1824
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 46,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000095",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController - copy.view~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1729,
+                1767
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 47,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000098",
+                "name": "resultDataContents",
+                "type": "ArrayExpression",
+                "value": "[\"row\",\"graph\"]"
+            }
+        },
+        "undocumented": true,
+        "name": "resultDataContents",
+        "longname": "module:controllers/ContentController - copy.view~params.resultDataContents",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1782,
+                1813
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 48,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000102",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController - copy.view~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1838,
+                2069
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 50,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000111",
+                "name": "isDefined",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "isDefined",
+        "longname": "module:controllers/ContentController - copy.view~isDefined",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1944,
+                1971
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 52,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000130",
+                "name": "value",
+                "type": "LogicalExpression",
+                "funcscope": "<anonymous>",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "value",
+        "longname": "module:controllers/ContentController - copy~value",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2084,
+                2528
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 56,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000147",
+                "name": "cb",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "row": "module:controllers/ContentController - copy.view~cb~row",
+                "object": "module:controllers/ContentController - copy.view~cb~object",
+                "object['identityNode']": "module:controllers/ContentController - copy.view~cb~object.'identityNode']",
+                "object['versionNode']": "module:controllers/ContentController - copy.view~cb~object.'versionNode']",
+                "object['layout']": "module:controllers/ContentController - copy.view~cb~object.'layout']"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController - copy.view~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2174,
+                2293
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 58,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000154",
+                "name": "row",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "row",
+        "longname": "module:controllers/ContentController - copy.view~cb~row",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~cb",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2312,
+                2323
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 59,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000195",
+                "name": "object",
+                "type": "ObjectExpression",
+                "value": "{}"
+            }
+        },
+        "undocumented": true,
+        "name": "object",
+        "longname": "module:controllers/ContentController - copy.view~cb~object",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~cb",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2338,
+                2376
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 60,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000199",
+                "name": "object['identityNode']",
+                "type": "LogicalExpression",
+                "funcscope": "module:controllers/ContentController - copy.view~cb",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "'identityNode']",
+        "longname": "module:controllers/ContentController - copy.view~cb~object.'identityNode']",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~cb~object",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2391,
+                2428
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 61,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000209",
+                "name": "object['versionNode']",
+                "type": "LogicalExpression",
+                "funcscope": "module:controllers/ContentController - copy.view~cb",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "'versionNode']",
+        "longname": "module:controllers/ContentController - copy.view~cb~object.'versionNode']",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~cb~object",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2443,
+                2470
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 62,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000219",
+                "name": "object['layout']",
+                "type": "Literal",
+                "funcscope": "module:controllers/ContentController - copy.view~cb",
+                "value": "layout",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "'layout']",
+        "longname": "module:controllers/ContentController - copy.view~cb~object.'layout']",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.view~cb~object",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\r\n     * `ContentController.create()`\r\n     */",
+        "meta": {
+            "range": [
+                2635,
+                4622
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 71,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000237",
+                "name": "create",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "username": "module:controllers/ContentController - copy.create~username",
+                "password": "module:controllers/ContentController - copy.create~password",
+                "txUrl": "module:controllers/ContentController - copy.create~txUrl",
+                "cypher": "module:controllers/ContentController - copy.create~cypher",
+                "query": "module:controllers/ContentController - copy.create~query",
+                "params": "module:controllers/ContentController - copy.create~params",
+                "isDefined": "module:controllers/ContentController - copy.create~isDefined",
+                "": null,
+                "cb": "module:controllers/ContentController - copy.create~cb"
+            }
+        },
+        "description": "`ContentController.create()`",
+        "name": "create",
+        "longname": "module:controllers/ContentController - copy.create",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2677,
+                2699
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 72,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000243",
+                "name": "username",
+                "type": "Literal",
+                "value": "GaviGraph"
+            }
+        },
+        "undocumented": true,
+        "name": "username",
+        "longname": "module:controllers/ContentController - copy.create~username",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2714,
+                2747
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 73,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000247",
+                "name": "password",
+                "type": "Literal",
+                "value": "DNWxlYkxIFzktTxSDGGS"
+            }
+        },
+        "undocumented": true,
+        "name": "password",
+        "longname": "module:controllers/ContentController - copy.create~password",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2762,
+                2884
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 74,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000251",
+                "name": "txUrl",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "txUrl",
+        "longname": "module:controllers/ContentController - copy.create~txUrl",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2929,
+                3369
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 77,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000270",
+                "name": "cypher",
+                "type": "FunctionDeclaration",
+                "paramnames": [
+                    "query",
+                    "params",
+                    "cb"
+                ]
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "cypher",
+        "longname": "module:controllers/ContentController - copy.create~cypher",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner",
+        "params": []
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3015,
+                3025
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 79,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000282",
+                "name": "uri",
+                "type": "Identifier",
+                "value": "txUrl"
+            }
+        },
+        "undocumented": true,
+        "name": "uri",
+        "longname": "module:controllers/ContentController - copy~uri",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3048,
+                3241
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 80,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000284",
+                "name": "json",
+                "type": "ObjectExpression",
+                "value": "{\"statements\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "json",
+        "longname": "module:controllers/ContentController - copy~json",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3081,
+                3218
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 81,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000286",
+                "name": "statements",
+                "type": "ArrayExpression",
+                "value": "[\"{\\\"statement\\\":\\\"\\\",\\\"parameters\\\":\\\"\\\"}\"]"
+            }
+        },
+        "undocumented": true,
+        "name": "statements",
+        "longname": "module:controllers/ContentController - copy~json.statements",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy~json",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3125,
+                3141
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 82,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000289",
+                "name": "statement",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "statement",
+        "longname": "module:controllers/ContentController - copy~statement",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3172,
+                3190
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 83,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000291",
+                "name": "parameters",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "parameters",
+        "longname": "module:controllers/ContentController - copy~parameters",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3385,
+                3885
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 92,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000305",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController - copy.create~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3900,
+                4215
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 93,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000317",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController - copy.create~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3924,
+                3962
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 94,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000320",
+                "name": "resultDataContents",
+                "type": "ArrayExpression",
+                "value": "[\"row\",\"graph\"]"
+            }
+        },
+        "undocumented": true,
+        "name": "resultDataContents",
+        "longname": "module:controllers/ContentController - copy.create~params.resultDataContents",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3977,
+                4016
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 95,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000324",
+                "name": "parentId",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "parentId",
+        "longname": "module:controllers/ContentController - copy.create~params.parentId",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4031,
+                4066
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 96,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000332",
+                "name": "contenttype",
+                "type": "MemberExpression",
+                "value": "req.body.contenttype"
+            }
+        },
+        "undocumented": true,
+        "name": "contenttype",
+        "longname": "module:controllers/ContentController - copy.create~params.contenttype",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4081,
+                4204
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 97,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000338",
+                "name": "properties",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "properties",
+        "longname": "module:controllers/ContentController - copy.create~params.properties",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4114,
+                4135
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 98,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000340",
+                "name": "name",
+                "type": "MemberExpression",
+                "value": "req.body.name"
+            }
+        },
+        "undocumented": true,
+        "name": "name",
+        "longname": "module:controllers/ContentController - copy.create~params.properties.name",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create~params.properties",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4154,
+                4189
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 99,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000346",
+                "name": "description",
+                "type": "MemberExpression",
+                "value": "req.body.description"
+            }
+        },
+        "undocumented": true,
+        "name": "description",
+        "longname": "module:controllers/ContentController - copy.create~params.properties.description",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController - copy.create~params.properties",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4230,
+                4461
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 102,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000353",
+                "name": "isDefined",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "isDefined",
+        "longname": "module:controllers/ContentController - copy.create~isDefined",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4336,
+                4363
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 104,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000372",
+                "name": "value",
+                "type": "LogicalExpression",
+                "funcscope": "<anonymous>",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "value",
+        "longname": "module:controllers/ContentController - copy~value",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController - copy"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4476,
+                4578
+            ],
+            "filename": "ContentController - Copy.js",
+            "lineno": 108,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000389",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController - copy.create~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController - copy.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "/**\r\n * @module          controllers/ContentController\r\n * @description     Server-side logic for managing content\r\n * @author          Fraser Hore\r\n * @requires        module:neo4j\r\n * @help            :: See http://sailsjs.org/#!/documentation/concepts/Controllers\r\n */",
+        "meta": {
+            "range": [
+                0,
+                271
+            ],
+            "filename": "ContentController.js",
+            "lineno": 1,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {}
+        },
+        "kind": "module",
+        "name": "controllers/ContentController",
+        "description": "Server-side logic for managing content",
+        "author": [
+            "Fraser Hore"
+        ],
+        "requires": [
+            "module:neo4j"
+        ],
+        "tags": [
+            {
+                "originalTitle": "help",
+                "title": "help",
+                "text": ":: See http://sailsjs.org/#!/documentation/concepts/Controllers",
+                "value": ":: See http://sailsjs.org/#!/documentation/concepts/Controllers"
+            }
+        ],
+        "longname": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                326,
+                350
+            ],
+            "filename": "ContentController.js",
+            "lineno": 10,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000415",
+                "name": "neo4j",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "neo4j",
+        "longname": "module:controllers/ContentController~neo4j",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                357,
+                844
+            ],
+            "filename": "ContentController.js",
+            "lineno": 11,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000421",
+                "name": "db",
+                "type": "NewExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "db",
+        "longname": "module:controllers/ContentController~db",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                773,
+                806
+            ],
+            "filename": "ContentController.js",
+            "lineno": 18,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000428",
+                "name": "url",
+                "type": "Literal",
+                "value": "http://146.185.147.45:7474"
+            }
+        },
+        "undocumented": true,
+        "name": "url",
+        "longname": "module:controllers/ContentController~url",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                813,
+                840
+            ],
+            "filename": "ContentController.js",
+            "lineno": 19,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000430",
+                "name": "auth",
+                "type": "Literal",
+                "value": "neo4j:gavinet-graph"
+            }
+        },
+        "undocumented": true,
+        "name": "auth",
+        "longname": "module:controllers/ContentController~auth",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                851,
+                879
+            ],
+            "filename": "ContentController.js",
+            "lineno": 21,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000433",
+                "name": "request",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "request",
+        "longname": "module:controllers/ContentController~request",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                884,
+                12710
+            ],
+            "filename": "ContentController.js",
+            "lineno": 23,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000439",
+                "name": "module.exports",
+                "type": "ObjectExpression",
+                "value": "{\"view\":\"\",\"getChildren\":\"\",\"getRelated\":\"\",\"getContentTypes\":\"\",\"getParent\":\"\",\"getSiblings\":\"\",\"getContentTypeSchema\":\"\",\"create\":\"\",\"createRelationship\":\"\",\"delete\":\"\",\"separateWords\":\"\",\"camelize\":\"\",\"pascalize\":\"\",\"decamelize\":\"\",\"_isNumerical\":\"\"}",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "module:controllers/ContentController",
+        "longname": "module:controllers/ContentController",
+        "kind": "member"
+    },
+    {
+        "comment": "/**\r\n     * ContentController.view()\r\n     */",
+        "meta": {
+            "range": [
+                961,
+                1728
+            ],
+            "filename": "ContentController.js",
+            "lineno": 28,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000444",
+                "name": "view",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.view~query",
+                "params": "module:controllers/ContentController.view~params",
+                "cb": "module:controllers/ContentController.view~cb",
+                "": null
+            }
+        },
+        "description": "ContentController.view()",
+        "name": "view",
+        "longname": "module:controllers/ContentController.view",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1003,
+                1314
+            ],
+            "filename": "ContentController.js",
+            "lineno": 30,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000450",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.view~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1330,
+                1396
+            ],
+            "filename": "ContentController.js",
+            "lineno": 34,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000458",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.view~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1354,
+                1385
+            ],
+            "filename": "ContentController.js",
+            "lineno": 35,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000461",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.view~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.view~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1411,
+                1628
+            ],
+            "filename": "ContentController.js",
+            "lineno": 37,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000470",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.view~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.view",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1663,
+                1675
+            ],
+            "filename": "ContentController.js",
+            "lineno": 46,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000501",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1690,
+                1704
+            ],
+            "filename": "ContentController.js",
+            "lineno": 47,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000503",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/** Get child content objects */",
+        "meta": {
+            "range": [
+                1775,
+                2333
+            ],
+            "filename": "ContentController.js",
+            "lineno": 52,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000506",
+                "name": "getChildren",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.getChildren~query",
+                "params": "module:controllers/ContentController.getChildren~params",
+                "cb": "module:controllers/ContentController.getChildren~cb",
+                "": null
+            }
+        },
+        "description": "Get child content objects",
+        "name": "getChildren",
+        "longname": "module:controllers/ContentController.getChildren",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1824,
+                2031
+            ],
+            "filename": "ContentController.js",
+            "lineno": 54,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000512",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.getChildren~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getChildren",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2045,
+                2111
+            ],
+            "filename": "ContentController.js",
+            "lineno": 57,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000520",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.getChildren~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getChildren",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2069,
+                2100
+            ],
+            "filename": "ContentController.js",
+            "lineno": 58,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000523",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.getChildren~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getChildren~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2126,
+                2233
+            ],
+            "filename": "ContentController.js",
+            "lineno": 60,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000532",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.getChildren~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.getChildren",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2268,
+                2280
+            ],
+            "filename": "ContentController.js",
+            "lineno": 65,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000550",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2295,
+                2309
+            ],
+            "filename": "ContentController.js",
+            "lineno": 66,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000552",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/** Get related content objects \r\n    * @param {object} req - HTTP request object\r\n    * @param {object} res - HTTP response object\r\n    * @param {object} req.id - Node ID of the content object for which to get related content objects\r\n    */",
+        "meta": {
+            "range": [
+                2590,
+                3205
+            ],
+            "filename": "ContentController.js",
+            "lineno": 75,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000555",
+                "name": "getRelated",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.getRelated~query",
+                "params": "module:controllers/ContentController.getRelated~params",
+                "cb": "module:controllers/ContentController.getRelated~cb",
+                "": null
+            }
+        },
+        "description": "Get related content objects",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "object"
+                    ]
+                },
+                "description": "HTTP request object",
+                "name": "req"
+            },
+            {
+                "type": {
+                    "names": [
+                        "object"
+                    ]
+                },
+                "description": "HTTP response object",
+                "name": "res"
+            },
+            {
+                "type": {
+                    "names": [
+                        "object"
+                    ]
+                },
+                "description": "Node ID of the content object for which to get related content objects",
+                "name": "req.id"
+            }
+        ],
+        "name": "getRelated",
+        "longname": "module:controllers/ContentController.getRelated",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2636,
+                2937
+            ],
+            "filename": "ContentController.js",
+            "lineno": 76,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000561",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.getRelated~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getRelated",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2951,
+                3017
+            ],
+            "filename": "ContentController.js",
+            "lineno": 79,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000569",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.getRelated~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getRelated",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                2975,
+                3006
+            ],
+            "filename": "ContentController.js",
+            "lineno": 80,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000572",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.getRelated~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getRelated~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3032,
+                3105
+            ],
+            "filename": "ContentController.js",
+            "lineno": 82,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000581",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.getRelated~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.getRelated",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3140,
+                3152
+            ],
+            "filename": "ContentController.js",
+            "lineno": 86,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000599",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3167,
+                3181
+            ],
+            "filename": "ContentController.js",
+            "lineno": 87,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000601",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/** Get content types */",
+        "meta": {
+            "range": [
+                3244,
+                3714
+            ],
+            "filename": "ContentController.js",
+            "lineno": 92,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000604",
+                "name": "getContentTypes",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.getContentTypes~query",
+                "params": "module:controllers/ContentController.getContentTypes~params",
+                "cb": "module:controllers/ContentController.getContentTypes~cb",
+                "": null
+            }
+        },
+        "description": "Get content types",
+        "name": "getContentTypes",
+        "longname": "module:controllers/ContentController.getContentTypes",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3297,
+                3435
+            ],
+            "filename": "ContentController.js",
+            "lineno": 94,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000610",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.getContentTypes~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypes",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3449,
+                3492
+            ],
+            "filename": "ContentController.js",
+            "lineno": 96,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000616",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.getContentTypes~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypes",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3473,
+                3481
+            ],
+            "filename": "ContentController.js",
+            "lineno": 97,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000619",
+                "name": "id",
+                "type": "Literal",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.getContentTypes~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypes~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3507,
+                3614
+            ],
+            "filename": "ContentController.js",
+            "lineno": 99,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000622",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.getContentTypes~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.getContentTypes",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3649,
+                3661
+            ],
+            "filename": "ContentController.js",
+            "lineno": 104,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000640",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3676,
+                3690
+            ],
+            "filename": "ContentController.js",
+            "lineno": 105,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000642",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3723,
+                4234
+            ],
+            "filename": "ContentController.js",
+            "lineno": 109,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000645",
+                "name": "getParent",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.getParent~query",
+                "params": "module:controllers/ContentController.getParent~params",
+                "cb": "module:controllers/ContentController.getParent~cb",
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "getParent",
+        "longname": "module:controllers/ContentController.getParent",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3770,
+                3929
+            ],
+            "filename": "ContentController.js",
+            "lineno": 111,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000651",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.getParent~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getParent",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3943,
+                4009
+            ],
+            "filename": "ContentController.js",
+            "lineno": 114,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000659",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.getParent~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getParent",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                3967,
+                3998
+            ],
+            "filename": "ContentController.js",
+            "lineno": 115,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000662",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.getParent~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getParent~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4024,
+                4134
+            ],
+            "filename": "ContentController.js",
+            "lineno": 117,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000671",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.getParent~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.getParent",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4169,
+                4181
+            ],
+            "filename": "ContentController.js",
+            "lineno": 122,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000691",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4196,
+                4210
+            ],
+            "filename": "ContentController.js",
+            "lineno": 123,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000693",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4243,
+                4874
+            ],
+            "filename": "ContentController.js",
+            "lineno": 127,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000696",
+                "name": "getSiblings",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.getSiblings~query",
+                "params": "module:controllers/ContentController.getSiblings~params",
+                "cb": "module:controllers/ContentController.getSiblings~cb",
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "getSiblings",
+        "longname": "module:controllers/ContentController.getSiblings",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4292,
+                4572
+            ],
+            "filename": "ContentController.js",
+            "lineno": 129,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000702",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.getSiblings~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getSiblings",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4586,
+                4652
+            ],
+            "filename": "ContentController.js",
+            "lineno": 134,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000714",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.getSiblings~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getSiblings",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4610,
+                4641
+            ],
+            "filename": "ContentController.js",
+            "lineno": 135,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000717",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.getSiblings~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getSiblings~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4667,
+                4774
+            ],
+            "filename": "ContentController.js",
+            "lineno": 137,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000726",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.getSiblings~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.getSiblings",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4809,
+                4821
+            ],
+            "filename": "ContentController.js",
+            "lineno": 142,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000744",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4836,
+                4850
+            ],
+            "filename": "ContentController.js",
+            "lineno": 143,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000746",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4883,
+                6426
+            ],
+            "filename": "ContentController.js",
+            "lineno": 147,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000749",
+                "name": "getContentTypeSchema",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.getContentTypeSchema~query",
+                "params": "module:controllers/ContentController.getContentTypeSchema~params",
+                "cb": "module:controllers/ContentController.getContentTypeSchema~cb",
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "getContentTypeSchema",
+        "longname": "module:controllers/ContentController.getContentTypeSchema",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                4941,
+                5371
+            ],
+            "filename": "ContentController.js",
+            "lineno": 149,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000755",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5385,
+                5459
+            ],
+            "filename": "ContentController.js",
+            "lineno": 152,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000763",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5409,
+                5448
+            ],
+            "filename": "ContentController.js",
+            "lineno": 153,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000766",
+                "name": "contenttype",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "contenttype",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~params.contenttype",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5524,
+                6326
+            ],
+            "filename": "ContentController.js",
+            "lineno": 156,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000773",
+                "name": "cb",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "contentTypeVersionProperties": "module:controllers/ContentController.getContentTypeSchema~cb~contentTypeVersionProperties",
+                "propertyVersions": "module:controllers/ContentController.getContentTypeSchema~cb~propertyVersions",
+                "schema": "module:controllers/ContentController~schema",
+                "schema[\"properties\"]": "module:controllers/ContentController~schema.\"properties\"]",
+                "i": "module:controllers/ContentController.getContentTypeSchema~cb~i",
+                "schema.properties[undefined]": "module:controllers/ContentController~schema.properties[undefined]"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5702,
+                5770
+            ],
+            "filename": "ContentController.js",
+            "lineno": 162,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000790",
+                "name": "contentTypeVersionProperties",
+                "type": "MemberExpression",
+                "value": "data[0].contentTypeVersion.properties"
+            }
+        },
+        "undocumented": true,
+        "name": "contentTypeVersionProperties",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~cb~contentTypeVersionProperties",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema~cb",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5789,
+                5832
+            ],
+            "filename": "ContentController.js",
+            "lineno": 163,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000799",
+                "name": "propertyVersions",
+                "type": "MemberExpression",
+                "value": "data[0].propertyVersions"
+            }
+        },
+        "undocumented": true,
+        "name": "propertyVersions",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~cb~propertyVersions",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema~cb",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5851,
+                5862
+            ],
+            "filename": "ContentController.js",
+            "lineno": 164,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000806",
+                "name": "schema",
+                "type": "ObjectExpression",
+                "value": "{}"
+            }
+        },
+        "undocumented": true,
+        "name": "schema",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~cb~schema",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema~cb",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                5957,
+                6003
+            ],
+            "filename": "ContentController.js",
+            "lineno": 167,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000810",
+                "name": "schema",
+                "type": "MemberExpression",
+                "funcscope": "module:controllers/ContentController.getContentTypeSchema~cb",
+                "value": "data[0].contentTypeVersion.properties",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "schema",
+        "longname": "module:controllers/ContentController~schema",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6018,
+                6043
+            ],
+            "filename": "ContentController.js",
+            "lineno": 168,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000820",
+                "name": "schema[\"properties\"]",
+                "type": "ObjectExpression",
+                "funcscope": "module:controllers/ContentController.getContentTypeSchema~cb",
+                "value": "{}",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "\"properties\"]",
+        "longname": "module:controllers/ContentController~schema.\"properties\"]",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController~schema",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6107,
+                6112
+            ],
+            "filename": "ContentController.js",
+            "lineno": 172,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000827",
+                "name": "i",
+                "type": "Literal",
+                "value": 0
+            }
+        },
+        "undocumented": true,
+        "name": "i",
+        "longname": "module:controllers/ContentController.getContentTypeSchema~cb~i",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.getContentTypeSchema~cb",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6167,
+                6260
+            ],
+            "filename": "ContentController.js",
+            "lineno": 173,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000839",
+                "name": "schema.properties[undefined]",
+                "type": "MemberExpression",
+                "funcscope": "module:controllers/ContentController.getContentTypeSchema~cb",
+                "value": "propertyVersions[undefined].properties",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "properties[undefined]",
+        "longname": "module:controllers/ContentController~schema.properties[undefined]",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController~schema",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6361,
+                6373
+            ],
+            "filename": "ContentController.js",
+            "lineno": 178,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000869",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6388,
+                6402
+            ],
+            "filename": "ContentController.js",
+            "lineno": 179,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000871",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/**\r\n     * `ContentController.create()`\r\n     */",
+        "meta": {
+            "range": [
+                6492,
+                9440
+            ],
+            "filename": "ContentController.js",
+            "lineno": 187,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000874",
+                "name": "create",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "relationships": "module:controllers/ContentController.create~relationships",
+                "matchRelated": "module:controllers/ContentController~matchRelated",
+                "whereRelated": "module:controllers/ContentController~whereRelated",
+                "createRelationships": "module:controllers/ContentController~createRelationships",
+                "i": "module:controllers/ContentController.create~i",
+                "relationshipName": "module:controllers/ContentController.create~relationshipName",
+                "direction": "module:controllers/ContentController.create~direction",
+                "inboundSymbol": "module:controllers/ContentController.create~inboundSymbol",
+                "outboundSymbol": "module:controllers/ContentController.create~outboundSymbol",
+                "relatedNode": "module:controllers/ContentController.create~relatedNode",
+                "relatedNodeId": "module:controllers/ContentController.create~relatedNodeId",
+                "relatedIdentifier": "module:controllers/ContentController.create~relatedIdentifier",
+                "query": "module:controllers/ContentController.create~query",
+                "params": "module:controllers/ContentController.create~params",
+                "cb": "module:controllers/ContentController.create~cb",
+                "": null
+            }
+        },
+        "description": "`ContentController.create()`",
+        "name": "create",
+        "longname": "module:controllers/ContentController.create",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6568,
+                6606
+            ],
+            "filename": "ContentController.js",
+            "lineno": 190,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000888",
+                "name": "relationships",
+                "type": "MemberExpression",
+                "value": "req.body.relationships"
+            }
+        },
+        "undocumented": true,
+        "name": "relationships",
+        "longname": "module:controllers/ContentController.create~relationships",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6621,
+                6638
+            ],
+            "filename": "ContentController.js",
+            "lineno": 191,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000895",
+                "name": "matchRelated",
+                "type": "Literal",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "matchRelated",
+        "longname": "module:controllers/ContentController.create~matchRelated",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6653,
+                6670
+            ],
+            "filename": "ContentController.js",
+            "lineno": 192,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000898",
+                "name": "whereRelated",
+                "type": "Literal",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "whereRelated",
+        "longname": "module:controllers/ContentController.create~whereRelated",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6685,
+                6709
+            ],
+            "filename": "ContentController.js",
+            "lineno": 193,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000901",
+                "name": "createRelationships",
+                "type": "Literal",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "createRelationships",
+        "longname": "module:controllers/ContentController.create~createRelationships",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6764,
+                6792
+            ],
+            "filename": "ContentController.js",
+            "lineno": 196,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000909",
+                "name": "i",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "i",
+        "longname": "module:controllers/ContentController.create~i",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6878,
+                6944
+            ],
+            "filename": "ContentController.js",
+            "lineno": 198,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000931",
+                "name": "relationshipName",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "relationshipName",
+        "longname": "module:controllers/ContentController.create~relationshipName",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                6967,
+                7005
+            ],
+            "filename": "ContentController.js",
+            "lineno": 199,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000941",
+                "name": "direction",
+                "type": "MemberExpression",
+                "value": "relationships[undefined].direction"
+            }
+        },
+        "undocumented": true,
+        "name": "direction",
+        "longname": "module:controllers/ContentController.create~direction",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7028,
+                7078
+            ],
+            "filename": "ContentController.js",
+            "lineno": 200,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000948",
+                "name": "inboundSymbol",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "inboundSymbol",
+        "longname": "module:controllers/ContentController.create~inboundSymbol",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7101,
+                7153
+            ],
+            "filename": "ContentController.js",
+            "lineno": 201,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000956",
+                "name": "outboundSymbol",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "outboundSymbol",
+        "longname": "module:controllers/ContentController.create~outboundSymbol",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7176,
+                7218
+            ],
+            "filename": "ContentController.js",
+            "lineno": 202,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000964",
+                "name": "relatedNode",
+                "type": "MemberExpression",
+                "value": "relationships[undefined].relatedNode"
+            }
+        },
+        "undocumented": true,
+        "name": "relatedNode",
+        "longname": "module:controllers/ContentController.create~relatedNode",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7241,
+                7272
+            ],
+            "filename": "ContentController.js",
+            "lineno": 203,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000971",
+                "name": "relatedNodeId",
+                "type": "MemberExpression",
+                "value": "relatedNode._id"
+            }
+        },
+        "undocumented": true,
+        "name": "relatedNodeId",
+        "longname": "module:controllers/ContentController.create~relatedNodeId",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7295,
+                7337
+            ],
+            "filename": "ContentController.js",
+            "lineno": 204,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000976",
+                "name": "relatedIdentifier",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "relatedIdentifier",
+        "longname": "module:controllers/ContentController.create~relatedIdentifier",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7358,
+                7405
+            ],
+            "filename": "ContentController.js",
+            "lineno": 206,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000982",
+                "name": "matchRelated",
+                "type": "BinaryExpression",
+                "funcscope": "module:controllers/ContentController.create",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "matchRelated",
+        "longname": "module:controllers/ContentController~matchRelated",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7424,
+                7495
+            ],
+            "filename": "ContentController.js",
+            "lineno": 207,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100000990",
+                "name": "whereRelated",
+                "type": "BinaryExpression",
+                "funcscope": "module:controllers/ContentController.create",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "whereRelated",
+        "longname": "module:controllers/ContentController~whereRelated",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7514,
+                7661
+            ],
+            "filename": "ContentController.js",
+            "lineno": 208,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001000",
+                "name": "createRelationships",
+                "type": "BinaryExpression",
+                "funcscope": "module:controllers/ContentController.create",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "createRelationships",
+        "longname": "module:controllers/ContentController~createRelationships",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                7753,
+                8837
+            ],
+            "filename": "ContentController.js",
+            "lineno": 214,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001021",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.create~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8852,
+                9144
+            ],
+            "filename": "ContentController.js",
+            "lineno": 227,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001069",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.create~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8876,
+                8915
+            ],
+            "filename": "ContentController.js",
+            "lineno": 228,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001072",
+                "name": "parentId",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "parentId",
+        "longname": "module:controllers/ContentController.create~params.parentId",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8930,
+                8969
+            ],
+            "filename": "ContentController.js",
+            "lineno": 229,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001080",
+                "name": "authorId",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "authorId",
+        "longname": "module:controllers/ContentController.create~params.authorId",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                8984,
+                9019
+            ],
+            "filename": "ContentController.js",
+            "lineno": 230,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001088",
+                "name": "contenttype",
+                "type": "MemberExpression",
+                "value": "req.body.contenttype"
+            }
+        },
+        "undocumented": true,
+        "name": "contenttype",
+        "longname": "module:controllers/ContentController.create~params.contenttype",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                9034,
+                9085
+            ],
+            "filename": "ContentController.js",
+            "lineno": 231,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001094",
+                "name": "identityNamePattern",
+                "type": "MemberExpression",
+                "value": "req.body.identityNamePattern"
+            }
+        },
+        "undocumented": true,
+        "name": "identityNamePattern",
+        "longname": "module:controllers/ContentController.create~params.identityNamePattern",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                9100,
+                9133
+            ],
+            "filename": "ContentController.js",
+            "lineno": 232,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001100",
+                "name": "properties",
+                "type": "MemberExpression",
+                "value": "req.body.properties"
+            }
+        },
+        "undocumented": true,
+        "name": "properties",
+        "longname": "module:controllers/ContentController.create~params.properties",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.create~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                9200,
+                9338
+            ],
+            "filename": "ContentController.js",
+            "lineno": 237,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001113",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.create~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.create",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                9374,
+                9386
+            ],
+            "filename": "ContentController.js",
+            "lineno": 243,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001137",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                9402,
+                9416
+            ],
+            "filename": "ContentController.js",
+            "lineno": 244,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001139",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/**\r\n     * `ContentController.createRelationship()`\r\n     */",
+        "meta": {
+            "range": [
+                9516,
+                10629
+            ],
+            "filename": "ContentController.js",
+            "lineno": 251,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001142",
+                "name": "createRelationship",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.createRelationship~query",
+                "params": "module:controllers/ContentController.createRelationship~params",
+                "cb": "module:controllers/ContentController.createRelationship~cb",
+                "": null
+            }
+        },
+        "description": "`ContentController.createRelationship()`",
+        "name": "createRelationship",
+        "longname": "module:controllers/ContentController.createRelationship",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                9604,
+                9985
+            ],
+            "filename": "ContentController.js",
+            "lineno": 253,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001148",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.createRelationship~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.createRelationship",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10000,
+                10372
+            ],
+            "filename": "ContentController.js",
+            "lineno": 259,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001177",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.createRelationship~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.createRelationship",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10024,
+                10138
+            ],
+            "filename": "ContentController.js",
+            "lineno": 260,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001180",
+                "name": "fromId",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "fromId",
+        "longname": "module:controllers/ContentController.createRelationship~params.fromId",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.createRelationship~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10153,
+                10233
+            ],
+            "filename": "ContentController.js",
+            "lineno": 261,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001203",
+                "name": "relationshipName",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "relationshipName",
+        "longname": "module:controllers/ContentController.createRelationship~params.relationshipName",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.createRelationship~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10248,
+                10361
+            ],
+            "filename": "ContentController.js",
+            "lineno": 262,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001220",
+                "name": "toId",
+                "type": "ConditionalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "toId",
+        "longname": "module:controllers/ContentController.createRelationship~params.toId",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.createRelationship~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10387,
+                10527
+            ],
+            "filename": "ContentController.js",
+            "lineno": 264,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001244",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.createRelationship~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.createRelationship",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10563,
+                10575
+            ],
+            "filename": "ContentController.js",
+            "lineno": 270,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001262",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10591,
+                10605
+            ],
+            "filename": "ContentController.js",
+            "lineno": 271,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001264",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/**\r\n     * `ContentController.delete()`\r\n     */",
+        "meta": {
+            "range": [
+                10693,
+                11321
+            ],
+            "filename": "ContentController.js",
+            "lineno": 278,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001267",
+                "name": "delete",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "query": "module:controllers/ContentController.delete~query",
+                "params": "module:controllers/ContentController.delete~params",
+                "cb": "module:controllers/ContentController.delete~cb",
+                "": null
+            }
+        },
+        "description": "`ContentController.delete()`",
+        "name": "delete",
+        "longname": "module:controllers/ContentController.delete",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10737,
+                10973
+            ],
+            "filename": "ContentController.js",
+            "lineno": 280,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001273",
+                "name": "query",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController.delete~query",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.delete",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                10988,
+                11054
+            ],
+            "filename": "ContentController.js",
+            "lineno": 284,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001283",
+                "name": "params",
+                "type": "ObjectExpression",
+                "value": "{\"undefined\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController.delete~params",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.delete",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11012,
+                11043
+            ],
+            "filename": "ContentController.js",
+            "lineno": 285,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001286",
+                "name": "id",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "id",
+        "longname": "module:controllers/ContentController.delete~params.id",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.delete~params",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11079,
+                11219
+            ],
+            "filename": "ContentController.js",
+            "lineno": 288,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001295",
+                "name": "cb",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "cb",
+        "longname": "module:controllers/ContentController.delete~cb",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController.delete",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11255,
+                11267
+            ],
+            "filename": "ContentController.js",
+            "lineno": 294,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001313",
+                "name": "query",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "query",
+        "longname": "module:controllers/ContentController~query",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11283,
+                11297
+            ],
+            "filename": "ContentController.js",
+            "lineno": 295,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001315",
+                "name": "params",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "params",
+        "longname": "module:controllers/ContentController~params",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11348,
+                11588
+            ],
+            "filename": "ContentController.js",
+            "lineno": 300,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001318",
+                "name": "separateWords",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "options": "module:controllers/ContentController~options",
+                "separator": "module:controllers/ContentController.separateWords~separator",
+                "split": "module:controllers/ContentController.separateWords~split"
+            }
+        },
+        "undocumented": true,
+        "name": "separateWords",
+        "longname": "module:controllers/ContentController.separateWords",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11400,
+                11423
+            ],
+            "filename": "ContentController.js",
+            "lineno": 301,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001324",
+                "name": "options",
+                "type": "LogicalExpression",
+                "funcscope": "module:controllers/ContentController.separateWords",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "module:controllers/ContentController~options",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11438,
+                11474
+            ],
+            "filename": "ContentController.js",
+            "lineno": 302,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001330",
+                "name": "separator",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "separator",
+        "longname": "module:controllers/ContentController.separateWords~separator",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.separateWords",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11489,
+                11525
+            ],
+            "filename": "ContentController.js",
+            "lineno": 303,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001338",
+                "name": "split",
+                "type": "LogicalExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "split",
+        "longname": "module:controllers/ContentController.separateWords~split",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.separateWords",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11597,
+                11963
+            ],
+            "filename": "ContentController.js",
+            "lineno": 308,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001355",
+                "name": "camelize",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "string": "module:controllers/ContentController~string",
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "camelize",
+        "longname": "module:controllers/ContentController.camelize",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11714,
+                11837
+            ],
+            "filename": "ContentController.js",
+            "lineno": 312,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001369",
+                "name": "string",
+                "type": "CallExpression",
+                "funcscope": "module:controllers/ContentController.camelize",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "string",
+        "longname": "module:controllers/ContentController~string",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                11972,
+                12180
+            ],
+            "filename": "ContentController.js",
+            "lineno": 319,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001404",
+                "name": "pascalize",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "camelized": "module:controllers/ContentController.pascalize~camelized"
+            }
+        },
+        "undocumented": true,
+        "name": "pascalize",
+        "longname": "module:controllers/ContentController.pascalize",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                12015,
+                12048
+            ],
+            "filename": "ContentController.js",
+            "lineno": 320,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001409",
+                "name": "camelized",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "camelized",
+        "longname": "module:controllers/ContentController.pascalize~camelized",
+        "kind": "member",
+        "memberof": "module:controllers/ContentController.pascalize",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                12189,
+                12302
+            ],
+            "filename": "ContentController.js",
+            "lineno": 325,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001432",
+                "name": "decamelize",
+                "type": "FunctionExpression"
+            }
+        },
+        "undocumented": true,
+        "name": "decamelize",
+        "longname": "module:controllers/ContentController.decamelize",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                12374,
+                12463
+            ],
+            "filename": "ContentController.js",
+            "lineno": 330,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001447",
+                "name": "_isNumerical",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "obj": "module:controllers/ContentController~obj"
+            }
+        },
+        "undocumented": true,
+        "name": "_isNumerical",
+        "longname": "module:controllers/ContentController._isNumerical",
+        "kind": "function",
+        "memberof": "module:controllers/ContentController",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                12413,
+                12426
+            ],
+            "filename": "ContentController.js",
+            "lineno": 331,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001452",
+                "name": "obj",
+                "type": "BinaryExpression",
+                "funcscope": "module:controllers/ContentController._isNumerical",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "obj",
+        "longname": "module:controllers/ContentController~obj",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:controllers/ContentController"
+    },
+    {
+        "comment": "/**\r\n * @module controllers/UserController\r\n *\r\n * @description :: Server-side logic for managing users\r\n * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers\r\n */",
+        "meta": {
+            "range": [
+                0,
+                189
+            ],
+            "filename": "UserController.js",
+            "lineno": 1,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {}
+        },
+        "kind": "module",
+        "name": "controllers/UserController",
+        "description": ":: Server-side logic for managing users",
+        "tags": [
+            {
+                "originalTitle": "help",
+                "title": "help",
+                "text": ":: See http://sailsjs.org/#!/documentation/concepts/Controllers",
+                "value": ":: See http://sailsjs.org/#!/documentation/concepts/Controllers"
+            }
+        ],
+        "longname": "module:controllers/UserController"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                193,
+                217
+            ],
+            "filename": "UserController.js",
+            "lineno": 8,
+            "path": "C:\\apps\\gavinet\\api\\controllers",
+            "code": {
+                "id": "astnode100001463",
+                "name": "module.exports",
+                "type": "ObjectExpression",
+                "value": "{}",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "module:controllers/UserController",
+        "longname": "module:controllers/UserController",
+        "kind": "member"
+    },
+    {
+        "comment": "/**\r\n* @module models/User\r\n*\r\n* @description :: User model.\r\n* @docs        :: http://sailsjs.org/#!documentation/models\r\n*/",
+        "meta": {
+            "range": [
+                0,
+                125
+            ],
+            "filename": "User.js",
+            "lineno": 1,
+            "path": "C:\\apps\\gavinet\\api\\models",
+            "code": {}
+        },
+        "kind": "module",
+        "name": "models/User",
+        "description": ":: User model.",
+        "tags": [
+            {
+                "originalTitle": "docs",
+                "title": "docs",
+                "text": ":: http://sailsjs.org/#!documentation/models",
+                "value": ":: http://sailsjs.org/#!documentation/models"
+            }
+        ],
+        "longname": "module:models/User"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                129,
+                176
+            ],
+            "filename": "User.js",
+            "lineno": 8,
+            "path": "C:\\apps\\gavinet\\api\\models",
+            "code": {
+                "id": "astnode100001470",
+                "name": "module.exports",
+                "type": "ObjectExpression",
+                "value": "{\"attributes\":\"\"}",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "module:models/User",
+        "longname": "module:models/User",
+        "kind": "member"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                153,
+                173
+            ],
+            "filename": "User.js",
+            "lineno": 10,
+            "path": "C:\\apps\\gavinet\\api\\models",
+            "code": {
+                "id": "astnode100001475",
+                "name": "attributes",
+                "type": "ObjectExpression",
+                "value": "{}"
+            }
+        },
+        "undocumented": true,
+        "name": "attributes",
+        "longname": "module:models/User.attributes",
+        "kind": "member",
+        "memberof": "module:models/User",
+        "scope": "static"
+    },
+    {
+        "comment": "/**\r\n * @module policies/sessionAuth\r\n *\r\n * @description :: Simple policy to allow any authenticated user\r\n *                 Assumes that your login action in one of your controllers sets `req.session.authenticated = true;`\r\n * @docs        :: http://sailsjs.org/#!/documentation/concepts/Policies\r\n *\r\n */",
+        "meta": {
+            "range": [
+                0,
+                308
+            ],
+            "filename": "sessionAuth.js",
+            "lineno": 1,
+            "path": "C:\\apps\\gavinet\\api\\policies",
+            "code": {}
+        },
+        "kind": "module",
+        "name": "policies/sessionAuth",
+        "description": ":: Simple policy to allow any authenticated user\r                Assumes that your login action in one of your controllers sets `req.session.authenticated = true;`",
+        "tags": [
+            {
+                "originalTitle": "docs",
+                "title": "docs",
+                "text": ":: http://sailsjs.org/#!/documentation/concepts/Policies",
+                "value": ":: http://sailsjs.org/#!/documentation/concepts/Policies"
+            }
+        ],
+        "longname": "module:policies/sessionAuth"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                310,
+                703
+            ],
+            "filename": "sessionAuth.js",
+            "lineno": 9,
+            "path": "C:\\apps\\gavinet\\api\\policies",
+            "code": {
+                "id": "astnode100001479",
+                "name": "module.exports",
+                "type": "FunctionExpression",
+                "paramnames": [
+                    "req",
+                    "res",
+                    "next"
+                ]
+            }
+        },
+        "undocumented": true,
+        "name": "module:policies/sessionAuth",
+        "longname": "module:policies/sessionAuth",
+        "kind": "function"
+    },
+    {
+        "comment": "/**\r\n * 400 (Bad Request) Handler\r\n *\r\n * Usage:\r\n * return res.badRequest();\r\n * return res.badRequest(data);\r\n * return res.badRequest(data, 'some/specific/badRequest/view');\r\n *\r\n * e.g.:\r\n * ```\r\n * return res.badRequest(\r\n *   'Please choose a valid `password` (6-12 characters)',\r\n *   'trial/signup'\r\n * );\r\n * ```\r\n */",
+        "meta": {
+            "range": [
+                330,
+                1838
+            ],
+            "filename": "badRequest.js",
+            "lineno": 18,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001506",
+                "name": "module.exports",
+                "type": "FunctionExpression",
+                "value": "badRequest",
+                "paramnames": [
+                    "data",
+                    "options"
+                ]
+            },
+            "vars": {
+                "req": "module.exports~req",
+                "res": "module.exports~res",
+                "sails": "module.exports~sails",
+                "data": "module.exports~data",
+                "options": "module.exports~options",
+                "": null
+            }
+        },
+        "description": "400 (Bad Request) Handler\r\rUsage:\rreturn res.badRequest();\rreturn res.badRequest(data);\rreturn res.badRequest(data, 'some/specific/badRequest/view');\r\re.g.:\r```\rreturn res.badRequest(\r  'Please choose a valid `password` (6-12 characters)',\r  'trial/signup'\r);\r```",
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "function",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                437,
+                451
+            ],
+            "filename": "badRequest.js",
+            "lineno": 21,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001516",
+                "name": "req",
+                "type": "MemberExpression",
+                "value": "this.req"
+            }
+        },
+        "undocumented": true,
+        "name": "req",
+        "longname": "module.exports~req",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                460,
+                474
+            ],
+            "filename": "badRequest.js",
+            "lineno": 22,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001522",
+                "name": "res",
+                "type": "MemberExpression",
+                "value": "this.res"
+            }
+        },
+        "undocumented": true,
+        "name": "res",
+        "longname": "module.exports~res",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                483,
+                501
+            ],
+            "filename": "badRequest.js",
+            "lineno": 23,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001528",
+                "name": "sails",
+                "type": "MemberExpression",
+                "value": "req._sails"
+            }
+        },
+        "undocumented": true,
+        "name": "sails",
+        "longname": "module.exports~sails",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                995,
+                1011
+            ],
+            "filename": "badRequest.js",
+            "lineno": 38,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001571",
+                "name": "data",
+                "type": "Identifier",
+                "funcscope": "module.exports",
+                "value": "undefined",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "module.exports~data",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1276,
+                1351
+            ],
+            "filename": "badRequest.js",
+            "lineno": 48,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001586",
+                "name": "options",
+                "type": "ConditionalExpression",
+                "funcscope": "module.exports",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "module.exports~options",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1320,
+                1333
+            ],
+            "filename": "badRequest.js",
+            "lineno": 48,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001594",
+                "name": "view",
+                "type": "Identifier",
+                "value": "options"
+            }
+        },
+        "undocumented": true,
+        "name": "view",
+        "longname": "view",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1563,
+                1573
+            ],
+            "filename": "badRequest.js",
+            "lineno": 54,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001613",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1752,
+                1762
+            ],
+            "filename": "badRequest.js",
+            "lineno": 59,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001621",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\r\n * 403 (Forbidden) Handler\r\n *\r\n * Usage:\r\n * return res.forbidden();\r\n * return res.forbidden(err);\r\n * return res.forbidden(err, 'some/specific/forbidden/view');\r\n *\r\n * e.g.:\r\n * ```\r\n * return res.forbidden('Access denied.');\r\n * ```\r\n */",
+        "meta": {
+            "range": [
+                251,
+                2408
+            ],
+            "filename": "forbidden.js",
+            "lineno": 15,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001634",
+                "name": "module.exports",
+                "type": "FunctionExpression",
+                "value": "forbidden",
+                "paramnames": [
+                    "data",
+                    "options"
+                ]
+            },
+            "vars": {
+                "req": "module.exports~req",
+                "res": "module.exports~res",
+                "sails": "module.exports~sails",
+                "data": "module.exports~data",
+                "options": "module.exports~options",
+                "": null
+            }
+        },
+        "description": "403 (Forbidden) Handler\r\rUsage:\rreturn res.forbidden();\rreturn res.forbidden(err);\rreturn res.forbidden(err, 'some/specific/forbidden/view');\r\re.g.:\r```\rreturn res.forbidden('Access denied.');\r```",
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "function",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                358,
+                372
+            ],
+            "filename": "forbidden.js",
+            "lineno": 18,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001644",
+                "name": "req",
+                "type": "MemberExpression",
+                "value": "this.req"
+            }
+        },
+        "undocumented": true,
+        "name": "req",
+        "longname": "module.exports~req",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                381,
+                395
+            ],
+            "filename": "forbidden.js",
+            "lineno": 19,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001650",
+                "name": "res",
+                "type": "MemberExpression",
+                "value": "this.res"
+            }
+        },
+        "undocumented": true,
+        "name": "res",
+        "longname": "module.exports~res",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                404,
+                422
+            ],
+            "filename": "forbidden.js",
+            "lineno": 20,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001656",
+                "name": "sails",
+                "type": "MemberExpression",
+                "value": "req._sails"
+            }
+        },
+        "undocumented": true,
+        "name": "sails",
+        "longname": "module.exports~sails",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                912,
+                928
+            ],
+            "filename": "forbidden.js",
+            "lineno": 35,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001699",
+                "name": "data",
+                "type": "Identifier",
+                "funcscope": "module.exports",
+                "value": "undefined",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "module.exports~data",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1193,
+                1268
+            ],
+            "filename": "forbidden.js",
+            "lineno": 45,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001714",
+                "name": "options",
+                "type": "ConditionalExpression",
+                "funcscope": "module.exports",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "module.exports~options",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1237,
+                1250
+            ],
+            "filename": "forbidden.js",
+            "lineno": 45,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001722",
+                "name": "view",
+                "type": "Identifier",
+                "value": "options"
+            }
+        },
+        "undocumented": true,
+        "name": "view",
+        "longname": "view",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1480,
+                1490
+            ],
+            "filename": "forbidden.js",
+            "lineno": 51,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001741",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1664,
+                1674
+            ],
+            "filename": "forbidden.js",
+            "lineno": 56,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001750",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\r\n * 404 (Not Found) Handler\r\n *\r\n * Usage:\r\n * return res.notFound();\r\n * return res.notFound(err);\r\n * return res.notFound(err, 'some/specific/notfound/view');\r\n *\r\n * e.g.:\r\n * ```\r\n * return res.notFound();\r\n * ```\r\n *\r\n * NOTE:\r\n * If a request doesn't match any explicit routes (i.e. `config/routes.js`)\r\n * or route blueprints (i.e. \"shadow routes\", Sails will call `res.notFound()`\r\n * automatically.\r\n */",
+        "meta": {
+            "range": [
+                420,
+                2574
+            ],
+            "filename": "notFound.js",
+            "lineno": 20,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001799",
+                "name": "module.exports",
+                "type": "FunctionExpression",
+                "value": "notFound",
+                "paramnames": [
+                    "data",
+                    "options"
+                ]
+            },
+            "vars": {
+                "req": "module.exports~req",
+                "res": "module.exports~res",
+                "sails": "module.exports~sails",
+                "data": "module.exports~data",
+                "options": "module.exports~options",
+                "": null
+            }
+        },
+        "description": "404 (Not Found) Handler\r\rUsage:\rreturn res.notFound();\rreturn res.notFound(err);\rreturn res.notFound(err, 'some/specific/notfound/view');\r\re.g.:\r```\rreturn res.notFound();\r```\r\rNOTE:\rIf a request doesn't match any explicit routes (i.e. `config/routes.js`)\ror route blueprints (i.e. \"shadow routes\", Sails will call `res.notFound()`\rautomatically.",
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "function",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                526,
+                540
+            ],
+            "filename": "notFound.js",
+            "lineno": 23,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001809",
+                "name": "req",
+                "type": "MemberExpression",
+                "value": "this.req"
+            }
+        },
+        "undocumented": true,
+        "name": "req",
+        "longname": "module.exports~req",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                549,
+                563
+            ],
+            "filename": "notFound.js",
+            "lineno": 24,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001815",
+                "name": "res",
+                "type": "MemberExpression",
+                "value": "this.res"
+            }
+        },
+        "undocumented": true,
+        "name": "res",
+        "longname": "module.exports~res",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                572,
+                590
+            ],
+            "filename": "notFound.js",
+            "lineno": 25,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001821",
+                "name": "sails",
+                "type": "MemberExpression",
+                "value": "req._sails"
+            }
+        },
+        "undocumented": true,
+        "name": "sails",
+        "longname": "module.exports~sails",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1080,
+                1096
+            ],
+            "filename": "notFound.js",
+            "lineno": 40,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001864",
+                "name": "data",
+                "type": "Identifier",
+                "funcscope": "module.exports",
+                "value": "undefined",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "module.exports~data",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1361,
+                1436
+            ],
+            "filename": "notFound.js",
+            "lineno": 50,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001879",
+                "name": "options",
+                "type": "ConditionalExpression",
+                "funcscope": "module.exports",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "module.exports~options",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1405,
+                1418
+            ],
+            "filename": "notFound.js",
+            "lineno": 50,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001887",
+                "name": "view",
+                "type": "Identifier",
+                "value": "options"
+            }
+        },
+        "undocumented": true,
+        "name": "view",
+        "longname": "view",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1648,
+                1658
+            ],
+            "filename": "notFound.js",
+            "lineno": 56,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001906",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1832,
+                1842
+            ],
+            "filename": "notFound.js",
+            "lineno": 61,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001915",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\r\n * 200 (OK) Response\r\n *\r\n * Usage:\r\n * return res.ok();\r\n * return res.ok(data);\r\n * return res.ok(data, 'auth/login');\r\n *\r\n * @param  {Object} data\r\n * @param  {String|Object} options\r\n *          - pass string to render specified view\r\n */",
+        "meta": {
+            "range": [
+                252,
+                1334
+            ],
+            "filename": "ok.js",
+            "lineno": 14,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001964",
+                "name": "module.exports",
+                "type": "FunctionExpression",
+                "value": "sendOK",
+                "paramnames": [
+                    "data",
+                    "options"
+                ]
+            },
+            "vars": {
+                "req": "module.exports~req",
+                "res": "module.exports~res",
+                "sails": "module.exports~sails",
+                "options": "module.exports~options",
+                "": null
+            }
+        },
+        "description": "200 (OK) Response\r\rUsage:\rreturn res.ok();\rreturn res.ok(data);\rreturn res.ok(data, 'auth/login');",
+        "params": [
+            {
+                "type": {
+                    "names": [
+                        "Object"
+                    ]
+                },
+                "name": "data"
+            },
+            {
+                "type": {
+                    "names": [
+                        "String",
+                        "Object"
+                    ]
+                },
+                "description": "- pass string to render specified view",
+                "name": "options"
+            }
+        ],
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "function",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                356,
+                370
+            ],
+            "filename": "ok.js",
+            "lineno": 17,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001974",
+                "name": "req",
+                "type": "MemberExpression",
+                "value": "this.req"
+            }
+        },
+        "undocumented": true,
+        "name": "req",
+        "longname": "module.exports~req",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                379,
+                393
+            ],
+            "filename": "ok.js",
+            "lineno": 18,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001980",
+                "name": "res",
+                "type": "MemberExpression",
+                "value": "this.res"
+            }
+        },
+        "undocumented": true,
+        "name": "res",
+        "longname": "module.exports~res",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                402,
+                420
+            ],
+            "filename": "ok.js",
+            "lineno": 19,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100001986",
+                "name": "sails",
+                "type": "MemberExpression",
+                "value": "req._sails"
+            }
+        },
+        "undocumented": true,
+        "name": "sails",
+        "longname": "module.exports~sails",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                772,
+                847
+            ],
+            "filename": "ok.js",
+            "lineno": 33,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002017",
+                "name": "options",
+                "type": "ConditionalExpression",
+                "funcscope": "module.exports",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "module.exports~options",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                816,
+                829
+            ],
+            "filename": "ok.js",
+            "lineno": 33,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002025",
+                "name": "view",
+                "type": "Identifier",
+                "value": "options"
+            }
+        },
+        "undocumented": true,
+        "name": "view",
+        "longname": "view",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1059,
+                1069
+            ],
+            "filename": "ok.js",
+            "lineno": 39,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002044",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1248,
+                1258
+            ],
+            "filename": "ok.js",
+            "lineno": 44,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002052",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\r\n * 500 (Server Error) Response\r\n *\r\n * Usage:\r\n * return res.serverError();\r\n * return res.serverError(err);\r\n * return res.serverError(err, 'some/specific/error/view');\r\n *\r\n * NOTE:\r\n * If something throws in a policy or controller, or an internal\r\n * error is encountered, Sails will call `res.serverError()`\r\n * automatically.\r\n */",
+        "meta": {
+            "range": [
+                344,
+                2515
+            ],
+            "filename": "serverError.js",
+            "lineno": 15,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002065",
+                "name": "module.exports",
+                "type": "FunctionExpression",
+                "value": "serverError",
+                "paramnames": [
+                    "data",
+                    "options"
+                ]
+            },
+            "vars": {
+                "req": "module.exports~req",
+                "res": "module.exports~res",
+                "sails": "module.exports~sails",
+                "data": "module.exports~data",
+                "options": "module.exports~options",
+                "": null
+            }
+        },
+        "description": "500 (Server Error) Response\r\rUsage:\rreturn res.serverError();\rreturn res.serverError(err);\rreturn res.serverError(err, 'some/specific/error/view');\r\rNOTE:\rIf something throws in a policy or controller, or an internal\rerror is encountered, Sails will call `res.serverError()`\rautomatically.",
+        "name": "exports",
+        "longname": "module.exports",
+        "kind": "function",
+        "memberof": "module",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                453,
+                467
+            ],
+            "filename": "serverError.js",
+            "lineno": 18,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002075",
+                "name": "req",
+                "type": "MemberExpression",
+                "value": "this.req"
+            }
+        },
+        "undocumented": true,
+        "name": "req",
+        "longname": "module.exports~req",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                476,
+                490
+            ],
+            "filename": "serverError.js",
+            "lineno": 19,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002081",
+                "name": "res",
+                "type": "MemberExpression",
+                "value": "this.res"
+            }
+        },
+        "undocumented": true,
+        "name": "res",
+        "longname": "module.exports~res",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                499,
+                517
+            ],
+            "filename": "serverError.js",
+            "lineno": 20,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002087",
+                "name": "sails",
+                "type": "MemberExpression",
+                "value": "req._sails"
+            }
+        },
+        "undocumented": true,
+        "name": "sails",
+        "longname": "module.exports~sails",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1015,
+                1031
+            ],
+            "filename": "serverError.js",
+            "lineno": 35,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002130",
+                "name": "data",
+                "type": "Identifier",
+                "funcscope": "module.exports",
+                "value": "undefined",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "module.exports~data",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1296,
+                1371
+            ],
+            "filename": "serverError.js",
+            "lineno": 45,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002145",
+                "name": "options",
+                "type": "ConditionalExpression",
+                "funcscope": "module.exports",
+                "value": "",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "options",
+        "longname": "module.exports~options",
+        "kind": "member",
+        "memberof": "module.exports",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1340,
+                1353
+            ],
+            "filename": "serverError.js",
+            "lineno": 45,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002153",
+                "name": "view",
+                "type": "Identifier",
+                "value": "options"
+            }
+        },
+        "undocumented": true,
+        "name": "view",
+        "longname": "view",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1583,
+                1593
+            ],
+            "filename": "serverError.js",
+            "lineno": 51,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002172",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                1767,
+                1777
+            ],
+            "filename": "serverError.js",
+            "lineno": 56,
+            "path": "C:\\apps\\gavinet\\api\\responses",
+            "code": {
+                "id": "astnode100002181",
+                "name": "data",
+                "type": "Identifier",
+                "value": "data"
+            }
+        },
+        "undocumented": true,
+        "name": "data",
+        "longname": "data",
+        "kind": "member",
+        "scope": "global"
+    },
+    {
+        "comment": "/**\r\n * @module          services/CypherService\r\n * @description     A service to use the neo4j REST API\r\n * @author          Fraser Hore\r\n */",
+        "meta": {
+            "range": [
+                0,
+                142
+            ],
+            "filename": "CypherService.js",
+            "lineno": 1,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {}
+        },
+        "kind": "module",
+        "name": "services/CypherService",
+        "description": "A service to use the neo4j REST API",
+        "author": [
+            "Fraser Hore"
+        ],
+        "longname": "module:services/CypherService"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                146,
+                574
+            ],
+            "filename": "CypherService.js",
+            "lineno": 7,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002230",
+                "name": "module.exports",
+                "type": "ObjectExpression",
+                "value": "{\"cypher\":\"\"}",
+                "paramnames": []
+            }
+        },
+        "undocumented": true,
+        "name": "module:services/CypherService",
+        "longname": "module:services/CypherService",
+        "kind": "member"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                168,
+                571
+            ],
+            "filename": "CypherService.js",
+            "lineno": 8,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002235",
+                "name": "cypher",
+                "type": "FunctionExpression"
+            },
+            "vars": {
+                "r": "module:services/CypherService.cypher~r",
+                "username": "module:services/CypherService.cypher~username",
+                "password": "module:services/CypherService.cypher~password",
+                "txUrl": "module:services/CypherService.cypher~txUrl",
+                "": null
+            }
+        },
+        "undocumented": true,
+        "name": "cypher",
+        "longname": "module:services/CypherService.cypher",
+        "kind": "function",
+        "memberof": "module:services/CypherService",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                209,
+                229
+            ],
+            "filename": "CypherService.js",
+            "lineno": 9,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002242",
+                "name": "r",
+                "type": "CallExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "r",
+        "longname": "module:services/CypherService.cypher~r",
+        "kind": "member",
+        "memberof": "module:services/CypherService.cypher",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                238,
+                258
+            ],
+            "filename": "CypherService.js",
+            "lineno": 10,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002248",
+                "name": "username",
+                "type": "Literal",
+                "value": "fhgraph"
+            }
+        },
+        "undocumented": true,
+        "name": "username",
+        "longname": "module:services/CypherService.cypher~username",
+        "kind": "member",
+        "memberof": "module:services/CypherService.cypher",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                267,
+                300
+            ],
+            "filename": "CypherService.js",
+            "lineno": 11,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002252",
+                "name": "password",
+                "type": "Literal",
+                "value": "9yPmYE8RU4QRDGkQER0V"
+            }
+        },
+        "undocumented": true,
+        "name": "password",
+        "longname": "module:services/CypherService.cypher~password",
+        "kind": "member",
+        "memberof": "module:services/CypherService.cypher",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                309,
+                429
+            ],
+            "filename": "CypherService.js",
+            "lineno": 12,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002256",
+                "name": "txUrl",
+                "type": "BinaryExpression",
+                "value": ""
+            }
+        },
+        "undocumented": true,
+        "name": "txUrl",
+        "longname": "module:services/CypherService.cypher~txUrl",
+        "kind": "member",
+        "memberof": "module:services/CypherService.cypher",
+        "scope": "inner"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                443,
+                452
+            ],
+            "filename": "CypherService.js",
+            "lineno": 13,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002273",
+                "name": "uri",
+                "type": "Identifier",
+                "value": "txUrl"
+            }
+        },
+        "undocumented": true,
+        "name": "uri",
+        "longname": "module:services/CypherService~uri",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:services/CypherService"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                462,
+                517
+            ],
+            "filename": "CypherService.js",
+            "lineno": 14,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002275",
+                "name": "json",
+                "type": "ObjectExpression",
+                "value": "{\"statements\":\"\"}"
+            }
+        },
+        "undocumented": true,
+        "name": "json",
+        "longname": "module:services/CypherService~json",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:services/CypherService"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                468,
+                516
+            ],
+            "filename": "CypherService.js",
+            "lineno": 14,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002277",
+                "name": "statements",
+                "type": "ArrayExpression",
+                "value": "[\"{\\\"statement\\\":\\\"\\\",\\\"parameters\\\":\\\"\\\"}\"]"
+            }
+        },
+        "undocumented": true,
+        "name": "statements",
+        "longname": "module:services/CypherService~json.statements",
+        "kind": "member",
+        "memberof": "module:services/CypherService~json",
+        "scope": "static"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                481,
+                496
+            ],
+            "filename": "CypherService.js",
+            "lineno": 14,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002280",
+                "name": "statement",
+                "type": "Identifier",
+                "value": "query"
+            }
+        },
+        "undocumented": true,
+        "name": "statement",
+        "longname": "module:services/CypherService~statement",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:services/CypherService"
+    },
+    {
+        "comment": "",
+        "meta": {
+            "range": [
+                497,
+                514
+            ],
+            "filename": "CypherService.js",
+            "lineno": 14,
+            "path": "C:\\apps\\gavinet\\api\\services\\CypherService",
+            "code": {
+                "id": "astnode100002282",
+                "name": "parameters",
+                "type": "Identifier",
+                "value": "params"
+            }
+        },
+        "undocumented": true,
+        "name": "parameters",
+        "longname": "module:services/CypherService~parameters",
+        "kind": "member",
+        "scope": "inner",
+        "memberof": "module:services/CypherService"
+    },
+    {
+        "kind": "package",
+        "longname": "package:undefined",
+        "files": [
+            "C:\\apps\\gavinet\\api\\controllers\\ContentController - Copy.js",
+            "C:\\apps\\gavinet\\api\\controllers\\ContentController.js",
+            "C:\\apps\\gavinet\\api\\controllers\\UserController.js",
+            "C:\\apps\\gavinet\\api\\models\\User.js",
+            "C:\\apps\\gavinet\\api\\policies\\sessionAuth.js",
+            "C:\\apps\\gavinet\\api\\responses\\badRequest.js",
+            "C:\\apps\\gavinet\\api\\responses\\forbidden.js",
+            "C:\\apps\\gavinet\\api\\responses\\notFound.js",
+            "C:\\apps\\gavinet\\api\\responses\\ok.js",
+            "C:\\apps\\gavinet\\api\\responses\\serverError.js",
+            "C:\\apps\\gavinet\\api\\services\\CypherService\\CypherService.js"
+        ]
+    }
+]

@@ -1,0 +1,81 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="gavi-sp-tasks">
+  <style>
+    :host {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      h1.paper-font-display1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+  <template>
+    <iron-ajax
+      auto
+      url="https://gavinet.sharepoint.com/sites/km/_api/Web/Lists/getByTitle('Working%20Documents')/items?$select=FieldValuesAsText,OData__dlc_DocIdUrl&$expand=FieldValuesAsText&$top=5&$filter=Editor/ID eq 11&$orderby=Modified desc"
+      method="get"
+      headers = '{"Accept": "application/json;odata=verbose"}'
+      last-response="{{myDocuments}}"
+      debounce-duration="300"></iron-ajax>
+
+    <iron-ajax
+      auto
+      url="https://gavinet.sharepoint.com/sites/km/_api/Web/Lists/getByTitle('Working%20Documents')/items?$select=FieldValuesAsText,OData__dlc_DocIdUrl&$expand=FieldValuesAsText&$top=5&$filter=Editor/ID ne 11&$orderby=Modified desc"
+      method="get"
+      headers = '{"Accept": "application/json;odata=verbose"}'
+      last-response="{{teamDocuments}}"
+      debounce-duration="300"></iron-ajax>
+
+      <h2>My Documents</h2>
+      <template id="t" is="dom-repeat" items="{{myDocuments.d.results}}">
+          <div><a href="{{item.OData__dlc_DocIdUrl.Url}}" target="_blank">{{item.FieldValuesAsText.FileLeafRef}}</a></div>
+          <div>{{item.FieldValuesAsText.Modified}}</div>
+      </template>
+      <h2>My Team Documents</h2>
+      <template id="t" is="dom-repeat" items="{{teamDocuments.d.results}}">
+          <div><a href="{{item.OData__dlc_DocIdUrl.Url}}" target="_blank">{{item.FieldValuesAsText.FileLeafRef}}</a></div>
+          <div><span>{{item.FieldValuesAsText.Editor}}</span> <span>{{item.FieldValuesAsText.Modified}}</span></div>
+      </template>
+  </template>
+</dom-module>
+<script>
+(function() {
+  Polymer({
+    is: 'gavi-sp-tasks',
+
+    properties: {
+      myDocuments: {
+        type: Array,
+        value: [],
+        notify: true
+      },
+      teamDocuments: {
+        type: Array,
+        value: [],
+        notify: true
+      }
+    }
+  });
+})();
+</script>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head>
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">GAVI-28-1834</mso:_dlc_DocId>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://gavinet.sharepoint.com/sites/km/_layouts/15/DocIdRedir.aspx?ID=GAVI-28-1834, GAVI-28-1834</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>

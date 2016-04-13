@@ -1,0 +1,56 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<dom-module id="gavi-dashboard">
+  <style>
+    :host {
+      display: -ms-flexbox;
+      display:flex;
+      flex-flow:row;
+      flex-wrap:wrap;
+      -ms-flex-wrap:wrap;
+      justify-content:center;
+      -ms-flex-pack: center;
+      align-items:flex-start;
+    }
+
+    @media (max-width: 600px) {
+      h1.paper-font-display1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+  <template>
+    <content></content>
+  </template>
+</dom-module>
+<script>
+  (function() {
+    Polymer({
+      is: 'gavi-dashboard',
+
+      properties: {
+        greeting: {
+          type: String,
+          value: 'Welcome!',
+          notify: true
+        }
+      }
+    });
+  })();
+</script>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head>
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">GAVI-28-1828</mso:_dlc_DocId>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://gavinet.sharepoint.com/sites/km/_layouts/15/DocIdRedir.aspx?ID=GAVI-28-1828, GAVI-28-1828</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
