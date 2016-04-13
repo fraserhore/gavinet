@@ -28,22 +28,22 @@ module.exports = {
     view: function(req, res) {
 
         var params = {
-            "id": parseInt(req.param('id')),
+            "id": parseInt(req.param('id')) || 0,
             "lang": parseInt(req.param('lang')) || "en-gb"
         };
 
         var versionMatch = "";
 
         if(req.param('versionName')) {
-            var versionName = parseInt(req.param('versionName'));
+            var versionName = req.param('versionName');
             versionMatch = " AND version.name = " + versionName;
         } else if(req.param('versionValidityDate')) {
             var versionValidityDate = parseInt(req.param('versionValidityDate'));
-            versionMatch = " AND version.from < " + versionValidityDate + "AND version.to > " + versionValidityDate;
+            versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
         } else {
             versionMatch = " AND version.to = 9223372036854775807";
         }
-
+        console.log(versionMatch);
         var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
                     +' WHERE id(identityNode) = {id} AND version.lang = "en-gb"'
                     +  versionMatch
@@ -56,6 +56,41 @@ module.exports = {
             } else {
                 return res.view("full", data[0]);
             }
+        }
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
+    /** Get child content objects */
+    getContent: function(req, res) {
+
+        var params = {
+            "id": parseInt(req.param('id')) || 0,
+            "lang": parseInt(req.param('lang')) || "en-gb"
+        };
+
+        var versionMatch = "";
+
+        if(req.param('versionName')) {
+            var versionName = req.param('versionName');
+            versionMatch = " AND version.name = " + versionName;
+        } else if(req.param('versionValidityDate')) {
+            var versionValidityDate = parseInt(req.param('versionValidityDate'));
+            versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
+        } else {
+            versionMatch = " AND version.to = 9223372036854775807";
+        }
+        console.log(versionMatch);
+        var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
+                    +' WHERE id(identityNode) = {id} AND version.lang = "en-gb"'
+                    +  versionMatch
+                    +' RETURN identityNode, version, versionNode, authorNode'
+
+        var cb = function(err, data) {
+            console.log(data);
+            return res.json(data[0]);
         }
         db.cypher({
             query: query,
@@ -280,6 +315,55 @@ module.exports = {
         var cb = function(err, data) {
             //console.log(err);
             //console.log(data);
+            return res.json(data);
+        };
+        db.cypher({
+            query: query, 
+            params: params
+        }, cb);
+    },
+
+    /**
+    * update
+    */
+    update: function(req, res) {
+        
+        var query = 
+            // UPDATE (CONTENT) - Add a Version node
+              ' MATCH (identitynode)-[currentversionrelationship:VERSION {to:9223372036854775807}]->(currentversion)'
+            + ' WHERE id(identitynode) = {id} AND currentversionrelationship.lang = {lang}'
+            // Update the current version relationship to end validity
+            + ' SET currentversionrelationship.to = timestamp()'
+            // Create the new version relationship and node
+            + ' CREATE identitynode-[newversionrelationship:VERSION {from:timestamp(), to:9223372036854775807}]->(newversion:Version)'
+            // Set new version relationship properties
+            + ' SET newversionrelationship.versionNumber = toInt(currentversionrelationship.versionNumber) + 1'
+            + ' SET newversionrelationship.versionName = {versionName}'
+            + ' SET newversionrelationship.lang = currentversionrelationship.lang'
+            // Set new version node properties
+            + ' SET newversion = {properties}'
+            //... update more newversion properties
+            // Update the identity node
+            + ' SET identitynode.name = newversion.name' //+ req.body.identityNamePattern
+            // Create a previous relationship from the new version to the previous version
+            + ' CREATE newversion-[:PREVIOUS]->currentversion'
+            // Return the affected nodes
+            + ' RETURN identitynode,currentversion,newversion';
+
+        var params = {
+            "id": parseInt(req.body.id),
+            "lang": req.body.lang,
+            "versionName": req.body.versionName,
+            "identityNamePattern": req.body.identityNamePattern,
+            "properties": req.body.properties
+        };
+        
+        console.log(query);
+        console.log(params);
+
+        var cb = function(err, data) {
+            console.log(err);
+            console.log(data);
             return res.json(data);
         };
         db.cypher({

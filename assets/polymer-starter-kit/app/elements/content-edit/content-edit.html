@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"></iron-ajax>
 
     <iron-ajax id="postData"
-      url="/content/create"
+      url="/content/{{formData.action}}"
       content-type="application/json"
       method="POST"
       body="{{formData}}"
@@ -160,10 +160,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       open: function() {
         this.$.editDialog.open();
+        if(this.formData.contenttype) {
+          this.$.getContentTypeSchema.params = {"contenttype": this.formData.contenttype};
+          this.$.getContentTypeSchema.url = '/content/getContentTypeSchema';
+          this.$.editDialog.refit();
+        }
       },
 
       _submit: function() {
         this.$.postData.generateRequest();
+        this.$.editDialog.close();
       },
 
 
