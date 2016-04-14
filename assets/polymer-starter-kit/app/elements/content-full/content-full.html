@@ -48,9 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <paper-slider id="versionSlider" pin on-change="_versionSliderChanged" editable></paper-slider>
 
-    <paper-button raised on-click="edit" data-dialog="newDialog">Edit</paper-button>
-    <paper-button raised on-click="openDialog" data-dialog="newDialog">New</paper-button>
-    <content-edit id="newDialog" ui-schema="" form-data="{{formData}}" on-iron-overlay-closed="_dialogClosed"></content-edit>
+    <paper-button raised on-click="update" data-dialog="contentEditDialog">Edit</paper-button>
+    <paper-button raised on-click="create" data-dialog="contentEditDialog">New</paper-button>
+    <content-edit id="contentEditDialog" ui-schema="" form-data="{{formData}}" on-iron-overlay-closed="_dialogClosed"></content-edit>
       
     <h3>Child Content</h3>
     <content-children id="contentChildren" identity-node-id="{{identityNode._id}}"></content-children>
@@ -85,25 +85,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function() {
-        //console.log('default formData');
-        //console.log(this.formData);
-        this.set('formData.authorId', this.authorNode._id);
-        this.set('formData.parentId', this.identityNode._id);
-        //this.set('formData.contentType', this.identityNode.properties.contentType);
-        //this.set('formData.properties', this.versionNode.properties);
-      	//console.log('update formData');
-        //console.log(this.formData);
         this.$.versionSlider.value = Date.now();
         this.$.versionSlider.max = Date.now();
         this.$.versionSlider.min = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
-        console.log(this.$.versionSlider);
-      },
-
-      clickHandler: function(event) {
-        event.target.parentElement.submit();
-        this.$.getChildren.generateRequest();
-        this.$.newDialog.close();
-        //console.log(this.$.getChildren);
       },
 
       openDialog: function(event) {
@@ -121,9 +105,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      edit: function(event) {
-        //console.log('default formData');
-        //console.log(this.formData);
+      create: function(event) {
+        this.set('formData.action', 'create');
+        this.set('formData.authorId', this.authorNode._id);
+        this.set('formData.parentId', this.identityNode._id);
+        this.set('formData.lang', 'en-gb');
+        this.openDialog(event)
+      },
+
+      update: function(event) {
+        console.log(event);
         this.set('formData.action', 'update');
         this.set('formData.authorId', this.authorNode._id);
         this.set('formData.parentId', undefined);
@@ -132,10 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.set('formData.versionName', '');
         this.set('formData.contenttype', this.identityNode.properties.contentType);
         this.set('formData.properties', this.versionNode.properties);
-      	console.log('update formData');
-        console.log(this.formData);
         this.openDialog(event);
-        
       },
 
       delete: function(event) {
@@ -145,23 +133,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       deleteResponse: function(request) {
-        //console.log(request.detail.response);
-        //console.log(this.$.deleteRequest.lastResponse);
       },
 
       _dialogClosed: function() {
-        console.log("closed");
         this.$.getContent.generateRequest();
       },
 
       _refreshContent: function() {
-        console.log(this.identityNode);
-        console.log(this.content);
         this.identityNode = this.content.identityNode;
         this.versionNode = this.content.versionNode;
         this.set('identityNode', this.content.identityNode);
         this.set('versionNode', this.content.versionNode);
-        console.log(this.identityNode);
       },
 
       _versionSliderChanged: function(event) {
