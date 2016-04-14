@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog-scrollable>
     </paper-dialog> -->
 
-    <paper-slider id="versionSlider" pin on-change="_versionSliderChanged" editable></paper-slider>
+    <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" pin on-change="_versionSliderChanged" editable></paper-slider><span>{{versionSliderValue}}</span>
 
     <paper-button raised on-click="update" data-dialog="contentEditDialog">Edit</paper-button>
     <paper-button raised on-click="create" data-dialog="contentEditDialog">New</paper-button>
@@ -85,9 +85,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       ready: function() {
-        this.$.versionSlider.value = Date.now();
-        this.$.versionSlider.max = Date.now();
-        this.$.versionSlider.min = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
+        var today = new Date();
+        this.versionSliderValue = Date.now();
+        this.versionSliderMax = Date.now();
+        this.versionSliderMin = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
+        console.log(today.toISOString());
       },
 
       openDialog: function(event) {
