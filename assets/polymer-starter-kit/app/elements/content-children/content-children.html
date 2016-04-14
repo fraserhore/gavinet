@@ -21,7 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax
       id="getChildren"
       auto
-      url="/content/getChildren/{{identityNodeId}}"
+      url="/content/getChildren/{{identityNodeId}}?versionValidityDate={{versionValidityDate}}"
       params=''
       handle-as="json"
       last-response="{{children}}"
@@ -72,7 +72,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Number,
           value: 0,
           notify: true
+        },
+
+        versionValidityDate: {
+          type: Number,
+          value: 0,
+          notify: true
         }
+
       },
 
       grid: document.querySelector('vaadin-grid'),
@@ -97,11 +104,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //console.log(this.$.deleteRequest.lastResponse);
       },
 
+      refresh: function() {
+        console.log(this.$.getChildren.params);
+        this.$.getChildren.generateRequest();
+      },
+
       _updateChildren: function(event) {
         this.grid = this.grid || this.$.childrenGrid;
         this.grid.items = this.children;
         this.grid.size = this.children.length;
         this.grid.refreshItems();
+        console.log(this.children);
       },
 
       _toArray: function(obj) {

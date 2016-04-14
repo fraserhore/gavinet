@@ -47,7 +47,7 @@ module.exports = {
         var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
                     +' WHERE id(identityNode) = {id} AND version.lang = "en-gb"'
                     +  versionMatch
-                    +' RETURN identityNode, version, versionNode, authorNode'
+                    +' RETURN identityNode, version, versionNode, authorNode';
 
         var cb = function(err, data) {
             //console.log(data);
@@ -82,14 +82,14 @@ module.exports = {
         } else {
             versionMatch = " AND version.to = 9223372036854775807";
         }
-        console.log(versionMatch);
+        //console.log(versionMatch);
         var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
-                    +' WHERE id(identityNode) = {id} AND version.lang = "en-gb"'
+                    +' WHERE id(identityNode) = {id} AND version.lang = {lang}'
                     +  versionMatch
-                    +' RETURN identityNode, version, versionNode, authorNode'
+                    +' RETURN identityNode, version, versionNode, authorNode';
 
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             return res.json(data[0]);
         }
         db.cypher({
@@ -101,13 +101,29 @@ module.exports = {
     /** Get child content objects */
     getChildren: function(req, res) {
 
-        var query =  'MATCH (a)-[r {to:9223372036854775807}]->(b)-[:VERSION {to:9223372036854775807}]->(c)'
-                    +' WHERE id(a) = {id}'
-                    +' RETURN b as identityNode, c as versionNode' 
-                    +' ORDER BY identityNode.properties.name'
+        console.log(req.param('versionValidityDate'));
         var params = {
-            "id": parseInt(req.param('id'))
+            "id": parseInt(req.param('id')),
+            "lang": parseInt(req.param('lang')) || "en-gb"
         };
+
+        var versionMatch = "";
+
+        if(req.param('versionName')) {
+            var versionName = req.param('versionName');
+            versionMatch = " AND version.name = " + versionName;
+        } else if(req.param('versionValidityDate')) {
+            var versionValidityDate = parseInt(req.param('versionValidityDate'));
+            versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
+        } else {
+            versionMatch = " AND version.to = 9223372036854775807";
+        }
+        console.log(versionMatch);
+        var query =   'MATCH (parentNode)-->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
+                    +' WHERE id(parentNode) = {id} AND version.lang = {lang}'
+                    +  versionMatch
+                    +' RETURN identityNode, version, versionNode, authorNode';
+
         var cb = function(err, data) {
             //console.log(data);
             return res.json(data);

@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <content-edit id="newDialog" ui-schema="" form-data="{{formData}}" on-iron-overlay-closed="_dialogClosed"></content-edit>
       
     <h3>Child Content</h3>
-    <content-children identity-node-id="{{identityNode._id}}"></content-children>
+    <content-children id="contentChildren" identity-node-id="{{identityNode._id}}"></content-children>
 
     <h3>Related Content</h3>
     <content-related identity-node-id="{{identityNode._id}}"></content-related>
@@ -95,7 +95,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //console.log(this.formData);
         this.$.versionSlider.value = Date.now();
         this.$.versionSlider.max = Date.now();
-        this.$.versionSlider.min = Date.now() - 86400000;
+        this.$.versionSlider.min = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
         console.log(this.$.versionSlider);
       },
 
@@ -167,6 +167,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _versionSliderChanged: function(event) {
         this.$.getContent.params["versionValidityDate"] = event.target.value;
         this.$.getContent.generateRequest();
+        this.$.contentChildren.versionValidityDate = event.target.value;
+        this.$.contentChildren.refresh();
       }
 
     });
