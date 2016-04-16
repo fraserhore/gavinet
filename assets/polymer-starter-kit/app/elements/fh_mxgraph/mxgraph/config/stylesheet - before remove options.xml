@@ -1,0 +1,165 @@
+<mxGraph>
+	<mxStylesheet as="stylesheet">
+		<add as="text">
+			<add as="shape" value="rectangle"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="fontSize" value="12"/>
+			<add as="align" value="left"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="shadow" value="0"/>
+			<add as="strokeColor" value="none"/>
+			<add as="fillColor" value="none"/>
+			<add as="gradientColor" value="none"/>
+			<add as="html" value="1"/>
+			<add as="whiteSpace" value="wrap"/>
+		</add>
+		<add as="textBorder" extend="text">
+			<add as="strokeColor" value="orange"/>
+		</add>
+		<add as="defaultVertex" extend="text">
+			<add as="shape" value="rectangle"/>
+			<add as="fontSize" value="12"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="shadow" value="0"/>
+			<add as="strokeColor" value="#C3D9FF"/>
+			<add as="fillColor" value="#C3D9FF"/>
+			<add as="gradientColor" value="none"/>
+		</add>
+		<add as="container">
+			<add as="shape" value="role"/>
+			<add as="shadow" value="0"/>
+			<add as="startSize" value="30"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="top"/>
+			<add as="strokeColor" value="#C6E8F1"/>
+			<add as="fillColor" value="#C6E8F1"/>
+			<add as="fontSize" value="14"/>
+			<add as="horizontal" value="1"/>
+		</add>
+		<add as="processEvent">
+			<add as="strokeColor" value="#B7C716"/>
+			<add as="fillColor" value="#B7C716"/>
+		</add>
+		<add as="input">
+			<add as="strokeColor" value="#95D600"/>
+			<add as="fillColor" value="#95D600"/>
+		</add>
+		<add as="activity">
+			<add as="rounded" value="1"/>
+			<add as="strokeColor" value="#00A1DF"/>
+			<add as="fillColor" value="#00A1DF"/>
+			<add as="fontColor" value="white"/>
+		</add>
+		<add as="activityGroup" extend="activity">
+			<add as="verticalAlign" value="top"/>
+			<add as="strokeColor" value="#005CB9"/>
+			<add as="fillColor" value="#005CB9"/>
+			<add as="fontColor" value="white"/>
+		</add>
+		<add as="decision">
+			<add as="shape" value="rhombus"/>
+			<add as="perimeter" value="rhombusPerimeter"/>
+			<add as="strokeColor" value="grey"/>
+			<add as="fillColor" value="grey"/>
+		</add>
+		<add as="decisionExtended" extend="decision">
+			<add as="shape" value="hexagon"/>
+			<add as="perimeter" value="hexagonPerimeter"/>
+		</add>
+		<add as="output">
+			<add as="strokeColor" value="#95D600"/>
+			<add as="fillColor" value="#95D600"/>
+		</add>
+		<add as="outputGroup">
+			<add as="verticalAlign" value="top"/>
+			<add as="strokeColor" value="#009639"/>
+			<add as="fillColor" value="#009639"/>
+		</add>
+		<add as="outcome">
+			<add as="strokeColor" value="#0097A9"/>
+			<add as="fillColor" value="#0097A9"/>
+			<add as="fontColor" value="white"/>
+		</add>
+		<add as="impact">
+			<add as="strokeColor" value="#009639"/>
+			<add as="fillColor" value="#009639"/>
+			<add as="fontColor" value="white"/>
+		</add>
+		<add as="actor">
+			<add as="shape" value="actor"/>
+			<add as="strokeColor" value="#FFC7C7"/>
+			<add as="fillColor" value="#FFC7C7"/>
+		</add>
+		<add as="swimlane">
+			<add as="shape" value="swimlane"/>
+			<add as="horizontal" value="0"/>
+			<add as="strokeColor" value="#005CB9"/>
+			<add as="fillColor" value="#005CB9"/>
+			<add as="fontColor" value="white"/>
+		</add>
+		<add as="cloud">
+			<add as="shape" value="cloud"/>
+			<add as="perimeter" value="ellipsePerimeter"/>
+		</add>
+	    <add as="ellipse">
+	        <add as="shape" value="ellipse"/>
+	        <add as="perimeter" value="ellipsePerimeter"/>
+	    </add>
+		<add as="cylinder">
+			<add as="shape" value="cylinder"/>
+			<add as="spacingTop" value="10"/>
+			<add as="strokeColor" value="#4096EE"/>
+			<add as="fillColor" value="#4096EE"/>
+		</add>
+		<add as="hline">
+			<add as="shape" value="line"/>
+			<add as="strokeWidth" value="3"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="fontColor" value="black"/>
+			<add as="fontSize" value="10"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="bottom"/>
+			<add as="strokeColor" value="#36393D"/>
+		</add>
+		<add as="image">
+			<add as="shape" value="image"/>
+			<add as="perimeter" value="rectanglePerimeter"/>
+			<add as="fontSize" value="10"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="image" value="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/draw/mxlogo.jpg"/>
+		</add>
+		<add as="defaultEdge">
+			<add as="shape" value="connector"/>
+			<add as="fontSize" value="10"/>
+			<add as="align" value="center"/>
+			<add as="verticalAlign" value="middle"/>
+			<add as="rounded" value="1"/>
+			<add as="labelBackgroundColor" value="white"/>
+			<add as="strokeColor" value="#36393D"/>
+			<add as="strokeWidth" value="1"/>
+			<add as="edgeStyle" value="elbowEdgeStyle"/>
+			<add as="endArrow" value="classic"/>
+		</add>
+		<add as="verticalConnector">
+			<add as="elbow" value="vertical"/>
+		</add>
+		<add as="straightConnector">
+			<add as="shape" value="connector"/>
+			<add as="endArrow" value="classic"/>
+			<add as="edgeStyle">null</add>
+		</add>
+		<add as="arrowConnector">
+			<add as="shape" value="arrow"/>
+			<add as="fillColor" value="#C3D9FF"/>
+			<add as="endSize" value="20"/>
+			<remove as="edgeStyle"/>
+		</add>
+		<add as="offPageReference">
+			<add as="shape" value="Off-page Reference"/>
+			<add as="strokeColor" value="#4CBCED"/>
+			<add as="fillColor" value="#4CBCED"/>
+		</add>
+	</mxStylesheet>
+</mxGraph>

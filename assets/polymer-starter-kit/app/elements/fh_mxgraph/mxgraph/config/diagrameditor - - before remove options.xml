@@ -1,0 +1,244 @@
+<mxEditor defaultGroup="group" defaultEdge="connector">
+	<include name="/sites/km/SiteAssets/fh_mxgraph/mxgraph/config/editor-commons.xml"/>
+	<add as="onInit"><![CDATA[
+		function ()
+		{
+			onInit(this);
+		}
+	]]></add>
+	<ui>
+		<add as="graph" element="graph"/>
+		<add as="status" element="status"/>
+		<add as="toolbar" element="toolbar"/>
+	</ui>
+	<Array as="templates">
+		<add as="text">
+			<Text label="Text" href="">
+				<mxCell vertex="1" style="text">
+					<mxGeometry as="geometry" width="80" height="20"/>
+				</mxCell>
+			</Text>
+		</add>
+		<add as="input">
+			<Input label="Input" spDescription="" spParentIDs="" spRelatedOutputID="" spID="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380300CEA7EC469979B8449D47469C081FD45F"  href="">
+				<mxCell vertex="1" style="input">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Input>
+		</add>
+		<add as="activity">
+			<Activity label="Activity" spDescription="" spParentIDs="" spID="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spResponsible="" spSupport="" spAccountable="" spConsulted="" spInformed="" spPolicies="" spPersonDays="" spCompetencies="" spRecommendations="" spComments="" href="">
+				<mxCell vertex="1" style="activity">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Activity>
+		</add>
+		<add as="decision">
+			<Decision label="Decision" spDescription="" spParentIDs="" spID="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33804000CCACB51C4F08C40B78A82D05EAB45F4" href="">
+				<mxCell vertex="1" style="decision">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Decision>
+		</add>
+		<add as="output">
+			<Output label="Output" spDescription="" spParentIDs="" spID="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33801004870C90224F9C8418222FC63C8AD478B" spMediaType="" spStorageLocation="" href="">
+				<mxCell vertex="1" style="activity">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Output>
+		</add>
+		<add as="outcome">
+			<Outcome label="Outcome" spDescription="" spParentIDs="" spParentGuid="" spID="" spGuid="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B338060087D8C90F857A1D4B93F1229ACED38295" href="">
+				<mxCell vertex="1" style="activity">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Outcome>
+		</add>
+		<add as="impact">
+			<Impact label="Impact" spDescription="" spParentIDs="" spParentGuid="" spID="" spGuid="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380700B45887AFF7B0034BBE1396AC49FF58CA" href="">
+				<mxCell vertex="1" style="activity">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Impact>
+		</add>
+		<add as="image">
+			<Image label="Image" href="">
+				<mxCell vertex="1" style="image">
+					<mxGeometry as="geometry" width="80" height="50"/>
+				</mxCell>
+			</Image>
+		</add>
+		<add as="actor">
+			<actor label="Actor" href="" spDescription="" spParentIDs="" spParentGuid="" spID="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380500620A3B00E9C83D4A94E40E418F0470FD" >
+				<mxCell vertex="1" style="actor">
+					<mxGeometry as="geometry" width="40" height="60"/>
+				</mxCell>
+			</actor>
+		</add>
+		<add as="role">
+			<Role label="Role" href="" spDescription="" spParentIDs="" spParentGuid="" spID="" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380500620A3B00E9C83D4A94E40E418F0470FD" >
+				<mxCell vertex="1" style="swimlane" connectable="1">
+					<mxGeometry as="geometry" width="1200" height="200"/>
+				</mxCell>
+			</Role>
+		</add>
+		<add as="cloud">
+			<Cloud label="Cloud" href="">
+				<mxCell vertex="1" style="cloud">
+					<mxGeometry as="geometry" width="80" height="60"/>
+				</mxCell>
+			</Cloud>
+		</add>
+	    <add as="ellipse">
+	        <Ellipse label="Ellipse" href="">
+	            <mxCell vertex="1" style="ellipse">
+	                <mxGeometry as="geometry" width="80" height="60"/>
+	            </mxCell>
+	        </Ellipse>
+	    </add>
+		<add as="hline">
+			<Hline label="Hline" href="">
+				<mxCell vertex="1" style="ellipse">
+					<mxGeometry as="geometry" width="60" height="10"/>
+				</mxCell>
+			</Hline>
+		</add>
+		<add as="connector">
+			<Connector label="" href="">
+				<mxCell edge="1">
+					<mxGeometry as="geometry" relative="1"/>
+				</mxCell>
+			</Connector>
+		</add>
+		<add as="offPageReference">
+			<OffPageReference label="Off Page Reference"  href="" spRelatedActivityID="">
+				<mxCell vertex="1" style="offPageReference">
+					<mxGeometry as="geometry" width="80" height="40"/>
+				</mxCell>
+			</OffPageReference>
+		</add>
+	</Array>
+	<mxGraph as="graph" alternateEdgeStyle="verticalConnector" allowLoops="1" dropEnabled="1" >
+		<add as="isAutoSizeCell"><![CDATA[
+			function(cell)
+			{
+				return mxUtils.isNode(this.model.getValue(cell), 'text');
+			}
+		]]></add>
+		<add as="isSwimlane"><![CDATA[
+			function (cell)
+			{
+				if(cell !== null)
+				{
+					if(cell.style === 'swimlane')
+						return true;
+					else
+						return mxUtils.isNode(this.model.getValue(cell), 'swimlane');
+				}
+				else
+					return mxUtils.isNode(this.model.getValue(cell), 'swimlane');
+				
+			}
+		]]></add>
+		<add as="getTooltipForCell"><![CDATA[
+			function(cell)
+			{
+				return '<b>'+cell.getAttribute('label')+
+						'</b> ('+cell.getId()+')'+
+						'<br>Style: '+cell.getStyle()+
+						'<br>Connections: '+cell.getEdgeCount()+
+						'<br>Children: '+cell.getChildCount();
+			}
+		]]></add>
+		<add as="convertValueToString"><![CDATA[
+			function(cell)
+			{
+				return cell.getAttribute('label');
+			}
+		]]></add>
+		<include name="/sites/km/SiteAssets/fh_mxgraph/mxgraph/config/stylesheet.xml"/>
+		<mxGraphModel as="model">
+			<add as="valueForCellChanged"><![CDATA[
+				function(cell, value)
+				{
+					var previous = null;
+
+					if (value == null || isNaN(value.nodeType))
+					{
+						previous = cell.value.getAttribute('label');
+
+						if (value == null)
+						{
+							cell.value.removeAttribute('label');
+						}
+						else
+						{
+							cell.setAttribute('label', value);
+						}
+					}
+					else
+					{
+						previous = cell.value;
+						cell.value = value;
+					}
+
+					return previous;
+				}
+			]]></add>
+			<root>
+				<Graph label="Graph" href="http://www.mxgraph.com/" id="0">
+					<mxCell/>
+				</Graph>
+				<Layer label="Default Layer" id="1" spId="" spGuid="">
+					<mxCell parent="0"/>
+				</Layer>
+			</root>
+		</mxGraphModel>
+	</mxGraph>
+	<mxDefaultToolbar as="toolbar">
+		<add as="connect" mode="connect" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/connect.gif"><![CDATA[
+			function (editor)
+			{
+				if (editor.defaultEdge != null)
+				{
+					editor.defaultEdge.style = null;
+				}
+			}
+		]]></add>
+		<add as="connect" mode="connect" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/straight.gif"><![CDATA[
+			function (editor)
+			{
+				if (editor.defaultEdge != null)
+				{
+					editor.defaultEdge.style = 'straightConnector';
+				}
+			}
+		]]></add>
+		<add as="connect" mode="connect" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/arrow.gif"><![CDATA[
+			function (editor)
+			{
+				if (editor.defaultEdge != null)
+				{
+					editor.defaultEdge.style = 'arrowConnector';
+				}
+			}
+		]]></add>
+		<add as="Text" template="text" style="text" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/text.gif"/>
+		<add as="Border" template="text" style="textBorder" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/text.gif"/>
+		<add as="Input" template="input" style="input" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/rectangle.gif"/>
+		<add as="Activity" template="activity" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/rounded.gif"/>
+		<add as="Decision" template="decision" style="decision" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/rhombus.gif"/>
+		<add as="Decision Extended" template="decision" style="decisionExtended" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/hexagon.gif"/>
+		<add as="Output" template="output" style="output" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/rectangle.gif"/>
+		<add as="Outcome" template="outcome" style="outcome" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/rectangle.gif"/>
+		<add as="Impact" template="impact" style="impact" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/rectangle.gif"/>
+		<add as="Actor" template="actor" style="actor" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/actor.gif"/>
+		<add as="Role" template="role" style="swimlane" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/swimlane.gif"/>
+		<add as="Database" template="database" style="database" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/cylinder.gif"/>
+		<add as="Cloud" template="cloud" style="cloud" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/cloud.gif"/>
+	    <add as="Ellipse" template="ellipse" style="ellipse" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/ellipse.gif"/>
+		<add as="Line" template="hline" style="hline" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/hline.gif"/>
+		<add as="Image" template="image" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/image.gif"/>
+		<add as="Off Page Reference" template="offPageReference" style="offPageReference" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/triangle.gif"/>
+	</mxDefaultToolbar>
+</mxEditor>

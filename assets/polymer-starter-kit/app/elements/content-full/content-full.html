@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     
-    <h1>{{versionNode.properties.name}}</h1>
+    <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
     <br/>
     
@@ -29,6 +29,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handle-as="json"
       last-response="{{content}}"
       on-response="_refreshContent"
+      debounce-duration="300"></iron-ajax>
+
+    <iron-ajax id="getContentTypeSchema"
+      auto
+      url="/content/getContentTypeSchema"
+      params='{"contenttype": formData.contenttype}'
+      handle-as="json"
+      last-response="{{dataSchema}}"
       debounce-duration="300"></iron-ajax>
 
     <iron-ajax
@@ -46,14 +54,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog-scrollable>
     </paper-dialog> -->
 
-    <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" pin on-change="_versionSliderChanged" editable></paper-slider>
+    <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged" editable></paper-slider>
 
-    <paper-button raised on-click="update" data-dialog="contentEditDialog">Edit</paper-button>
-    <paper-button raised on-click="create" data-dialog="contentEditDialog">New</paper-button>
-    <content-edit id="contentEditDialog" ui-schema="" form-data="{{formData}}" on-iron-overlay-closed="_dialogClosed"></content-edit>
+    <paper-button raised on-click="update">Edit</paper-button>
+    <paper-button raised on-click="create">New</paper-button>
+    
+    <paper-dialog id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true" on-iron-overlay-closed="_dialogClosed">
+      <h2>Create / Edit Item</h2>
+      <paper-dialog-scrollable>
+        <content-edit id="contentEdit" ui-schema="" form-data="{{formData}}" data-schema="{{dataSchema}}" on-content-edited="_refreshAllContent"></content-edit>
+      </paper-dialog-scrollable>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button raised on-click="_submit" data-form="contentEdit">Submit</paper-button>
+      </div>
+    </paper-dialog>
       
     <h3>Child Content</h3>
-    <content-children id="contentChildren" identity-node-id="{{identityNode._id}}"></content-children>
+    <content-children id="contentChildren" identity-node-id="{{identityNode._id}}" on-edit="update"></content-children>
 
     <h3>Related Content</h3>
     <content-related identity-node-id="{{identityNode._id}}"></content-related>
@@ -92,40 +110,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(today.toISOString());
       },
 
-      openDialog: function(event) {
-        var button = event.target;
-        while (!button.hasAttribute('data-dialog') && button !== document.body) {
-          button = button.parentElement;
-        }
-        if (!button.hasAttribute('data-dialog')) {
-          return;
-        }
-        var id = button.getAttribute('data-dialog');
-        var dialog = document.getElementById(id);
-        if (dialog) {
-          dialog.open();
-        }
-      },
-
       create: function(event) {
         this.set('formData.action', 'create');
         this.set('formData.authorId', this.authorNode._id);
         this.set('formData.parentId', this.identityNode._id);
+        this.set('formData.id', undefined);
         this.set('formData.lang', 'en-gb');
-        this.openDialog(event)
+        this.set('formData.versionName', '');
+        this.set('formData.contenttype', 'folder');
+        this.set('formData.properties', {});
+        // could add a change listener to formData.contenttype to handle the following
+        this.$.getContentTypeSchema.params = {"contenttype": this.formData.contenttype};
+        this.$.getContentTypeSchema.generateRequest;
+        this._initFormData();
+        this.$.editDialog.open();
       },
 
       update: function(event) {
-        console.log(event);
+        var identityNode = event.detail.identityNode || this.identityNode,
+            versionNode = event.detail.versionNode || this.versionNode,
+            authorNode = event.detail.authorNode || this.authorNode;
         this.set('formData.action', 'update');
-        this.set('formData.authorId', this.authorNode._id);
+        this.set('formData.authorId', authorNode._id);
         this.set('formData.parentId', undefined);
-        this.set('formData.id', this.identityNode._id);
+        this.set('formData.id', identityNode._id);
         this.set('formData.lang', 'en-gb');
         this.set('formData.versionName', '');
-        this.set('formData.contenttype', this.identityNode.properties.contentType);
-        this.set('formData.properties', this.versionNode.properties);
-        this.openDialog(event);
+        this.set('formData.contenttype', identityNode.properties.contentType);
+        this.set('formData.properties', versionNode.properties);
+        // could add a change listener to formData.contenttype to handle the following
+        this.$.getContentTypeSchema.params = {"contenttype": this.formData.contenttype};
+        this.$.getContentTypeSchema.generateRequest;
+        this._initFormData();
+        this.$.editDialog.open();
       },
 
       delete: function(event) {
@@ -137,8 +154,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       deleteResponse: function(request) {
       },
 
+      _initFormData: function() {
+        // Configure the formData properties and relationships based on the dataSchema if they are not already provided
+        var dataSchemaKeys = Object.keys(this.dataSchema);
+        if(!this.formData.properties) {
+          this.formData.properties = {};
+        }
+        if(!this.formData.relationships) {
+          this.formData.relationships = [];
+        }
+        for (var i = 0; i < dataSchemaKeys.length; i++) {
+          var key = dataSchemaKeys[i];
+          if(!this.formData.properties[key]) {
+            switch(this.dataSchema[key].type) {
+              case 'String':
+                this.formData.properties[key] = '';
+                break;
+              case 'Array':
+                this.formData.properties[key] = [];
+                break;
+              case 'Object':
+                this.formData.properties[key] = {};
+                break;
+              case 'Relationship':
+                break;
+              case 'relationship':
+                break;
+              default:
+                this.formData.properties[key] = undefined;
+                break;       
+            }
+          }
+        };
+      },
+
       _dialogClosed: function() {
-        this.$.getContent.generateRequest();
+        //this.$.getContent.generateRequest();
       },
 
       _refreshContent: function() {
@@ -148,11 +199,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.set('versionNode', this.content.versionNode);
       },
 
+      _refreshAllContent: function() {
+        this.$.contentChildren.refresh();
+      },
+
       _versionSliderChanged: function(event) {
         this.$.getContent.params["versionValidityDate"] = event.target.value;
         this.$.getContent.generateRequest();
         this.$.contentChildren.versionValidityDate = event.target.value;
         this.$.contentChildren.refresh();
+      },
+
+      _submit: function(event) {
+        var button = event.target;
+        while (!button.hasAttribute('data-form') && button !== document.body) {
+          button = button.parentElement;
+        }
+        if (!button.hasAttribute('data-form')) {
+          return;
+        }
+        var id = button.getAttribute('data-form');
+        var form = document.getElementById(id);
+        if (form) {
+          form._submit();
+        }
+        this.$.editDialog.close();
+        this.$.getContent.generateRequest();       
       }
 
     });

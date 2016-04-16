@@ -1,0 +1,161 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="/polymer-starter-kit/app/bower_components/polymer/polymer.html">
+
+<dom-module id="content-full-activity">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <h1>{{versionNode.properties.name}}</h1>
+    <div>{{versionNode.properties.description}}</div>
+    <br/>
+    
+    <iron-ajax id="getContent"
+      
+      url="/content/getContent/{{identityNode._id}}"
+      params={}
+      handle-as="json"
+      last-response="{{content}}"
+      on-response="_refreshContent"
+      debounce-duration="300"></iron-ajax>
+
+    <iron-ajax
+      id="deleteRequest"
+      url=""
+      handle-as="json"
+      on-response="deleteResponse"
+      debounce-duration="300"></iron-ajax>
+
+    <!-- <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Create Relationship</paper-button>
+    <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
+      <h2>Create Relationship</h2>
+      <paper-dialog-scrollable>
+        <content-relationship reference-node-id="{{identityNode._id}}" direction="outbound" parent-node-id="{{identityNode._id}}"></content-relationship>
+      </paper-dialog-scrollable>
+    </paper-dialog> -->
+
+    <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" pin on-change="_versionSliderChanged" editable></paper-slider>
+
+    <paper-button raised on-click="update" data-dialog="contentEditDialog">Edit</paper-button>
+    <paper-button raised on-click="create" data-dialog="contentEditDialog">New</paper-button>
+    <content-edit id="contentEditDialog" ui-schema="" form-data="{{formData}}" on-iron-overlay-closed="_dialogClosed"></content-edit>
+      
+    <h3>Child Content</h3>
+    <content-children id="contentChildren" identity-node-id="{{identityNode._id}}"></content-children>
+
+    <h3>Related Content</h3>
+    <content-related identity-node-id="{{identityNode._id}}"></content-related>
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'content-full-activity',
+
+      properties: {
+        identityNode: {
+          type: Object,
+          value: function() { return {}; },
+          notify: true
+        },
+        versionNode: {
+          type: Object,
+          value: function() { return {}; },
+          notify: true
+        },
+        authorNode: {
+          type: Object,
+          value: function() { return {}; },
+          notify: true
+        }
+      },
+
+      ready: function() {
+        var today = new Date();
+        this.versionSliderValue = Date.now();
+        this.versionSliderMax = Date.now();
+        this.versionSliderMin = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
+        console.log(today.toISOString());
+      },
+
+      openDialog: function(event) {
+        var button = event.target;
+        while (!button.hasAttribute('data-dialog') && button !== document.body) {
+          button = button.parentElement;
+        }
+        if (!button.hasAttribute('data-dialog')) {
+          return;
+        }
+        var id = button.getAttribute('data-dialog');
+        var dialog = document.getElementById(id);
+        if (dialog) {
+          dialog.open();
+        }
+      },
+
+      create: function(event) {
+        this.set('formData.action', 'create');
+        this.set('formData.authorId', this.authorNode._id);
+        this.set('formData.parentId', this.identityNode._id);
+        this.set('formData.lang', 'en-gb');
+        this.openDialog(event)
+      },
+
+      update: function(event) {
+        console.log(event);
+        this.set('formData.action', 'update');
+        this.set('formData.authorId', this.authorNode._id);
+        this.set('formData.parentId', undefined);
+        this.set('formData.id', this.identityNode._id);
+        this.set('formData.lang', 'en-gb');
+        this.set('formData.versionName', '');
+        this.set('formData.contenttype', this.identityNode.properties.contentType);
+        this.set('formData.properties', this.versionNode.properties);
+        this.openDialog(event);
+      },
+
+      delete: function(event) {
+        this.$.deleteRequest.url = "/content/delete";
+        this.$.deleteRequest.params = {"id": event.model.item.identityNode._id};
+        this.$.deleteRequest.generateRequest();
+      },
+
+      deleteResponse: function(request) {
+      },
+
+      _dialogClosed: function() {
+        this.$.getContent.generateRequest();
+      },
+
+      _refreshContent: function() {
+        this.identityNode = this.content.identityNode;
+        this.versionNode = this.content.versionNode;
+        this.set('identityNode', this.content.identityNode);
+        this.set('versionNode', this.content.versionNode);
+      },
+
+      _versionSliderChanged: function(event) {
+        this.$.getContent.params["versionValidityDate"] = event.target.value;
+        this.$.getContent.generateRequest();
+        this.$.contentChildren.versionValidityDate = event.target.value;
+        this.$.contentChildren.refresh();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

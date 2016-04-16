@@ -1,0 +1,334 @@
+
+<link rel="stylesheet" type="text/css" href="/sites/km/SiteAssets/fh_mxgraph/mxgraph/css/mxGraphStyles.css"/>
+  
+<div class="row">
+	<div class="column small-8">
+
+		<!-- Graph of sub-activities -->
+		<div class="divTitle"> 
+			<div class="divTitleNavigation">
+				<div id="divTitlelbl">
+					<label id="lblTitle" text=""></label>
+				</div>
+				<h1 id="activityName"></h1>
+			</div>
+			<div class="divTitleBtnSwitch">		
+				<input class="button btnFloatRight" type="button" id="btnViewEdit" text="Edit" value="Edit" onclick="ToggleViewEdit();"></input>
+				<!-- <input class="btnFloatRight" type="button" id="btnEditProperties" text="Edit Properties" value="Edit Properties" onclick="EditProperties();"></input> -->
+				<input class="btnFloatRight" type="button" id="btnShowPath" text="Show Activity Path" value="Show Activity Path" onclick="showActivityPath();"></input>
+			</div>
+		</div>
+
+
+		<div id="graph-ancestor-path"></div>
+		<div id="sub-activities-graph">
+		    <!-- Edit interface for the graph -->
+		    <div id="page">
+		        <span id="mainActions" ></span> 
+				<span id="selectActions" ></span><span id="zoomActions"></span>
+				<div id="toolbar" ><!-- Toolbar Here --></div>
+				<div id="psMain">
+					<div id="graph" >
+						<!-- Graph Here -->
+						<center id="splash" >
+							<img src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/loading.gif">
+						</center>
+					</div>
+				</div>
+		    </div>
+		    <div id="mxgraph-model"></div>
+		</div>
+		<div id="mxGraph-view"></div><br/>
+
+	</div>
+	<div class="column small-4">
+
+		<div id="resources">
+			<h2 class="title">Resources</h2>
+			<div id="dragandrophandler">
+				<div id="resourcesList" >
+					
+				</div>
+				<div class="divUploader">
+					Drag & drop files here to upload or 
+					
+					<!-- <input id="FileUpload" class="button" type="file" title="upldFileBox"></input> -->
+					<div class="custom-file-upload">
+						<!--<label for="file">File: </label>--> 
+						<input type="file" id="FileUpload" name="myfiles[]" multiple />
+					</div>
+					<input class="button" type="button" id="btnUploadFile" text="Upload" value="Upload" onclick="UploadFile();"></input>
+				</div>
+			</div>
+			<br></br>
+			
+			<table id="RASCITable" class="tabRasci">
+		      <thead>
+		        <tr>
+		          <th class="tabHeader">Responsible</th>
+		          <th class="tabHeader">Accountable</th>
+		          <th class="tabHeader">Support</th>
+		          <th class="tabHeader">Consulted</th>
+		          <th class="tabHeader">Informed</th>
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr>
+		          <td id="tabCell1" class="tabCell" data-label="Responsible"></td>
+		          <td id="tabCell2" class="tabCell" data-label="Accountable"></td>
+		          <td id="tabCell3" class="tabCell" data-label="Support"></td>
+		          <td id="tabCell4" class="tabCell" data-label="Consulted"></td>
+		          <td id="tabCell5" class="tabCell" data-label="Informed"></td>
+		        </tr>
+		      </tbody>
+		    </table>
+			<!-- <input onclick="GetContents();" type="button" value="Get Editor Contents (HTML)"> -->
+			<div id="status1"></div>
+		</div>
+
+	</div>
+</div>
+
+<div id="footer">
+	<div id="properties"></div>
+</div>
+
+
+
+<div id="dialog" title="Role Selection" style="display:none">
+  Pick an existing role or pick 'Create' to create a new role:
+  <br/>
+  <select id="actors">
+	</select>
+</div>
+
+
+
+
+
+<div class="divProperties">
+	<!-- <div id="graph-versions">Previous versions:
+	</div> -->
+</div>
+
+<!-- <div id="draggable" class="ui-widget-content">
+  <p>Drag me around</p>
+</div> -->
+
+<!-- <div id="droppable" class="ui-widget-header dropzone">
+  <p>Drop here</p>
+</div> -->
+			
+<script type="text/javascript">
+	mxBasePath = _spPageContextInfo.siteServerRelativeUrl + '/SiteAssets/fh_mxgraph/mxgraph';
+</script>
+
+<div id="psDescription"></div>
+
+<!-- Javascript dependencies included already: jquery, jquery.ui, jquery.cookie, jquery.expander.js, fh_select_minimal_submit.js -->
+ <script src="/sites/km/SiteAssets/jquery-1.11.2.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="//gavinet.sharepoint.com///gavinet.sharepoint.com///gavinet.sharepoint.com///code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+<script src="//gavinet.sharepoint.com///gavinet.sharepoint.com///gavinet.sharepoint.com///code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//gavinet.sharepoint.com///gavinet.sharepoint.com///gavinet.sharepoint.com///code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<!-- Loads and initializes the library -->
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/mxClient.js"></script> 
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/mxApplication.js"></script>  
+
+<!-- Load the Edit view scripts -->
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityViewer.js"></script>  
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityEditor.js"></script>  
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityOperations.js"></script>  
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/Uploader.js"></script> 
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/mxgraph/js/Loader.js"></script>   
+<script type="text/javascript" src="/sites/km/SiteAssets/fh_mxgraph/ckeditor/ckeditor.js"></script>  
+
+
+
+
+<!-- Needed Viewer and Editor references -->
+<script type="text/javascript">
+  	var siteServerRelativeUrl = _spPageContextInfo.siteServerRelativeUrl;
+	
+	//var mxClient = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/mxClient.js";
+	//var mxApplication = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/mxApplication.js";
+	//var mxGraphActivityViewer = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityViewer.js";
+	//var mxGraphActivityEditor = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityEditor.js";
+	//var mxGraphActivityOperations = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityOperations.js";
+	//var Uploader = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/Uploader.js";
+	//var Loader = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/mxgraph/js/Loader.js";
+	//var ckeditor = siteServerRelativeUrl + "/SiteAssets/fh_mxgraph/ckeditor/ckeditor.js";
+	
+	//$.getScript(mxClient, function() {
+	//   console.log(mxClient + " Loaded");
+	//});
+	//
+	//$.getScript(mxApplication, function() {
+	//   console.log(mxApplication + " Loaded");
+	//}); 
+	//
+	//$.getScript(Loader, function() {
+	//	console.log(Loader + " Loaded");
+	//	loadItemContent();
+	//	new mxApplication( _spPageContextInfo.siteAbsoluteUrl + '/SiteAssets/fh_mxgraph/mxgraph/config/diagrameditor.xml');
+	//});
+	//
+	//$.getScript(mxGraphActivityViewer, function() {
+	//   console.log(mxGraphActivityViewer + " Loaded");
+	//});
+	//
+	//$.getScript(mxGraphActivityEditor, function() {
+	//   console.log(mxGraphActivityEditor + " Loaded");
+	//});
+	//
+	//$.getScript(mxGraphActivityOperations, function() {
+	//   console.log(mxGraphActivityOperations + " Loaded");
+	//});
+	//
+	//$.getScript(Uploader, function() {
+	//   console.log(Uploader + " Loaded");
+	//});
+	//
+	//
+	//
+	//$.getScript(ckeditor, function() {
+	//   console.log(ckeditor + " Loaded");
+	//});
+	 
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/mxClient.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/mxApplication.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityViewer.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityEditor.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/mxGraphActivityOperations.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/Uploader.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/mxgraph/js/Loader.js"&gt;&lt;/script&gt;');
+	//document.write('&lt;script type="text/javascript" src="'+siteServerRelativeUrl+'/SiteAssets/fh_mxgraph/ckeditor/ckeditor.js"&gt;&lt;/script&gt;');
+	
+	function GetContents() {
+		// Get the editor instance that you want to interact with.
+		var editor = CKEDITOR.instances.txtDescription;
+
+		// Get editor contents
+		// http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-getData
+		alert( editor.getData() );
+	}
+
+
+	if(!(window.console && console.log)) {
+	  console = {
+		log: function(){},
+		debug: function(){},
+		info: function(){},
+		warn: function(){},
+		error: function(){}
+	  };
+	}
+
+	console.log(_spPageContextInfo);
+	
+	var mxGraphEditor;
+	
+	function LoadEditor() {
+		mxGraphActivityEditor(mxGraphEditor);	
+	}
+	
+    // In the config file, the mxEditor.onInit method is overridden to invoke this global function as the last step in the editor constructor.
+    function onInit(editor) {
+		mxGraphEditor = editor;
+		ToggleViewEdit();
+    }
+
+    // window.onbeforeunload = function() { return mxResources.get('changesLost'); };
+
+    // The application starts here. The document.onLoad executes the mxApplication constructor with a given configuration.
+    // The xml stylesheet that defines the look of the shapes is a seperate xml file that is included by the configuration file.
+	
+	function UploadFile(){
+		if (document.getElementById("FileUpload").files.length === 0) {
+			alert('No file was selected');
+			return;
+		}
+		var obj = $("#dragandrophandler");
+		var parts = document.getElementById("FileUpload").value.split("\\");
+		var filename = parts[parts.length - 1];
+		var file = document.getElementById("FileUpload").files[0];
+		handleSingleFileUpload(file, obj);
+	}
+
+    $(function() {
+		loadItemContent();
+		new mxApplication( _spPageContextInfo.siteAbsoluteUrl + '/SiteAssets/fh_mxgraph/mxgraph/config/diagrameditor.xml');
+	});
+	
+
+$(document).ready(function() {
+	
+	//hide this table rows
+	$('h3:contains("Title")').closest('tr').hide();
+	$('h3:contains("Process XML")').closest('tr').hide();
+	$('h3:contains("GraphXML")').closest('tr').hide();
+
+	<!--$('h3:contains("href")').closest('tr').hide();-->
+	<!--$('h3:contains("spContentTypeID")').closest('tr').hide();-->
+	<!--$('h3:contains("spID")').closest('tr').hide();-->
+	<!--$('h3:contains("spParentIDs")').closest('tr').hide(); -->
+	
+	var obj = $("#dragandrophandler");
+	obj.on('dragenter', function (e) 
+	{
+		e.stopPropagation();
+		e.preventDefault();
+		$(this).css('border', '1px dotted #0B85A1');
+		$(this).css('background-color', '#FAFAFA');
+	});
+	obj.on('dragover', function (e) 
+	{
+		 e.stopPropagation();
+		 e.preventDefault();
+	});
+	obj.on('drop', function (e) 
+	{
+	 
+		 
+		 e.preventDefault();
+		 var files = e.originalEvent.dataTransfer.files;
+	 
+		if (files !== undefined)
+		{
+			$(this).css('border', '1px dotted #0B85A1');
+			//We need to send dropped files to Server
+			handleFileUpload(files,obj);
+			$(this).css('border', '0px transparent #0B85A1');
+		}
+	});
+	$(document).on('dragenter', function (e) 
+	{
+		e.stopPropagation();
+		e.preventDefault();
+	});
+	$(document).on('dragover', function (e) 
+	{
+	  e.stopPropagation();
+	  e.preventDefault();
+	  obj.css('border', '1px solid #0B85A1');
+	  obj.css('background-color', '#ffffff');
+	});
+	$(document).on('drop', function (e) 
+	{
+		e.stopPropagation();
+		e.preventDefault();
+	});
+});
+
+</script>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head>
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">GAVI-4-2560</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">6caf72ea-8a2e-4c4a-8b92-fafc600bd74e</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://gavinet.sharepoint.com/sites/km/_layouts/15/DocIdRedir.aspx?ID=GAVI-4-2560, GAVI-4-2560</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>

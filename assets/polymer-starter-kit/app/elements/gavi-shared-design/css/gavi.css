@@ -1,0 +1,186 @@
+@import url('gavi-blessed1.css?z=1433332641725');
+
+  .layout_body__topbar > p, .layout_body__topbar > h1, .layout_body__topbar > h2, .layout_body__topbar > h3, .layout_body__topbar > h4, .layout_body__topbar > h5, .layout_body__topbar > h6 {
+    line-height: 58px;
+    white-space: nowrap; }
+  .layout_body__topbar > .button {
+    margin-top: 7px;
+    margin-bottom: 0; }
+  .layout_body__topbar + .layout_body__content {
+    padding-top: 58px; }
+
+@font-face {
+	font-family: 'gavi-icons';
+	src:url('fonts/gavi-icons.eot?-qg3wcw');
+	src:url('fonts/gavi-icons.eot?#iefix-qg3wcw') format('embedded-opentype'),
+		url('fonts/gavi-icons.ttf?-qg3wcw') format('truetype'),
+		url('fonts/gavi-icons.woff?-qg3wcw') format('woff'),
+		url('fonts/gavi-icons.svg?-qg3wcw#gavi-icons') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon--"], [class*=" icon--"] {
+	font-family: 'gavi-icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon--ticket:before {
+	content: "\e939";
+}
+.icon--messages:before {
+	content: "\e970";
+}
+.icon--profil:before {
+	content: "\e971";
+}
+.icon--wrench:before {
+	content: "\e991";
+}
+.icon--bug:before {
+	content: "\e999";
+}
+.icon--rocket:before {
+	content: "\e9a5";
+}
+.icon--bulb:before {
+	content: "\e627";
+}
+.icon--connect:before {
+	content: "\e61e";
+}
+.icon--info:before {
+	content: "\e61f";
+}
+.icon--lighthouse:before {
+	content: "\e620";
+}
+.icon--refresh:before {
+	content: "\61";
+}
+.icon--dot:before {
+	content: "\2022";
+}
+.icon--prev-circle:before {
+	content: "\2190";
+}
+.icon--next-circle:before {
+	content: "\2192";
+}
+.icon--notes:before {
+	content: "\e61d";
+}
+.icon--contacts:before {
+	content: "\e618";
+}
+.icon--check-circle:before {
+	content: "\e617";
+}
+.icon--done:before {
+	content: "\e600";
+}
+.icon--grade:before {
+	content: "\e601";
+}
+.icon--help:before {
+	content: "\e602";
+}
+.icon--highlight-remove:before {
+	content: "\e603";
+}
+.icon--home:before {
+	content: "\e619";
+}
+.icon--info-circle:before {
+	content: "\e604";
+}
+.icon--search:before {
+	content: "\e605";
+}
+.icon--stars:before {
+	content: "\e606";
+}
+.icon--videocam:before {
+	content: "\e621";
+}
+.icon--message:before {
+	content: "\e609";
+}
+.icon--add-circle:before {
+	content: "\e60a";
+}
+.icon--add-circle-outline:before {
+	content: "\e60b";
+}
+.icon--clear:before {
+	content: "\e60c";
+}
+.icon--dvr:before {
+	content: "\e622";
+}
+.icon--edit:before {
+	content: "\e60d";
+}
+.icon--up:before {
+	content: "\e60e";
+}
+.icon--cloud:before {
+	content: "\e623";
+}
+.icon--folder:before {
+	content: "\e624";
+}
+.icon--laptop:before {
+	content: "\e625";
+}
+.icon--phone-iphone:before {
+	content: "\e626";
+}
+.icon--dehaze:before {
+	content: "\e615";
+}
+.icon--apps:before {
+	content: "\e616";
+}
+.icon--arrow-back:before {
+	content: "\e607";
+}
+.icon--arrow-forward:before {
+	content: "\e608";
+}
+.icon--chevron-left:before {
+	content: "\e61b";
+}
+.icon--chevron-right:before {
+	content: "\e61c";
+}
+.icon--expand-less:before {
+	content: "\e60f";
+}
+.icon--expand-more:before {
+	content: "\e610";
+}
+.icon--countries:before {
+	content: "\e61a";
+}
+.icon--check-box:before {
+	content: "\e611";
+}
+.icon--check-box-outline-blank:before {
+	content: "\e612";
+}
+.icon--radio-button-off:before {
+	content: "\e613";
+}
+.icon--radio-button-on:before {
+	content: "\e614";
+}

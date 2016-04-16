@@ -35,7 +35,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
-    <vaadin-grid id="childrenGrid">
+    <!-- <vaadin-grid id="childrenGrid">
       <table>
         <colgroup>
           <col name="versionNode.properties.name">
@@ -43,7 +43,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <col name="versionNode.properties.description">
         </colgroup>
       </table>
-    </vaadin-grid>
+    </vaadin-grid> -->
 
     <template is="dom-repeat" items="[[children]]">
       <div class="horizontal-section">
@@ -82,15 +82,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-      grid: document.querySelector('vaadin-grid'),
+      //grid: document.querySelector('vaadin-grid'),
 
       ready: function() {
-        this.grid = this.grid || this.$.childrenGrid;
-        this.grid.items = this.children || [];
+        //this.grid = this.grid || this.$.childrenGrid;
+        //this.grid.items = this.children || [];
       },
 
-      clickHandler: function(event) {
-        event.target.parentElement.submit();
+      edit: function(event) {
+        this.fire('edit', event.model.item);
       },
 
       delete: function(event) {
@@ -105,15 +105,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       refresh: function() {
-        console.log(this.$.getChildren.params);
+        console.log(this.$.getChildren.url);
         this.$.getChildren.generateRequest();
       },
 
       _updateChildren: function(event) {
-        this.grid = this.grid || this.$.childrenGrid;
-        this.grid.items = this.children;
-        this.grid.size = this.children.length;
-        this.grid.refreshItems();
+        //this.grid = this.grid || this.$.childrenGrid;
+        // this.grid.items = this.children;
+        // this.grid.size = this.children.length;
+        // this.grid.refreshItems();
         console.log(this.children);
       },
 

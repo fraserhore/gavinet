@@ -1,0 +1,100 @@
+.button { text-decoration:none; }
+/**
+ *
+ * 
+ Section & title
+**/
+.section {margin-left:0;}
+.panel > div, #graph-ancestor-path, #sub-activities-graph, #mxGraph-view,
+#graph-ancestor-path .pathTotalDiv, #graph { float:none; }
+.panel > div:last-child { margin-bottom: 1em;}
+.panel.header .header__title #divTitlelbl { float:none;  padding-top: 10px;}
+.panel.header .header__title #parentNavigation { margin:0; color:#fff;}
+.panel.header .header__title #activityName { margin:0; padding-bottom: 20px; color:#fff;}
+.panel.header .header__button:hover { text-decoration:none; }
+#btnViewEdit, #btnShowPath { float:none; }
+
+/**
+ *
+ * 
+ Graph view 
+**/
+.mxGraph-view-wrapper {
+	padding:10px;
+	border:solid 1px #dedede;}
+#mxGraph-view {
+	overflow:hidden;
+	margin:0;
+	cursor:move;
+}
+.pathTotalDiv {
+	overflow:auto;
+}
+
+/* edit */
+#mainActions > .button { margin-right:4px; vertical-align:top; }
+#mainActions > select { 
+	display:inline-block;
+	margin-left:0;
+}
+#mainActions, #selectActions, #zoomActions { 
+	display:inline-block;
+	vertical-align:middle;
+}
+
+/** 
+ *
+ *
+ Description / Resources 
+*/
+#psDescription, #divResources {
+	float:none;
+	display:block;
+	width:auto;
+	margin-bottom:2em;
+}
+
+/** 
+ *
+ *
+ Resources 
+*/
+#resources { margin-top:0; }
+
+/* file upload */
+.divUploader {
+	float:none;
+	width:auto;
+}
+.file-upload-wrapper .file-upload-input,
+.file-upload-wrapper .file-upload-button { display:inline-block; float:none; height:31px; }
+.file-upload-wrapper .file-upload-input { width:250px; }
+.file-upload-wrapper .file-upload-button {
+	float:none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border-radius: 0;
+	border-style: solid;
+	border-width: 0;
+	cursor: pointer;
+	font-family: Roboto, Arial, sans-serif;
+	font-weight: normal;
+	line-height: normal;
+	margin: 0 0 0.38889rem;
+	position: relative;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	padding: 0.21rem 0.38889rem 0.25rem 0.38889rem;
+	font-size: 1rem;
+	background-color: #00a1df;
+	border-color: #0081b2;
+	color: #FFFFFF;
+	transition: background-color 300ms ease-out;
+}
+
+#RASCITable {
+	width:70vw;
+	border-collapse: separate;
+	border-spacing: 5px;
+}

@@ -1,0 +1,1006 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic";
+
+#s4-ribbonrow{
+	display:none;	
+}
+.CommentsTitle
+{
+	color:#00a1df!important;
+	width:250px;
+}
+
+.hgroup__title a:visited
+{
+	color:#00a1df
+}
+
+.hgroup__title a:hover
+{
+	color:#00a1df;
+	text-decoration:none;
+}
+
+#CommentsButton
+{
+    float: left;
+    width: 100%;
+}
+
+#CommentsToggle{
+		display:none;	
+}
+
+#graph{
+	border:1px gray solid;
+	position: relative;
+	float:left;
+	width: 100%;
+	}
+
+#psDescription{
+	float:left;
+	width:67%;
+  padding: 10px;
+}
+#feedbackUserErrors{
+	float:left;
+	width:100%;
+	color:red !important;
+}
+#toolbar{
+	margin:8px 0 8px 0;
+}
+
+
+#searchInputBox
+{
+		float:left;
+}
+#s4-titlerow {
+    margin-top: 5px;
+    margin-bottom: 0px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+div.welcome {
+    padding: 10px 0px;
+}
+
+
+#mainActions{
+	margin:8px 8px 8px 0;
+}
+
+#selectActions{
+	margin:8px;
+}
+#selectActions span {
+    color: #00a1df !important;
+    text-decoration: none !important;
+}
+#selectActions span:hover {
+    color: #0081b2 !important;
+}
+#zoomActions span {
+    color: #00a1df !important;
+    text-decoration: none !important;
+}
+#zoomActions span:hover {
+    color: #0081b2 !important;
+}
+.smallBorderBottom
+{
+    float: left;
+    width: 100%;
+	border-bottom:1px solid gray;
+	margin-bottom: 10px;
+}
+.smallBorderBottom p 
+{
+	margin-bottom: 0px;
+}
+.smallBorderBottom div
+{	
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+#Comments{
+    float: left;
+    width: 100%;
+}
+
+#newComment{
+	width:51.8%;
+	height:28.5px;
+    float: left;
+    /* margin-right: 10px; */
+}
+
+#zoomActions{
+	margin:8px;
+}
+
+.pathTitleDiv{
+	display:block;
+}
+
+#parentNavigationPath{
+	margin-right: 40%; 
+	margin-left: 40%; 
+	float: left;
+	color:#404041;
+	font-size:21px;
+	font-family:"Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+	font-weight: bold;
+	min-width:250px;
+	max-width:800px;
+	display:block;
+	line-height:30px;
+	text-decoration:none;
+	text-align:center;
+	word-wrap:break-word;
+}
+
+#parentNavigationPath:hover{
+	margin-right: 40%; 
+	margin-left: 40%; 
+	float: left;
+	color:#404041;
+	font-size:21px;
+	font-family:"Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+	font-weight: bold;
+	min-width:250px;
+	max-width:800px;
+	display:block;
+	line-height:30px;
+	text-decoration:none;
+	text-align:center;
+}
+
+#parentNavigation{
+	margin-top:3px;
+	color:#0072c6;
+	font-size:12px;
+	font-family:"Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+}
+#lblTitle{
+	font-weight: bold;
+	color:#0072c6;
+	font-size:1.46em;
+	font-family:"Segoe UI Semilight","Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+	vertical-align:baseline;
+}
+
+#activityName {
+	/* font-size: 4em; */
+	float:left;
+	font-size:2.3em;
+	width:100%;
+	color:#0072c6;
+}
+
+.imgPath{
+	width:50px; height:50px;
+}
+#splash{
+	padding-top:230px;
+	}
+
+.divTitle{
+	Float:left;
+	width:100%;
+	/* height: 80px; */
+	/* line-height: 70px; */
+	display: block;
+}
+.divTitleBtnSwitch{
+	/* margin-top:20px; */
+	margin-right:20px;
+	float:right;
+	}
+	
+.divTitleNavigation{
+	Float:left; width:75%;
+}
+#divTitlelbl{
+	Float:left;
+}
+.divCurrentTitlelbl{
+	Float:left;
+}
+.floatLeft{
+	Float:left !important;
+}
+.floatRight{
+	Float:right !important;
+}
+.divProperties{
+	Float:left; 
+	width:100%;
+	text-align:center;
+}
+
+#properties{
+    margin-top: 13px;
+}
+
+#properties > table{
+    margin-top: 5px;
+}
+
+.btnFloatRight
+{
+	Float:right;
+}
+
+.mxCellEditor
+{
+	color:black !important;
+}
+
+#graph-ancestor-path{
+	float:left;
+	width:100% !important;
+	background-color:#CCCCCC;
+	margin-top: 15px; 
+	margin-bottom: 15px; 
+	
+}
+#droppable{
+		float:right;
+		width:100%;
+	}
+
+#draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; }
+
+#droppable { height: 150px; padding: 0.5em; float: left; margin: 10px; }
+
+#psMain{
+	width:100%;
+}
+
+
+.activityBorderBottom
+{
+		margin-top: 5px; 
+		width:80%;
+		margin-right: 10%; 
+		margin-left: 10%; 
+		float:left;
+		border-bottom:1px solid #999;
+}
+.mxGraph-viewActivityPathClass{
+	float: left;
+	margin:20px 0 30px;
+	}
+.pathTitleDiv{
+		margin-top:10px;
+		margin-bottom:10px;
+		width:100%;
+		margin-right: auto; 
+		margin-left: auto; 
+		float: left;
+		display:block;
+}
+.pathTotalDiv{
+		width:100%;
+		margin-right: auto; 
+		margin-left: auto; 
+		float: left;
+		display:block;
+}
+
+#mxGraph-view{
+	margin-top:15px;
+	width:100% !important;
+	float:left;
+	/*  border:1px gray solid; */
+}
+
+#sub-activities-graph{
+	margin-top:15px;
+	width:100%;
+	float:left;
+}
+
+#btnViewEdit{
+	Float:right;
+}
+
+/* 100% page width for  */
+.ms-core-tableNoSpace{
+	width: 100% !important;
+}
+#footer{
+		margin-top:10px;
+		float:left;
+		width:100%;
+}
+
+.title{
+	color:black;
+	font-size: 19px;
+	font-weight: 700;
+	margin: 0 0 10px 0;
+}
+#mainActions > select{
+	margin-left:15px;
+}
+
+#mainActions > button:first-child{
+	margin-left:0px !important;
+	}
+	
+	
+#graph-ancestor-path{
+	display:none;
+	}
+	
+#resourcesDropZone{
+	float:left;
+	width:100%;
+}
+#resources{
+	float:left;
+	width:100%;
+	margin-top:50px;
+    max-width: 1410px;
+}
+
+#divResources{
+	float:right;
+	width:30%;
+}
+
+svg{
+	white-space:normal;
+	}
+	
+svg text{
+	white-space:normal;
+	}
+	
+#resourcesList
+{
+	width:100%;
+	/* background-color:#FBFBFB; */
+	/* border:0.5px solid #92AAB0; */
+}
+
+
+#dragandrophandler
+{
+	float:right;
+	border:0.5px solid #92AAB0;
+	width:100%;
+	color:#92AAB0;
+	text-align:left;vertical-align:middle;
+	margin-bottom:5px;
+  padding: 10px;
+}
+.progressBar {
+    width: 100px;
+    height: 22px;
+    border: 1px solid #ddd;
+    border-radius: 5px; 
+    overflow: hidden;
+    display:inline-block;
+    margin:0px 10px 5px 5px;
+    vertical-align:top;
+	float: right;
+}
+ 
+.progressBar div {
+    height: 100%;
+    color: #fff;
+    text-align: right;
+    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+    width: 0;
+    background-color: #0ba1b5; border-radius: 3px; 
+}
+.statusbar
+{
+    border-top:1px solid #A9CCD1;
+    min-height:25px;
+    /* width:700px; */
+    padding:10px 0px 0px 0px;
+    vertical-align:top;
+	float:left;
+	width:100%;
+}
+.statusbar:nth-child(odd){
+    background:#EBEFF0;
+}
+.filename
+{
+display:inline-block;
+vertical-align:top;
+/* width:250px; */
+margin-left:3px;
+}
+.filesize
+{
+display:inline-block;
+vertical-align:top;
+color:#30693D;
+/* width:100px; */
+margin-left:10px;
+margin-right:5px;
+}
+.abort{
+    background-color:#A8352F;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    border-radius:4px;
+    color:#fff;
+    font-family:arial;
+	font-size:13px;
+	font-weight:normal;
+    padding:4px 15px;
+    cursor:pointer;
+    vertical-align:top;
+	display:inline-block !important;
+	float:right;
+	
+    }
+
+.divUploader{
+	/* width:50%; */
+	float:left;
+	margin-bottom:10px;
+	margin-left:5px;
+	vertical-align:middle;
+}
+#FileUpload{
+		float:right;
+}
+#btnUploadFile{
+		margin-left:0px;
+		margin-top:2px;
+}
+#resourcesList p{
+	/* width: 650px;  */
+	padding-top: 5px; 
+	padding-bottom: 5px; 
+	border-bottom-color: darkgray; 
+	border-bottom-width: 0.5px; 
+	border-bottom-style: solid;
+	margin-left: 5px;
+	
+}
+
+.btnDeleteDocs{
+	padding: 0px 0px 0px 0px;
+	margin-left: 0px;
+	min-width: 0px;
+	margin-top:5px;
+}
+	
+.LinkDeleteDoc{
+	float:right; 
+	margin-Right:10px;
+}
+	
+.tabCell{
+	padding:8px;
+	border-top: 1px solid #cdcdcd;
+	border-radius: 5px;
+	background-color:white;
+	vertical-align: top;
+	text-align: center;
+}
+
+.tabHeader {	  
+	border-top: 1px solid #cdcdcd;
+	border-radius: 5px;
+	background-color:#e8e8e8;
+	vertical-align: top;
+	text-align: center;
+	padding:8px;
+	}
+
+.tabRasci{
+	display: table;
+	border-collapse: separate;  
+	border-spacing: 2px;
+	border-color: grey;
+}	  
+
+
+
+.custom-file-upload-hidden {
+    display: none;
+    visibility: hidden;
+    position: absolute;
+    left: -9999px;
+}
+.custom-file-upload {
+    display: block;
+    width: auto;
+    font-size: 16px;
+    margin-top: 5px;
+    //border: 1px solid #ccc;
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+}
+
+$file-upload-color: #c0392b;
+$file-upload-size: 300px;
+
+* {
+    margin: 0;
+    padding: 0;
+    @include box-sizing(border-box);
+}
+
+.file-upload-wrapper {
+    position: relative; 
+    margin-bottom: 5px;
+    //border: 1px solid #ccc;
+}
+.file-upload-input {
+    width: $file-upload-size;
+    color: #444;
+    font-size: 16px;
+    padding: 11px 17px; 
+    border: none;
+    background-color: $file-upload-color; 
+    @include transition(all 0.2s ease-in); 
+    float: left; /* IE 9 Fix */
+    &:hover, &:focus { 
+        background-color: darken($file-upload-color, 5);
+        outline: none; 
+    }
+}
+.file-upload-button {
+    cursor: pointer; 
+    display: inline-block; 
+    color: #444;
+    font-size: 16px;
+    padding: 2px 15px; 
+    border: 1px solid #ababab;
+    margin-left: -1px;  
+    background-color: darken($file-upload-color, 10); 
+    float: left; /* IE 9 Fix */
+    @include transition(all 0.2s ease-in);
+    &:hover {
+        background-color: darken($file-upload-color, 20);
+    }
+}
+
+#contentBox{
+	margin-right:0px !important;
+	margin-left:0px !important;
+}
+#sideNavBox{
+	display:none;
+}
+.divWith70{
+	width:70%;
+	}
+.divWith30{
+	width:30%;
+	}
+.leftBorder{
+	border-left:1px solid #ccc;
+	}
+.leftpadding{
+    padding-left: 10px;
+}
+
+.ms-fullWidth{
+		width:100% !important;
+}
+.section{
+	margin-left:0px !important;
+	margin-left:0px !important;
+	}
+#titleAreaBox{
+		margin-left:0px !important;
+		margin-left:0px !important;
+}
+#siteIcon{
+	margin-left:20px !important;
+}
+div.mxRubberband {
+	position: absolute;
+	overflow: hidden;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #0000FF;
+	background: #0077FF;
+}
+textarea.mxCellEditor {
+	background: url('https://gavinet.sharepoint.com/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/transparent.gif');
+	border-style: solid;
+	border-color: black;
+	border-width: 0;
+	overflow: auto;
+	color:black;
+}
+div.mxWindow {
+	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
+	-moz-box-shadow: 3px 3px 12px #C0C0C0;
+	box-shadow: 3px 3px 12px #C0C0C0;
+	background: url('https://gavinet.sharepoint.com/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/window.gif');
+	border:1px solid #c3c3c3;
+	position: absolute;
+	overflow: hidden;
+	z-index: 1;
+}
+table.mxWindow {
+	border-collapse: collapse;
+	table-layout: fixed;
+  	font-family: Arial;
+	font-size: 8pt;
+}
+td.mxWindowTitle {
+	background: url('https://gavinet.sharepoint.com/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/window-title.gif') repeat-x;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+ 	text-align: center;
+ 	font-weight: bold;
+ 	overflow: hidden;
+	height: 13px;
+	padding: 2px;
+ 	padding-top: 4px;
+ 	padding-bottom: 6px;
+ 	color: black;
+}
+td.mxWindowPane {
+	vertical-align: top;
+	padding: 0px;
+}
+div.mxWindowPane {
+	overflow: hidden;
+	position: relative;
+}
+td.mxWindowPane td {
+  	font-family: Arial;
+	font-size: 8pt;
+}
+td.mxWindowPane input, td.mxWindowPane select, td.mxWindowPane textarea, td.mxWindowPane radio {
+  	border-color: #8C8C8C;
+  	border-style: solid;
+  	border-width: 1px;
+  	font-family: Arial;
+	font-size: 8pt;
+ 	padding: 1px;
+}
+td.mxWindowPane button {
+	background: url('https://gavinet.sharepoint.com/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/button.gif') repeat-x;
+  	font-family: Arial;
+  	font-size: 8pt;
+  	padding: 2px;
+	float: left;
+}
+img.mxToolbarItem {
+	margin-right: 6px;
+	margin-bottom: 6px;
+	border-width: 1px;
+}
+select.mxToolbarCombo {
+	vertical-align: top;
+	border-style: inset;
+	border-width: 2px;
+}
+div.mxToolbarComboContainer {
+	padding: 2px;
+}
+img.mxToolbarMode {
+	margin: 2px;
+	margin-right: 4px;
+	margin-bottom: 4px;
+	border-width: 0px;
+	width:35px !important;
+}
+img.mxToolbarModeSelected {
+	margin: 0px;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	border-width: 2px;
+	border-style: inset;
+}
+div.mxTooltip {
+	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
+	-moz-box-shadow: 3px 3px 12px #C0C0C0;
+	box-shadow: 3px 3px 12px #C0C0C0;
+	background: #FFFFCC;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	font-family: Arial;
+	font-size: 8pt;
+	position: absolute;
+	cursor: default;
+	padding: 4px;
+	color: black;
+}
+div.mxPopupMenu {
+	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
+	-moz-box-shadow: 3px 3px 12px #C0C0C0;
+	box-shadow: 3px 3px 12px #C0C0C0;
+	background: url('https://gavinet.sharepoint.com/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/window.gif');
+	position: absolute;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+}
+table.mxPopupMenu {
+	border-collapse: collapse;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+tr.mxPopupMenuItem {
+	color: black;
+	cursor: pointer;
+}
+tr.mxPopupMenuItemHover {
+	background-color: #000066;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+td.mxPopupMenuItem {
+	padding: 2px 30px 2px 10px;
+	white-space: nowrap;
+	font-family: Arial;
+	font-size: 8pt;
+}
+td.mxPopupMenuIcon {
+	background-color: #D0D0D0;
+	padding: 2px 4px 2px 4px;
+}
+.mxDisabled {
+	opacity: 0.2 !important;
+	cursor:default !important;
+}
+
+/* It's easier to calculate widths 
+ * with border-box layout */
+.customfile-container * {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font: normal 14px Arial, sans-serif; /* Global font to use ems with precision */
+}
+ 
+.customfile-container {
+  width: 300px;
+  background: #FFF2B8;
+  padding: 1em;
+}
+ 
+.customfile-container label:first-child {
+  width: 100px;
+  display: block;
+  margin-bottom: .5em;
+  font: bold 18px Arial, sans-serif;
+  color: #333;
+}
+ 
+.customfile-wrap {
+  position: relative;
+  padding: 0;
+  margin-bottom: .5em;
+}
+ 
+.customfile-filename,
+.customfile-upload { 
+  margin: 0;
+  padding: 0;
+}
+ 
+.customfile-filename {
+  width: 230px;
+  padding: .4em .5em;
+  border: 1px solid #A8A49D;
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.2);
+}
+.customfile-filename:focus { 
+  outline: none;
+}
+ 
+.customfile-upload {
+  display: inline-block;
+  width: 70px;
+  padding: .4em 1em;
+  border: 1px solid #A8A49D;
+  background: #ddd;
+  border-radius: 0 2px 2px 0;
+  margin-left: -1px; /* align with input */
+  cursor: pointer;
+  background: #fcfff4;
+  background: -moz-linear-gradient(top, #fcfff4 0%, #e9e9ce 100%);
+  background: -webkit-linear-gradient(top, #fcfff4 0%, #e9e9ce 100%);
+  background: -o-linear-gradient(top, #fcfff4 0%, #e9e9ce 100%);
+  background: -ms-linear-gradient(top, #fcfff4 0%, #e9e9ce 100%);
+  background: linear-gradient(to bottom, #fcfff4 0%, #e9e9ce 100%);
+}
+ 
+.customfile-upload:hover {
+  background: #fafafa;
+  box-shadow: 0 0 2px rgba(0,0,0,.2);
+}
+.customfile-upload::-moz-focus-inner { /* Fix firefox padding */
+  padding: 0; border: 0;
+}
+.ms-srch-sb>input{
+	/* height:0px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	height: 30.6625003814697px; */
+	margin-bottom: 6.22223997116089px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	font-size: 11.73px;
+}
+
+.ms-textSmall{font-size: 0.9em;}
+/* 
+#footer{
+    position: fixed;
+    background-color: WHITE;
+    top: 50px;
+    float: right;
+    right: 0px;
+    height: 100%;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid #ccc;
+}
+
+#toogleFooter{
+		float:right;
+} */
+.body{
+    font-family: 'RobotoDraft', 'Roboto', 'Helvetica Neue, Helvetica, Arial', sans-serif !important;
+		line-height:normal !mportant;
+}
+
+.ms-srch-sb-navImg {
+    max-width: auto;
+}
+
+.ms-srch-sb-searchImg{
+    max-width: auto;
+}
+
+.waterfall-demo-header-nav .mdl-navigation__link:last-of-type  {
+  padding-right: 0;
+}
+
+.layout-transparent {
+  background: url('http://www.getmdl.io/assets/demos/transparent.jpg') center / cover;
+}
+.layout-transparent .mdl-layout__header,
+.layout-transparent .mdl-layout__drawer-button {
+  /* This background is dark, so we set text to white. Use 87% black instead if
+     your background is light. */
+  color: white;
+}
+
+/* #pageTitle{
+	display:none;
+}
+
+
+
+
+
+.ms-dialogHidden {
+	display:none;
+}
+#s4-titlerow > #s4-titlerow {
+     display: none;
+}
+
+ */
+
+#titleAreaRow{
+	display:none !important;
+	
+}
+#s4-titlerow{
+	display:none !important;
+	height:0px;
+}
+#contentRow{
+	padding:0px !important;
+}
+div.article, div.welcome {
+	padding:0px !important;
+}
+.panel{
+	background-color:transparent !important;
+}
+
+.txtLeft{
+	text-align: left;
+    padding: 10px 20px;
+}
+
+.o365cs-topnavBGColor-2.o365cst.o365cs-base
+{
+	background-color:rgba(0, 160, 222, 1) !important;
+}
+.o365cst.o365cs-base .ms-bgc-tp, .o365cst.o365cs-base .ms-bgc-tp-h:hover, .ms-bgc-tp.o365cst.o365cs-base{
+	background-color:rgba(0, 160, 222, 1) !important;
+}
+.o365cst.o365cs-base .o365cs-topnavLinkBackground-2 {
+	background-color:rgba(0, 160, 222, 1) !important;
+}
+.o365cs-nav-header16 .o365cs-nav-o365Branding{
+	display:none !important;
+}
+
+/* Hide help ribbon button */
+/* #O365_MainLink_Help{
+	display:none !important;
+} */
+
+.ms-siteicon-a{
+    position: absolute;
+    top: 0px;
+    right: 175px;
+}
+
+.labelRight
+{
+	width:50px;
+	float:right;
+}
+
+#RASCITable {
+    width: 100% !important;
+}
+
+/* hides mxgraph console */
+.mxWindow{
+	display:none !important;
+}
+
+/* hides Menu until Rod proval */
+/* .mdl-navigation{
+	display:none !important;
+} */
+
+#s4-workspace{
+    margin-top: 64px;
+}
+
+#s4-bodyContainer{
+    margin-top: -64px;
+	padding-bottom:0px !important;
+	padding:0px;
+}
+#DeltaPageStatusBar
+{
+	display:none;	
+}
+
+.mdl-layout__header .mdl-layout__header--waterfall{
+    position: fixed !important;
+}
+.mdl-layout__drawer-button{
+	position: fixed !important;
+	top:50px !important;
+}
+.mdl-layout__content{
+	top:50px !important;
+}
+.mdl-layout__container
+{
+	position: relative !important;
+}
+
+#properties{
+    padding-bottom: 50px;
+}
+
