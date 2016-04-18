@@ -147,7 +147,7 @@
 			<add as="verticalAlign" value="middle"/>
 			<add as="html" value="1"/>
 			<add as="whiteSpace" value="wrap"/>
-			<add as="image" value="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/draw/mxlogo.jpg"/>
+			<add as="image" value="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/draw/mxlogo.jpg"/>
 		</add>
 		<add as="defaultEdge">
 			<add as="shape" value="connector"/>

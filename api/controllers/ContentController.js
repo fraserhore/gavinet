@@ -26,6 +26,7 @@ module.exports = {
      * ContentController.view()
      */
     view: function(req, res) {
+        var view = parseInt(req.param('view')) || "full";
         var params = {
             "id": parseInt(req.param('id')) || 0,
             "lang": parseInt(req.param('lang')) || "en-gb"
@@ -43,7 +44,7 @@ module.exports = {
             versionMatch = " AND version.to = 9223372036854775807";
         }
         var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
-                    +' WHERE id(identityNode) = {id} AND version.lang = "en-gb"'
+                    +' WHERE id(identityNode) = {id} AND version.lang = {lang}'
                     +  versionMatch
                     +' RETURN identityNode, version, versionNode, authorNode';
         var cb = function(err, data) {
@@ -53,15 +54,49 @@ module.exports = {
             } else {
                 var identityNode = data[0].identityNode,
                     versionNode = data[0].versionNode,
-                    authorNode = data[0].authorNode,
-                    viewTemplate = module.exports.getViewTemplate(identityNode, versionNode, authorNode) || "full";
-                return res.view(viewTemplate, data[0]);
+                    authorNode = data[0].authorNode;
+
+                module.exports.getViewTemplate(view, identityNode, versionNode, authorNode, function(viewTemplate) {
+                    console.log('viewTemplate: ' + viewTemplate);
+                    return res.view(viewTemplate, data[0]);
+                });
             }
         }
         db.cypher({
             query: query,
             params: params
         }, cb);
+    },
+
+    /** Get template override */
+    getViewTemplate: function(source, identityNode, versionNode, authorNode, callback) {
+        
+        var query =  'MATCH (a:Override)-[r:VERSION {to:9223372036854775807}]-(b:Version {source:{source}})'
+                    +' WHERE b.contentTypeIdentifier = {contentTypeIdentifier} OR b.contentTypeId = {contentTypeId}'
+                    +' RETURN b as override';
+        var params = {
+            "source": source,
+            "contentTypeIdentifier": identityNode.properties.contentType,
+            "contentTypeId": 0
+
+        };
+        var cb = function(err, data) {
+            if(err || data.length === 0) {
+                console.log(err);
+                callback('full');
+            } else {
+                console.log(data[0].override.properties.matchFile);
+                callback(data[0].override.properties.matchFile);   
+            }
+        };
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
+    getViewTemplateOverrides: function() {
+
     },
 
     /** Get child content objects */
@@ -252,10 +287,12 @@ module.exports = {
      * Create new content obect (identityNode and versionNode)
      */
     create: function(req, res) {
-        var relationships = req.body.relationships,
+        var properties = req.body.properties,
+            relationships = req.body.relationships,
             matchRelated = '',
             whereRelated = '',
-            createRelationships = '';
+            createRelationships = '',
+            identityNamePattern = identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'childversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : '');
 
         if(relationships) {
             for (var i = relationships.length - 1; i >= 0; i--) {
@@ -276,6 +313,7 @@ module.exports = {
             };
         }
 
+        var identityNamePattern = req.body.properties.hasOwnProperty('name')
         var query =   'MATCH (parent), (author)' + matchRelated
                     +' WHERE id(parent)={parentId} AND id(author)={authorId}' + whereRelated
                     +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
@@ -287,7 +325,7 @@ module.exports = {
                     + createRelationships
                     +' SET childidentity:' + this.pascalize(req.body.contenttype) 
                     +' SET childversion = {properties}'
-                    +' SET childidentity.name = ' + req.body.identityNamePattern
+                    +' SET childidentity.name = ' + identityNamePattern
                     +' RETURN parent,childidentity,childversion';
         var params = {
             "parentId": parseInt(req.body.parentId),
@@ -338,7 +376,8 @@ module.exports = {
     * update content object (new versionNode)
     */
     update: function(req, res) {
-        
+        var properties = req.body.properties,
+            identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'newversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : '');
         var query = 
             // UPDATE (CONTENT) - Add a Version node
               ' MATCH (identitynode)-[currentversionrelationship:VERSION {to:9223372036854775807}]->(currentversion)'
@@ -355,7 +394,7 @@ module.exports = {
             + ' SET newversion = {properties}'
             //... update more newversion properties
             // Update the identity node
-            + ' SET identitynode.name = ' + req.body.identityNamePattern
+            + ' SET identitynode.name = ' + identityNamePattern
             // Create a previous relationship from the new version to the previous version
             + ' CREATE newversion-[:PREVIOUS]->currentversion'
             // Return the affected nodes
@@ -367,6 +406,7 @@ module.exports = {
             "identityNamePattern": req.body.identityNamePattern,
             "properties": req.body.properties
         };
+        console.log(query);
         var cb = function(err, data) {
             console.log(err);
             console.log(data);
@@ -409,27 +449,6 @@ module.exports = {
 
     /** Add content object to an additional location (create new location relationship) */
     addLocation: function(req, res) {
-
-    },
-
-    /** Get template override */
-    0 function(identityNode, versionNode, authorNode) {
-        var query =  'MATCH (a:Overrides)-[:CONTAINS]->(override:Override)'
-                    +' RETURN override'
-        var params = {
-            "id": ''
-        };
-        var cb = function(err, data) {
-            //console.log(data);
-            return "full"//res.json(data);
-        }
-        db.cypher({
-            query: query,
-            params: params
-        }, cb);
-    },
-
-    getViewTemplateOverrides: function() {
 
     },
 

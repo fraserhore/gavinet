@@ -1,5 +1,5 @@
 <mxEditor defaultGroup="group" defaultEdge="connector">
-	<include name="/sites/km/SiteAssets/fh_mxgraph/mxgraph/config/editor-commons.xml"/>
+	<include name="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/config/editor-commons.xml"/>
 	<add as="onInit"><![CDATA[
 		function ()
 		{
@@ -138,7 +138,7 @@
 				return cell.getAttribute('label');
 			}
 		]]></add>
-		<include name="/sites/km/SiteAssets/fh_mxgraph/mxgraph/config/stylesheet.xml"/>
+		<include name="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/config/stylesheet.xml"/>
 		<mxGraphModel as="model">
 			<add as="valueForCellChanged"><![CDATA[
 				function(cell, value)
@@ -178,7 +178,7 @@
 		</mxGraphModel>
 	</mxGraph>
 	<mxDefaultToolbar as="toolbar">
-		<add as="connect" mode="connect" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/connect.png"><![CDATA[
+		<add as="connect" mode="connect" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/connect.png"><![CDATA[
 			function (editor)
 			{
 				if (editor.defaultEdge != null)
@@ -187,7 +187,7 @@
 				}
 			}
 		]]></add>
-		<add as="connect" mode="connect" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/straight.png"><![CDATA[
+		<add as="connect" mode="connect" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/straight.png"><![CDATA[
 			function (editor)
 			{
 				if (editor.defaultEdge != null)
@@ -196,7 +196,7 @@
 				}
 			}
 		]]></add>
-		<add as="connect" mode="connect" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/arrow.png"><![CDATA[
+		<add as="connect" mode="connect" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/arrow.png"><![CDATA[
 			function (editor)
 			{
 				if (editor.defaultEdge != null)
@@ -205,19 +205,19 @@
 				}
 			}
 		]]></add>
-		<add as="Text" template="text" style="text" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/text.png"/>
-		<add as="Border" template="text" style="textBorder" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/text_border.png"/>
-		<add as="Input" template="input" style="input" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_input.png"/>
-		<add as="Activity" template="activity" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/Activity.png"/>
-		<add as="Decision" template="decision" style="decision" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/Decision.png"/>
-		<add as="Decision Extended" template="decision" style="decisionExtended" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/hexagon_filled.png"/>
-		<add as="Output" template="output" style="output" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_output.png"/>
-		<add as="Outcome" template="outcome" style="outcome" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_blue.png"/>
-		<add as="Impact" template="impact" style="impact" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_green_2.png"/>
-		<add as="Role" template="role" style="swimlane" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/swimlane.png"/>
-		<add as="Database" template="database" style="database" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/cylinder.png"/>
-		<add as="Line" template="hline" style="hline" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/hline.png"/>
-		<add as="Image" template="image" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/ic_image_black_48dp_1x.png"/>
-		<add as="Off Page Reference" template="offPageReference" style="offPageReference" icon="/sites/km/SiteAssets/fh_mxgraph/mxgraph/images/MaterialIcons/triangle_blue.png"/>
+		<add as="Text" template="text" style="text" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/text.png"/>
+		<add as="Border" template="text" style="textBorder" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/text_border.png"/>
+		<add as="Input" template="input" style="input" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_input.png"/>
+		<add as="Activity" template="activity" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/Activity.png"/>
+		<add as="Decision" template="decision" style="decision" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/Decision.png"/>
+		<add as="Decision Extended" template="decision" style="decisionExtended" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/hexagon_filled.png"/>
+		<add as="Output" template="output" style="output" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_output.png"/>
+		<add as="Outcome" template="outcome" style="outcome" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_blue.png"/>
+		<add as="Impact" template="impact" style="impact" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/ic_crop_5_4_black_48dp_1x_green_2.png"/>
+		<add as="Role" template="role" style="swimlane" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/swimlane.png"/>
+		<add as="Database" template="database" style="database" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/cylinder.png"/>
+		<add as="Line" template="hline" style="hline" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/hline.png"/>
+		<add as="Image" template="image" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/ic_image_black_48dp_1x.png"/>
+		<add as="Off Page Reference" template="offPageReference" style="offPageReference" icon="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/MaterialIcons/triangle_blue.png"/>
 	</mxDefaultToolbar>
 </mxEditor>
