@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+-->
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+	<meta charset="utf-8">
+	<title>Using the CKEditor Read-Only API &mdash; CKEditor Sample</title>
+	<script src="../ckeditor.js"></script>
+	<link rel="stylesheet" href="sample.css">
+	<script>
+
+		var editor;
+
+		// The instanceReady event is fired, when an instance of CKEditor has finished
+		// its initialization.
+		CKEDITOR.on( 'instanceReady', function( ev ) {
+			editor = ev.editor;
+
+			// Show this "on" button.
+			document.getElementById( 'readOnlyOn' ).style.display = '';
+
+			// Event fired when the readOnly property changes.
+			editor.on( 'readOnly', function() {
+				document.getElementById( 'readOnlyOn' ).style.display = this.readOnly ? 'none' : '';
+				document.getElementById( 'readOnlyOff' ).style.display = this.readOnly ? '' : 'none';
+			});
+		});
+
+		function toggleReadOnly( isReadOnly ) {
+			// Change the read-only state of the editor.
+			// http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-setReadOnly
+			editor.setReadOnly( isReadOnly );
+		}
+
+	</script>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">GAVI-4-3353</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">fbd13942-26e8-4cfe-8189-7f79f7ef83b6</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://gavinet.sharepoint.com/sites/km/_layouts/15/DocIdRedir.aspx?ID=GAVI-4-3353, GAVI-4-3353</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+	<h1 class="samples">
+		<a href="index.html">CKEditor Samples</a> &raquo; Using the CKEditor Read-Only API
+	</h1>
+	<div class="description">
+		<p>
+			This sample shows how to use the
+			<code><a class="samples" href="http://docs.ckeditor.com/#!/api/CKEDITOR.editor-method-setReadOnly">setReadOnly</a></code>
+			API to put editor into the read-only state that makes it impossible for users to change the editor contents.
+		</p>
+		<p>
+			For details on how to create this setup check the source code of this sample page.
+		</p>
+	</div>
+	<form action="sample_posteddata.php" method="post">
+		<p>
+			<textarea class="ckeditor" id="editor1" name="editor1" cols="100" rows="10">&lt;p&gt;This is some &lt;strong&gt;sample text&lt;/strong&gt;. You are using &lt;a href="http://ckeditor.com/"&gt;CKEditor&lt;/a&gt;.&lt;/p&gt;</textarea>
+		</p>
+		<p>
+			<input id="readOnlyOn" onclick="toggleReadOnly();" type="button" value="Make it read-only" style="display:none">
+			<input id="readOnlyOff" onclick="toggleReadOnly( false );" type="button" value="Make it editable again" style="display:none">
+		</p>
+	</form>
+	<div id="footer">
+		<hr>
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2015, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>
