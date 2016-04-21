@@ -22,9 +22,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
     <br/>
+
+    <iron-ajax id="uploadProcessData"
+      auto
+      url="http://localhost/datasets/pmt_top_all.json"
+      handle-as="json"
+      last-response="{{processData}}"
+      debounce-duration="300"></iron-ajax>
     
     <iron-ajax id="getContent"
-      
       url="/content/getContent/{{identityNode._id}}"
       params={}
       handle-as="json"
@@ -57,9 +63,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
+      <iron-ajax id="postData"
+        url="/content/{{formData.action}}"
+        content-type="application/json"
+        method="POST"
+        body="{{formData}}"
+        handle-as="json"
+        last-response="{{res}}"
+        debounce-duration="300"></iron-ajax>
+
     <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged" editable></paper-slider>
 
     <paper-button raised on-click="update">Edit</paper-button>
+
+    <paper-button raised on-click="uploadProcessData">Upload Process Data</paper-button>
     
     <paper-dialog id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true" on-iron-overlay-closed="_dialogClosed">
       <h2>Create / Edit Item</h2>
@@ -110,6 +127,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.versionSliderMax = Date.now();
         this.versionSliderMin = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
         console.log(today.toISOString());
+      },
+
+      uploadProcessData: function() {
+        var data = this.processData.d.results; // 1690
+        for (var i = 0; i < 1; i++) {
+          delete data[i].__proto__
+
+          this.set('formData.action', 'create');
+          this.set('formData.authorId', this.authorNode._id);
+          this.set('formData.parentId', this.identityNode._id);
+          this.set('formData.id', undefined);
+          this.set('formData.lang', 'en-gb');
+          this.set('formData.versionName', '');
+          this.set('formData.contenttype', data[i].ContentType.Name.toLowerCase());
+          this.set('formData.identityNamePattern', 'childversion.Title');
+          this.set('formData.properties', data[i]);
+
+          delete this.formData.properties.ContentType;
+          delete this.formData.properties.ContentTypeId;
+          delete this.formData.properties.__metadata;
+
+          //this.$.postData.generateRequest();
+
+          if(data[i].GraphXML) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
+            var j, x, txt;
+            x = doc.documentElement.childNodes[0].childNodes;
+            for (j = 0; j < x.length ;j++) {
+              this.set('formData.action', 'create');
+              this.set('formData.authorId', this.authorNode._id);
+              this.set('formData.parentId', '');
+              this.set('formData.id', undefined);
+              this.set('formData.lang', 'en-gb');
+              this.set('formData.versionName', '');
+              this.set('formData.contenttype', 'geometry');
+              this.set('formData.identityNamePattern', '');
+              this.set('formData.properties', '');
+                txt += x[j].nodeName + ": " + x[j].childNodes[0].nodeName + "<br>";
+            }
+
+            console.log(doc);
+            console.log(txt);
+
+          }
+
+          console.log(this.formData);
+        };
       },
 
       // Program starts here. Creates a sample graph in the
