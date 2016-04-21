@@ -21,11 +21,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
-    <div id="graphxml">{{versionNode.properties.graphxml}}</div>
     <br/>
+
+    <iron-ajax id="uploadProcessData"
+      auto
+      url="http://localhost/datasets/pmt_top_all.json"
+      handle-as="json"
+      last-response="{{processData}}"
+      debounce-duration="300"></iron-ajax>
     
     <iron-ajax id="getContent"
-      
       url="/content/getContent/{{identityNode._id}}"
       params={}
       handle-as="json"
@@ -58,9 +63,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
+      <iron-ajax id="postData"
+        url="/content/{{formData.action}}"
+        content-type="application/json"
+        method="POST"
+        body="{{formData}}"
+        handle-as="json"
+        last-response="{{res}}"
+        debounce-duration="300"></iron-ajax>
+
     <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged" editable></paper-slider>
 
     <paper-button raised on-click="update">Edit</paper-button>
+
+    <paper-button raised on-click="uploadProcessData">Upload Process Data</paper-button>
     
     <paper-dialog id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true" on-iron-overlay-closed="_dialogClosed">
       <h2>Create / Edit Item</h2>
@@ -113,22 +129,82 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         console.log(today.toISOString());
       },
 
+      uploadProcessData: function() {
+        var data = this.processData.d.results; // 1690
+        for (var i = 0; i < 1; i++) {
+          delete data[i].__proto__
+
+          this.set('formData.action', 'create');
+          this.set('formData.authorId', this.authorNode._id);
+          this.set('formData.parentId', this.identityNode._id);
+          this.set('formData.id', undefined);
+          this.set('formData.lang', 'en-gb');
+          this.set('formData.versionName', '');
+          this.set('formData.contenttype', data[i].ContentType.Name.toLowerCase());
+          this.set('formData.identityNamePattern', 'childversion.Title');
+          this.set('formData.properties', data[i]);
+
+          delete this.formData.properties.ContentType;
+          delete this.formData.properties.ContentTypeId;
+          delete this.formData.properties.__metadata;
+
+          //this.$.postData.generateRequest();
+
+          if(data[i].GraphXML) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
+            var j, x, txt;
+            x = doc.documentElement.childNodes[0].childNodes;
+            for (j = 0; j < x.length ;j++) {
+              this.set('formData.action', 'create');
+              this.set('formData.authorId', this.authorNode._id);
+              this.set('formData.parentId', '');
+              this.set('formData.id', undefined);
+              this.set('formData.lang', 'en-gb');
+              this.set('formData.versionName', '');
+              this.set('formData.contenttype', 'geometry');
+              this.set('formData.identityNamePattern', '');
+              this.set('formData.properties', '');
+                txt += x[j].nodeName + ": " + x[j].childNodes[0].nodeName + "<br>";
+            }
+
+            console.log(doc);
+            console.log(txt);
+
+          }
+
+          console.log(this.formData);
+        };
+      },
+
       // Program starts here. Creates a sample graph in the
       // DOM node with the specified ID. This function is invoked
       // from the onLoad event handler of the document (see below).
       main: function(container)
       {
-        // Creates the graph inside the given container
-        var graph = new mxGraph(container);
 
+        // Show mxLog for debugging
+        //mxLog.show();
+
+        // Creates the graph inside the given container
+        //var model = new mxGraphModel();
+        //var graph = new mxGraph(container, model);
+        //var model = graph.getModel();
         
 
-        // Enables HTML labels
-        graph.setHtmlLabels(true);
-        // Enables HTML labels as wrapping is only available for those
-        graph.isHtmlLabel = function (cell) {
-            return true;
-        };
+        // Load the configuration (e.g. stylesheet)
+        // var configReq = mxUtils.load('/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/config/stylesheet.xml'),
+        //     configRoot = configReq.getDocumentElement(),
+        //     configDecoder = new mxCodec(configRoot.ownerDocument);
+        // configDecoder.decode(configRoot, graph);
+
+        var config = mxUtils.load('/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/config/stylesheet.xml').getDocumentElement();
+        var editor = new mxEditor(config);
+
+        editor.setGraphContainer(container);
+
+        var graph = editor.graph;
+        var model = graph.model;
 
         // Enables rubberband selection
         new mxRubberband(graph);
@@ -138,21 +214,296 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var parent = graph.getDefaultParent();
 
         // Adds cells to the model in a single step
-        graph.getModel().beginUpdate();
+        model.beginUpdate();
         try
         {
-           for (var i = this.children.length - 1; i >= 0; i--) {
-             var child = this.children[i];
-             graph.insertVertex(parent, child.identityNode._id, child.versionNode.properties.title, 20+(i*100), 20+(i*50), 80, 30);
-           };
+           // for (var i = this.children.length - 1; i >= 0; i--) {
+           //   var child = this.children[i];
+           //   graph.insertVertex(parent, child.identityNode._id, child.versionNode.properties.title, 20+(i*100), 20+(i*50), 80, 30, 'activity;');
+           // };
 
            //graph.insertEdge(parent, null, '', 2588, 2590);
+
+           var graphXml = '<mxGraphModel><root><Graph href="http://www.mxgraph.com/" label="Graph" id="0"><mxCell/></Graph><Layer label="Default Layer" spGuid="" spId="55" id="1"><mxCell parent="0"/></Layer><Text href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=undefined" label="Gavi Core Processes" mxCellUpdated="1" spId="undefined" spParentId="55" id="17"><mxCell style="textBorder;fontSize=18;strokeColor=#005CB9;fillColor=white;fontColor=#005CB9;" parent="1" vertex="1"><mxGeometry x="150" y="40" width="500" height="230" as="geometry"/></mxCell></Text><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=56" label="Raise" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="This is a description of the activity" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="56" spParentId="55" id="2"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="170" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=57" label="Spend" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="57" spParentId="55" id="3"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="360" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Connector href="" label="" id="4"><mxCell parent="1" source="2" target="3" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=58" label="Prove" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="58" spParentId="55" id="5"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="530" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Connector href="" label="" id="6"><mxCell parent="1" source="3" target="5" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=59" label="Enable" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="59" spParentId="55" id="7"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="170" y="180" width="460" height="60" as="geometry"/></mxCell></Activity><Output href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=71" label="Grant financing" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33801004870C90224F9C8418222FC63C8AD478B" spID="" spParentIDs="" spDescription="" spStorageLocation="" spMediaType="" mxCellUpdated="1" spId="71" spParentId="55" id="8"><mxCell style="output" parent="1" vertex="1"><mxGeometry x="690" y="130" width="80" height="70" as="geometry"/></mxCell></Output><Input href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=73" label="Donor funding" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380300CEA7EC469979B8449D47469C081FD45F" spID="" spRelatedOutputID="" spParentIDs="" spDescription="" mxCellUpdated="1" spId="73" spParentId="55" id="10"><mxCell style="input" parent="1" vertex="1"><mxGeometry x="10" y="130" width="100" height="70" as="geometry"/></mxCell></Input><Connector href="" label="" id="18"><mxCell style="verticalConnector" parent="1" source="10" target="17" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Connector href="" label="" id="19"><mxCell style="verticalConnector" parent="1" source="17" target="8" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Outcome href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=98" label="Number of children fully immunised" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B338060087D8C90F857A1D4B93F1229ACED38295" spID="" spParentIDs="" spDescription="" mxCellUpdated="1" spGuid="" spParentGuid="" spId="98" spParentId="55" id="20"><mxCell style="outcome" parent="1" vertex="1"><mxGeometry x="800" y="130" width="80" height="70" as="geometry"/></mxCell></Outcome><Connector href="" label="" id="21"><mxCell parent="1" source="8" target="20" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Impact href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=100" label="Child deaths averted" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380700B45887AFF7B0034BBE1396AC49FF58CA" spID="" spParentIDs="" spDescription="" mxCellUpdated="1" spGuid="" spParentGuid="" spId="100" spParentId="55" id="24"><mxCell style="impact" parent="1" vertex="1"><mxGeometry x="910" y="130" width="80" height="70" as="geometry"/></mxCell></Impact><Connector href="" label="" id="25"><mxCell parent="1" source="20" target="24" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector></root></mxGraphModel>'
+          var doc = mxUtils.parseXml(graphXml);
+          //var node = doc.documentElement;
+          //editor.readGraphModel(node);
+
+          var codec = new mxCodec(doc);
+          codec.decode(doc.documentElement, graph.getModel());
+        
+          graph.refresh();
+
         }
         finally
         {
            // Updates the display
-           graph.getModel().endUpdate();
+           model.endUpdate();
         }
+      },
+
+      /**
+     * Constructs a new application (note that this returns an mxEditor
+     * instance).
+     */
+      mxApplication: function(config) {
+
+        var hideSplash = function() {
+          // Fades-out the splash screen
+          var splash = document.getElementById('splash');
+          
+          if (splash != null)
+          {
+            try
+            {
+              mxEvent.release(splash);
+              mxEffects.fadeOut(splash, 100, true);
+            }
+            catch (e)
+            {
+              splash.parentNode.removeChild(splash);
+            }
+          }
+        };
+        
+        try
+        {
+          if (!mxClient.isBrowserSupported())
+          {
+            mxUtils.error('Browser is not supported!', 200, false);
+          }
+          else
+          {
+            mxObjectCodec.allowEval = true;
+            var node = mxUtils.load(config).getDocumentElement();
+            var editor = new mxEditor(node);
+            mxObjectCodec.allowEval = false;
+            
+            //------------Carlos ADD
+            
+            var graph = editor.graph;
+            var model = graph.getModel();
+
+            // Auto-resizes the container
+            graph.border = 80;
+            graph.getView().translate = new mxPoint(graph.border/2, graph.border/2);
+            //graph.setResizeContainer(true);
+            graph.graphHandler.setRemoveCellsFromParent(true);
+          
+            if (graph.isEnabled())
+            {
+              // Allows new connections but no dangling edges
+              graph.setConnectable(true);
+              graph.setAllowDanglingEdges(false);
+              
+              // End-states are no valid sources
+              var previousIsValidSource = graph.isValidSource;
+              
+              graph.isValidSource = function(cell)
+              {
+                if (previousIsValidSource.apply(this, arguments))
+                {
+                  var style = this.getModel().getStyle(cell);
+                  
+                  return style == null ||
+                    !(style == 'end' ||
+                    style.indexOf('end') == 0);
+                }
+                return false;
+              };
+              
+              // Start-states are no valid targets, we do not
+              // perform a call to the superclass function because
+              // this would call isValidSource
+              // Note: All states are start states in
+              // the example below, so we use the state
+              // style below
+              graph.isValidTarget = function(cell)
+              {
+                var style = this.getModel().getStyle(cell);
+                
+                var swimlane = this.isSwimlane(cell);
+                //Always returning false
+                
+                if(style === "swimlane")
+                  return false;
+                  
+                return !this.getModel().isEdge(cell) &&
+                  !this.isSwimlane(cell) &&
+                  (style == null ||
+                  !(style == 'state' ||
+                  style.indexOf('state') == 0));
+              };
+              
+              // Allows dropping cells into new lanes and
+              // lanes into new pools, but disallows dropping
+              // cells on edges to split edges
+              graph.setDropEnabled(true);
+              graph.setSplitEnabled(false);
+              
+              // Returns true for valid drop operations
+              graph.isValidDropTarget = function(target, cells, evt)
+              {
+                if (this.isSplitEnabled() &&
+                  this.isSplitTarget(target, cells, evt))
+                {
+                  return true;
+                }
+                
+                var model = this.getModel();
+                var lane = false;
+                var pool = false;
+                var cell = false;
+                
+                // Checks if any lanes or pools are selected
+                for (var i = 0; i < cells.length; i++)
+                {
+                  var tmp = model.getParent(cells[i]);
+                  lane = lane || this.isPool(tmp);
+                  pool = pool || this.isPool(cells[i]);
+                  
+                  cell = cell || !(lane || pool);
+                }
+                
+                return !pool &&
+                  cell != lane &&
+                  ((lane && this.isPool(target)) ||
+                  (cell && this.isPool(model.getParent(target))));
+              };
+              
+              // Adds new method for identifying a pool
+              graph.isPool = function(cell)
+              {
+                var model = this.getModel();
+                var parent = model.getParent(cell);
+              
+                return parent != null &&
+                  model.getParent(parent) == model.getRoot();
+              };
+              
+              // Changes swimlane orientation while collapsed
+              graph.model.getStyle = function(cell)
+              {
+                var style = mxGraphModel.prototype.getStyle.apply(this, arguments);
+              
+                if (graph.isCellCollapsed(cell))
+                {
+                  if (style != null)
+                  {
+                    style += ';';
+                  }
+                  else
+                  {
+                    style = '';
+                  }
+                  
+                  style += 'horizontal=1;align=left;spacingLeft=14;';
+                }
+                
+                return style;
+              };
+              // Keeps widths on collapse/expand          
+              var foldingHandler = function(sender, evt)
+              {
+                var cells = evt.getProperty('cells');
+                
+                for (var i = 0; i < cells.length; i++)
+                {
+                  var geo = graph.model.getGeometry(cells[i]);
+                  if (geo.alternateBounds != null)
+                  {
+                    geo.width = geo.alternateBounds.width;
+                  }
+                }
+              };
+              graph.addListener(mxEvent.FOLD_CELLS, foldingHandler);
+            }
+            
+            // Creates a stack depending on the orientation of the swimlane
+            var layout = new mxStackLayout(graph, false);
+            
+            // Makes sure all children fit into the parent swimlane
+            layout.resizeParent = true;
+                  
+            // Applies the size to children if parent size changes
+            layout.fill = true;
+            // Only update the size of swimlanes
+            layout.isVertexIgnored = function(vertex)
+            {
+              return !graph.isSwimlane(vertex);
+            }
+            
+            // Keeps the lanes and pools stacked
+            var layoutMgr = new mxLayoutManager(graph);
+            layoutMgr.getLayout = function(cell)
+            {
+              if (!model.isEdge(cell) && graph.getModel().getChildCount(cell) > 0 &&
+                (model.getParent(cell) == model.getRoot() || graph.isPool(cell)))
+              {
+                layout.fill = graph.isPool(cell);
+                
+                return layout;
+              }
+              
+              return null;
+            };
+            
+            
+            //------------Carlos ADD END
+
+            // Updates the window title after opening new files
+            var title = document.title;
+            var funct = function(sender)
+            {
+              document.title = title + ' - ' + sender.getTitle();
+            };
+            
+            editor.addListener(mxEvent.OPEN, funct);
+            
+            // Prints the current root in the window title if the
+            // current root of the graph changes (drilling).
+            editor.addListener(mxEvent.ROOT, funct);
+            funct(editor);
+            
+            // Displays version in statusbar
+            editor.setStatus('Powered by  <a href=\"http://www.jgraph.com/mxgraph.html\">mxGraph</a>');
+
+            // Shows the application
+            hideSplash();
+          }
+        }
+        catch (e)
+        {
+          hideSplash();
+
+          // Shows an error message if the editor cannot start
+          mxUtils.alert('Cannot start application: '+e.message);
+          throw e; // for debugging
+        }
+                    
+        return editor;
+      },
+
+      mxGraphActivityEditor: function(editor) {
+
+        // Show mxLog for debugging
+        mxLog.show();
+        
+        var sharepointXMLProperty = 'GraphXML',
+            root,
+            mxGraphMainParent,
+            changes,
+            i,
+            option,
+            node,
+            buttons,
+            select,
+            items;
+
+        var graphXml = this.versionNode.properties.graphxml;
+        var doc = mxUtils.parseXml(xml);
+        var node = doc.documentElement;
+        editor.readGraphModel(node);
       },
 
       create: function(event) {
@@ -238,8 +589,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _updateChildren: function() {
-        console.log(this.children);
         this.main(this.$.graphContainer);
+        var mxGraphEditor;
+        
+        // In the config file, the mxEditor.onInit method is overridden to invoke this global function as the last step in the editor constructor.
+        function onInit(editor) {
+        mxGraphEditor = editor;
+        ToggleViewEdit();
+        }
+
+        //new this.mxApplication('/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/config/diagrameditor.xml');
+
       },
 
       _refreshContent: function() {

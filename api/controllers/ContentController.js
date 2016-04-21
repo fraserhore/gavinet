@@ -19,6 +19,7 @@ var db = new neo4j.GraphDatabase({
     auth: 'neo4j:gavinet-graph'
 });
 var request = require("request");
+var fs = require("fs");
 
 module.exports = {
 
@@ -72,12 +73,13 @@ module.exports = {
     getViewTemplate: function(source, identityNode, versionNode, authorNode, callback) {
         
         var query =  'MATCH (a:Override)-[r:VERSION {to:9223372036854775807}]-(b:Version {source:{source}})'
-                    +' WHERE b.contentTypeIdentifier = {contentTypeIdentifier} OR b.contentTypeId = {contentTypeId}'
+                    +' WHERE b.contentTypeIdentifier = {contentTypeIdentifier} OR b.contentTypeId = {contentTypeId} or toInt(b.identityNodeId) = {identityNodeId}'
                     +' RETURN b as override';
         var params = {
             "source": source,
             "contentTypeIdentifier": identityNode.properties.contentType,
-            "contentTypeId": 0
+            "contentTypeId": 0,
+            "identityNodeId": identityNode._id
 
         };
         var cb = function(err, data) {
@@ -98,6 +100,81 @@ module.exports = {
     getViewTemplateOverrides: function() {
 
     },
+
+    /**
+     * Create new content object (identityNode and versionNode)
+     */
+    uploadProcessData: function(req, res) {
+
+        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+          
+          if (err) throw err;
+
+            var data = JSON.parse(file).d.results; // 1690
+
+            for (var i = 0; i < 5; i++) {
+
+                var contentType = data[i].ContentType.Name.toLowerCase();
+                var params = {
+                    "parentId": 138,
+                    "authorId": 126,
+                    "contenttype": contentType
+                };
+
+                delete data[i].__proto__;
+                delete data[i].ContentType;
+                delete data[i].ContentTypeId;
+                delete data[i].__metadata;
+
+                params['properties'] = data[i];
+
+                var query =   'MATCH (parent), (author)'
+                            +' WHERE id(parent)={parentId} AND id(author)={authorId}'
+                            +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
+                            +       '(childidentity:Identity:ContentObject {contentType:{contenttype}})'
+                            +       '-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
+                            +       '(childversion:Version)'
+                            +' CREATE author-[:CREATED {timestamp:timestamp()}]->childidentity'
+                            +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
+                            +' SET childidentity:' + contentType 
+                            +' SET childversion = {properties}'
+                            +' SET childidentity.name = childversion.Title'
+                            +' SET childidentity.spId = childversion.Id'
+                            +' SET childidentity.spID = childversion.ID'
+                            +' RETURN parent,childidentity,childversion';
+                
+                var cb = function(error, cypherData) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(cypherData);
+                        //return res.json(cypherData);
+                    }
+                    
+                    // Add Geometry
+                    // if(data[i].GraphXML) {
+                    //     var parser = new DOMParser();
+                    //     var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
+                    //     var j, x, txt;
+                    //     x = doc.documentElement.childNodes[0].childNodes;
+                    //     for (j = 0; j < x.length ;j++) {
+
+                    //         txt += x[j].nodeName + ": " + x[j].childNodes[0].nodeName + "<br>";
+                    //     }
+                    //     console.log(doc);
+                    //     console.log(txt);
+                    // }
+                };
+
+                db.cypher({
+                    query: query, 
+                    params: params
+                }, cb);
+
+            };
+        }); // fs
+    },
+
 
     /** Get child content objects */
     getContent: function(req, res) {
@@ -248,8 +325,8 @@ module.exports = {
     /** Get content type schema */
     getContentTypeSchema: function(req, res) {
 
-        var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION]->(contentTypeVersion:Version {identifier:{contenttype}}),'
-                    + ' (contentTypeIdentity)-[:PROPERTY|RELATIONSHIP|CONTAINS]->(propertyIdentity)-[:VERSION]->(propertyVersion:Version)'
+        var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION {to:9223372036854775807}]->(contentTypeVersion:Version {identifier:{contenttype}}),'
+                    + ' (contentTypeIdentity)-[:PROPERTY|RELATIONSHIP|CONTAINS {to:9223372036854775807}]->(propertyIdentity)-[:VERSION {to:9223372036854775807}]->(propertyVersion:Version)'
                     + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity) as propertyIdentities, collect(propertyVersion) as propertyVersions'
         var params = {
             "contenttype": req.param('contenttype')
@@ -284,9 +361,10 @@ module.exports = {
 
 
     /**
-     * Create new content obect (identityNode and versionNode)
+     * Create new content object (identityNode and versionNode)
      */
     create: function(req, res) {
+        console.log(req.body.properties);
         var properties = req.body.properties,
             relationships = req.body.relationships,
             matchRelated = '',
@@ -313,7 +391,6 @@ module.exports = {
             };
         }
 
-        var identityNamePattern = req.body.properties.hasOwnProperty('name')
         var query =   'MATCH (parent), (author)' + matchRelated
                     +' WHERE id(parent)={parentId} AND id(author)={authorId}' + whereRelated
                     +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
@@ -326,6 +403,8 @@ module.exports = {
                     +' SET childidentity:' + this.pascalize(req.body.contenttype) 
                     +' SET childversion = {properties}'
                     +' SET childidentity.name = ' + identityNamePattern
+                    +' SET childidentity.spId = childversion.Id'
+                    +' SET childidentity.spID = childversion.ID'
                     +' RETURN parent,childidentity,childversion';
         var params = {
             "parentId": parseInt(req.body.parentId),
@@ -335,9 +414,12 @@ module.exports = {
             "properties": req.body.properties
         };
         var cb = function(err, data) {
-            //console.log(err);
-            console.log(data);
-            return res.json(data);
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(data);
+                return res.json(data);
+            }
         };
         db.cypher({
             query: query, 
