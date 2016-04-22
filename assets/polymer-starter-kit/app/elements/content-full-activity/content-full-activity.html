@@ -130,6 +130,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       uploadProcessData: function() {
+        // Create process items
+        // Create geometry items
+        // Create parent-child relationships
+        // Create responsible for relationships
         var data = this.processData.d.results; // 1690
         for (var i = 0; i < 1; i++) {
           delete data[i].__proto__
@@ -156,6 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var j, x, txt;
             x = doc.documentElement.childNodes[0].childNodes;
             for (j = 0; j < x.length ;j++) {
+
               this.set('formData.action', 'create');
               this.set('formData.authorId', this.authorNode._id);
               this.set('formData.parentId', '');
@@ -166,6 +171,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               this.set('formData.identityNamePattern', '');
               this.set('formData.properties', '');
                 txt += x[j].nodeName + ": " + x[j].childNodes[0].nodeName + "<br>";
+
+              console.log(x[j].childNodes[0].childnodes[0]);
+
+              if(x[j].childNodes[0].childnodes) {
+                console.log(x[j].childNodes[0].childnodes[0].nodeName);
+              }
             }
 
             console.log(doc);

@@ -166,10 +166,10 @@ module.exports = {
                     // }
                 };
 
-                db.cypher({
-                    query: query, 
-                    params: params
-                }, cb);
+                // db.cypher({
+                //     query: query, 
+                //     params: params
+                // }, cb);
 
             };
         }); // fs
