@@ -309,9 +309,9 @@ module.exports = {
             var versionValidityDate = parseInt(req.param('versionValidityDate'));
             versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
         } else {
-            versionMatch = " AND version.to = 9007199254740991";
+            versionMatch = " AND parentChildRel.to = 9007199254740991 AND version.to = 9007199254740991";
         }
-        var query =   'MATCH (parentNode)-[r]->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
+        var query =   'MATCH (parentNode)-[parentChildRel]->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
                     +' WHERE id(parentNode) = {id} AND version.lang = {lang}'
                     +  versionMatch
                     +' RETURN identityNode, version, versionNode, authorNode';
