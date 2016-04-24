@@ -96,6 +96,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       delete: function(event) {
         this.$.deleteRequest.url = "/content/delete";
         this.$.deleteRequest.params = {"id": event.model.item.identityNode._id};
+        console.log(deleteRequest);
         this.$.deleteRequest.generateRequest();
       },
 

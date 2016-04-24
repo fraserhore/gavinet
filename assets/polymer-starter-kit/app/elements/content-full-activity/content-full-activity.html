@@ -22,13 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h1>{{identityNode.properties.name}}</h1>
     <div>{{versionNode.properties.description}}</div>
     <br/>
-
-    <iron-ajax id="uploadProcessData"
-      auto
-      url="http://localhost/datasets/pmt_top_all.json"
-      handle-as="json"
-      last-response="{{processData}}"
-      debounce-duration="300"></iron-ajax>
     
     <iron-ajax id="getContent"
       url="/content/getContent/{{identityNode._id}}"
@@ -75,9 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged" editable></paper-slider>
 
     <paper-button raised on-click="update">Edit</paper-button>
-
-    <paper-button raised on-click="uploadProcessData">Upload Process Data</paper-button>
-    
+  
     <paper-dialog id="editDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true" on-iron-overlay-closed="_dialogClosed">
       <h2>Create / Edit Item</h2>
       <paper-dialog-scrollable>
@@ -91,6 +82,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     <h3>Graph</h3>
     <div id="graphContainer" style="overflow:hidden;width:100%;height:400px;"></div>
+
+    <h3>Child Content</h3>
+    <content-children id="contentChildren" identity-node-id="{{identityNode._id}}" on-edit="update"></content-children>
 
     <h3>Related Content</h3>
     <content-related identity-node-id="{{identityNode._id}}"></content-related>
@@ -127,65 +121,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.versionSliderMax = Date.now();
         this.versionSliderMin = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
         console.log(today.toISOString());
-      },
-
-      uploadProcessData: function() {
-        // Create process items
-        // Create geometry items
-        // Create parent-child relationships
-        // Create responsible for relationships
-        var data = this.processData.d.results; // 1690
-        for (var i = 0; i < 1; i++) {
-          delete data[i].__proto__
-
-          this.set('formData.action', 'create');
-          this.set('formData.authorId', this.authorNode._id);
-          this.set('formData.parentId', this.identityNode._id);
-          this.set('formData.id', undefined);
-          this.set('formData.lang', 'en-gb');
-          this.set('formData.versionName', '');
-          this.set('formData.contenttype', data[i].ContentType.Name.toLowerCase());
-          this.set('formData.identityNamePattern', 'childversion.Title');
-          this.set('formData.properties', data[i]);
-
-          delete this.formData.properties.ContentType;
-          delete this.formData.properties.ContentTypeId;
-          delete this.formData.properties.__metadata;
-
-          //this.$.postData.generateRequest();
-
-          if(data[i].GraphXML) {
-            var parser = new DOMParser();
-            var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
-            var j, x, txt;
-            x = doc.documentElement.childNodes[0].childNodes;
-            for (j = 0; j < x.length ;j++) {
-
-              this.set('formData.action', 'create');
-              this.set('formData.authorId', this.authorNode._id);
-              this.set('formData.parentId', '');
-              this.set('formData.id', undefined);
-              this.set('formData.lang', 'en-gb');
-              this.set('formData.versionName', '');
-              this.set('formData.contenttype', 'geometry');
-              this.set('formData.identityNamePattern', '');
-              this.set('formData.properties', '');
-                txt += x[j].nodeName + ": " + x[j].childNodes[0].nodeName + "<br>";
-
-              console.log(x[j].childNodes[0].childnodes[0]);
-
-              if(x[j].childNodes[0].childnodes) {
-                console.log(x[j].childNodes[0].childnodes[0].nodeName);
-              }
-            }
-
-            console.log(doc);
-            console.log(txt);
-
-          }
-
-          console.log(this.formData);
-        };
       },
 
       // Program starts here. Creates a sample graph in the
@@ -228,14 +163,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         model.beginUpdate();
         try
         {
-           // for (var i = this.children.length - 1; i >= 0; i--) {
-           //   var child = this.children[i];
-           //   graph.insertVertex(parent, child.identityNode._id, child.versionNode.properties.title, 20+(i*100), 20+(i*50), 80, 30, 'activity;');
-           // };
+           for (var i = this.children.length - 1; i >= 0; i--) {
+             var child = this.children[i];
+             graph.insertVertex(parent, child.identityNode._id, child.versionNode.properties.Title, 20+(i*100), 20+(i*50), 80, 30, 'activity;');
+           };
 
            //graph.insertEdge(parent, null, '', 2588, 2590);
 
-           var graphXml = '<mxGraphModel><root><Graph href="http://www.mxgraph.com/" label="Graph" id="0"><mxCell/></Graph><Layer label="Default Layer" spGuid="" spId="55" id="1"><mxCell parent="0"/></Layer><Text href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=undefined" label="Gavi Core Processes" mxCellUpdated="1" spId="undefined" spParentId="55" id="17"><mxCell style="textBorder;fontSize=18;strokeColor=#005CB9;fillColor=white;fontColor=#005CB9;" parent="1" vertex="1"><mxGeometry x="150" y="40" width="500" height="230" as="geometry"/></mxCell></Text><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=56" label="Raise" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="This is a description of the activity" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="56" spParentId="55" id="2"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="170" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=57" label="Spend" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="57" spParentId="55" id="3"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="360" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Connector href="" label="" id="4"><mxCell parent="1" source="2" target="3" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=58" label="Prove" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="58" spParentId="55" id="5"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="530" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Connector href="" label="" id="6"><mxCell parent="1" source="3" target="5" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=59" label="Enable" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="59" spParentId="55" id="7"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="170" y="180" width="460" height="60" as="geometry"/></mxCell></Activity><Output href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=71" label="Grant financing" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33801004870C90224F9C8418222FC63C8AD478B" spID="" spParentIDs="" spDescription="" spStorageLocation="" spMediaType="" mxCellUpdated="1" spId="71" spParentId="55" id="8"><mxCell style="output" parent="1" vertex="1"><mxGeometry x="690" y="130" width="80" height="70" as="geometry"/></mxCell></Output><Input href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=73" label="Donor funding" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380300CEA7EC469979B8449D47469C081FD45F" spID="" spRelatedOutputID="" spParentIDs="" spDescription="" mxCellUpdated="1" spId="73" spParentId="55" id="10"><mxCell style="input" parent="1" vertex="1"><mxGeometry x="10" y="130" width="100" height="70" as="geometry"/></mxCell></Input><Connector href="" label="" id="18"><mxCell style="verticalConnector" parent="1" source="10" target="17" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Connector href="" label="" id="19"><mxCell style="verticalConnector" parent="1" source="17" target="8" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Outcome href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=98" label="Number of children fully immunised" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B338060087D8C90F857A1D4B93F1229ACED38295" spID="" spParentIDs="" spDescription="" mxCellUpdated="1" spGuid="" spParentGuid="" spId="98" spParentId="55" id="20"><mxCell style="outcome" parent="1" vertex="1"><mxGeometry x="800" y="130" width="80" height="70" as="geometry"/></mxCell></Outcome><Connector href="" label="" id="21"><mxCell parent="1" source="8" target="20" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Impact href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=100" label="Child deaths averted" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380700B45887AFF7B0034BBE1396AC49FF58CA" spID="" spParentIDs="" spDescription="" mxCellUpdated="1" spGuid="" spParentGuid="" spId="100" spParentId="55" id="24"><mxCell style="impact" parent="1" vertex="1"><mxGeometry x="910" y="130" width="80" height="70" as="geometry"/></mxCell></Impact><Connector href="" label="" id="25"><mxCell parent="1" source="20" target="24" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector></root></mxGraphModel>'
+           // var graphXml = '<mxGraphModel><root><Graph href="http://www.mxgraph.com/" label="Graph" id="0"><mxCell/></Graph><Layer label="Default Layer" spGuid="" spId="55" id="1"><mxCell parent="0"/></Layer><Text href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=undefined" label="Gavi Core Processes" mxCellUpdated="1" spId="undefined" spParentId="55" id="17"><mxCell style="textBorder;fontSize=18;strokeColor=#005CB9;fillColor=white;fontColor=#005CB9;" parent="1" vertex="1"><mxGeometry x="150" y="40" width="500" height="230" as="geometry"/></mxCell></Text><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=56" label="Raise" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="This is a description of the activity" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="56" spParentId="55" id="2"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="170" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=57" label="Spend" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="57" spParentId="55" id="3"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="360" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Connector href="" label="" id="4"><mxCell parent="1" source="2" target="3" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=58" label="Prove" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="58" spParentId="55" id="5"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="530" y="100" width="100" height="60" as="geometry"/></mxCell></Activity><Connector href="" label="" id="6"><mxCell parent="1" source="3" target="5" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Activity href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=59" label="Enable" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33802009299A06F36C5354199F164C35DB1BE0D" spID="" spParentIDs="" spDescription="" spComments="" spRecommendations="" spCompetencies="" spPersonDays="" spPolicies="" spInformed="" spConsulted="" spAccountable="" spSupport="" spResponsible="" mxCellUpdated="1" spId="59" spParentId="55" id="7"><mxCell style="activity;" parent="1" vertex="1"><mxGeometry x="170" y="180" width="460" height="60" as="geometry"/></mxCell></Activity><Output href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=71" label="Grant financing" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B33801004870C90224F9C8418222FC63C8AD478B" spID="" spParentIDs="" spDescription="" spStorageLocation="" spMediaType="" mxCellUpdated="1" spId="71" spParentId="55" id="8"><mxCell style="output" parent="1" vertex="1"><mxGeometry x="690" y="130" width="80" height="70" as="geometry"/></mxCell></Output><Input href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=73" label="Donor funding" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380300CEA7EC469979B8449D47469C081FD45F" spID="" spRelatedOutputID="" spParentIDs="" spDescription="" mxCellUpdated="1" spId="73" spParentId="55" id="10"><mxCell style="input" parent="1" vertex="1"><mxGeometry x="10" y="130" width="100" height="70" as="geometry"/></mxCell></Input><Connector href="" label="" id="18"><mxCell style="verticalConnector" parent="1" source="10" target="17" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Connector href="" label="" id="19"><mxCell style="verticalConnector" parent="1" source="17" target="8" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Outcome href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=98" label="Number of children fully immunised" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B338060087D8C90F857A1D4B93F1229ACED38295" spID="" spParentIDs="" spDescription="" mxCellUpdated="1" spGuid="" spParentGuid="" spId="98" spParentId="55" id="20"><mxCell style="outcome" parent="1" vertex="1"><mxGeometry x="800" y="130" width="80" height="70" as="geometry"/></mxCell></Outcome><Connector href="" label="" id="21"><mxCell parent="1" source="8" target="20" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector><Impact href="https://gavinet.sharepoint.com/sites/km/pmt/Lists/Core%20Processes/DispForm.aspx?ID=100" label="Child deaths averted" spContentTypeID="0x0100B780648F0DD4474886F4D0C3F275B3380700B45887AFF7B0034BBE1396AC49FF58CA" spID="" spParentIDs="" spDescription="" mxCellUpdated="1" spGuid="" spParentGuid="" spId="100" spParentId="55" id="24"><mxCell style="impact" parent="1" vertex="1"><mxGeometry x="910" y="130" width="80" height="70" as="geometry"/></mxCell></Impact><Connector href="" label="" id="25"><mxCell parent="1" source="20" target="24" edge="1"><mxGeometry relative="1" as="geometry"/></mxCell></Connector></root></mxGraphModel>';
+          var graphXml = JSON.parse(this.versionNode);
+          console.log(graphXml);
           var doc = mxUtils.parseXml(graphXml);
           //var node = doc.documentElement;
           //editor.readGraphModel(node);

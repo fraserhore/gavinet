@@ -20,6 +20,7 @@ var db = new neo4j.GraphDatabase({
 });
 var request = require("request");
 var fs = require("fs");
+var DOMParser = require('xmldom').DOMParser;
 
 module.exports = {
 
@@ -42,7 +43,7 @@ module.exports = {
             var versionValidityDate = parseInt(req.param('versionValidityDate'));
             versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
         } else {
-            versionMatch = " AND version.to = 9223372036854775807";
+            versionMatch = " AND version.to = 9007199254740991";
         }
         var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
                     +' WHERE id(identityNode) = {id} AND version.lang = {lang}'
@@ -72,7 +73,7 @@ module.exports = {
     /** Get template override */
     getViewTemplate: function(source, identityNode, versionNode, authorNode, callback) {
         
-        var query =  'MATCH (a:Override)-[r:VERSION {to:9223372036854775807}]-(b:Version {source:{source}})'
+        var query =  'MATCH ()-[:CONTAINS {to:9007199254740991}]->(a:Override)-[r:VERSION {to:9007199254740991}]->(b:Version {source:{source}})'
                     +' WHERE b.contentTypeIdentifier = {contentTypeIdentifier} OR b.contentTypeId = {contentTypeId} or toInt(b.identityNodeId) = {identityNodeId}'
                     +' RETURN b as override';
         var params = {
@@ -112,7 +113,13 @@ module.exports = {
 
             var data = JSON.parse(file).d.results; // 1690
 
-            for (var i = 0; i < 5; i++) {
+            for (var i = 0; i < data.length; i++) {
+
+                if(data[i].ID !==97) {
+                    continue;
+                } else {
+                    console.log(data[i].ID);
+                }
 
                 var contentType = data[i].ContentType.Name.toLowerCase();
                 var params = {
@@ -130,19 +137,20 @@ module.exports = {
 
                 var query =   'MATCH (parent), (author)'
                             +' WHERE id(parent)={parentId} AND id(author)={authorId}'
-                            +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
+                            +' MERGE parent-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->'
                             +       '(childidentity:Identity:ContentObject {contentType:{contenttype}})'
-                            +       '-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
+                            +       '-[:VERSION {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
                             +       '(childversion:Version)'
-                            +' CREATE author-[:CREATED {timestamp:timestamp()}]->childidentity'
-                            +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
-                            +' SET childidentity:' + contentType 
+                            +' MERGE author-[:CREATED {timestamp:timestamp()}]->childidentity'
+                            +' MERGE author-[:CREATED {timestamp:timestamp()}]->childversion'
+                            +' SET childidentity:' + contentType.charAt(0).toUpperCase() + contentType.slice(1) 
                             +' SET childversion = {properties}'
                             +' SET childidentity.name = childversion.Title'
                             +' SET childidentity.spId = childversion.Id'
                             +' SET childidentity.spID = childversion.ID'
+                            +' SET childidentity.spParentIDs = childversion.ParentIDs'
                             +' RETURN parent,childidentity,childversion';
-                
+                console.log(query);
                 var cb = function(error, cypherData) {
                     if (error) {
                         console.log(error);
@@ -151,19 +159,7 @@ module.exports = {
                         //return res.json(cypherData);
                     }
                     
-                    // Add Geometry
-                    // if(data[i].GraphXML) {
-                    //     var parser = new DOMParser();
-                    //     var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
-                    //     var j, x, txt;
-                    //     x = doc.documentElement.childNodes[0].childNodes;
-                    //     for (j = 0; j < x.length ;j++) {
-
-                    //         txt += x[j].nodeName + ": " + x[j].childNodes[0].nodeName + "<br>";
-                    //     }
-                    //     console.log(doc);
-                    //     console.log(txt);
-                    // }
+                    
                 };
 
                 // db.cypher({
@@ -172,6 +168,93 @@ module.exports = {
                 // }, cb);
 
             };
+        }); // fs
+    },
+
+    uploadGraphXml: function(req, res) {
+        // Add Graph Data
+        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+
+            if (err) throw err;
+
+            var data = JSON.parse(file).d.results; // 1690
+
+            for (var i = 0; i < 20; i++) {
+                if (data[i].GraphXML) {
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
+                    var j;
+                    var geometry = {};
+                    var elements = doc.documentElement.childNodes[0].childNodes;
+                    for (j = 0; j < elements.length; j++) {
+                        var name = elements[j].nodeName;
+                        // Add Missing Elemenents (e.g. connectors)
+                        if (name === 'Text' || name === 'Image' || name === 'Connector' || name === 'OffPageReference') {
+                            console.log(name);
+                        }
+
+                        // Add Geometry
+                        if (name === 'Input' || name === 'Activity' || name === 'Output' || name === 'Outcome' || name === 'Impact' || name === 'Decision' || name === 'Role' || name === 'Actor') {
+                            if (elements[j].childNodes[0].childNodes) {
+                                if (elements[j].childNodes[0].childNodes[0].nodeName === 'mxGeometry') {
+                                    geometry['processSpId'] = parseInt(data[i].Id);
+                                    geometry['elementSpId'] = parseInt(elements[j].getAttribute('spId') ? elements[j].getAttribute('spId') : elements[j].getAttribute('spID'));
+                                    geometry['elementMxId'] = elements[j].getAttribute('id');
+                                    geometry['elementName'] = elements[j].getAttribute('label');
+                                    geometry['width'] = elements[j].childNodes[0].childNodes[0].getAttribute('width');
+                                    geometry['height'] = elements[j].childNodes[0].childNodes[0].getAttribute('height');
+                                    geometry['x'] = elements[j].childNodes[0].childNodes[0].getAttribute('x');
+                                    geometry['y'] = elements[j].childNodes[0].childNodes[0].getAttribute('y');
+
+                                    var params = {
+                                        "processSpId": geometry.processSpId,
+                                        "elementSpId": geometry.elementSpId,
+                                        "authorId": 126,
+                                        "contenttype": 'geometry',
+                                        "properties": geometry
+                                    };
+
+                                    var query =   'MATCH (author)'
+                                                +' WHERE id(author) = {authorId}'
+                                                +' WITH author'
+                                                +' MATCH (process:Identity)'
+                                                +' WHERE process.spId={processSpId}'
+                                                +' WITH author, process'
+                                                +' MATCH (element:Identity)'
+                                                +' WHERE element.spId = {elementSpId}'
+                                                +' CREATE (process)-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->'
+                                                +       '(childidentity:Identity:ContentObject:Geometry {contentType:{contenttype}})'
+                                                +       '-[:VERSION {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
+                                                +       '(childversion:Version)'
+                                                +' CREATE (element)-[:GEOMETRY {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(childidentity)'
+                                                +' CREATE (author)-[:CREATED {timestamp:timestamp()}]->(childidentity)'
+                                                +' CREATE (author)-[:CREATED {timestamp:timestamp()}]->(childversion)'
+                                                +' SET childidentity:Geometry' 
+                                                +' SET childversion = {properties}'
+                                                +' SET childidentity.name = "Geometry"'
+                                                +' RETURN author,process,element,childidentity,childversion';
+                                    //console.log(query);
+                                    var cb = function(error, cypherData) {
+                                        if (error) {
+                                            console.log(error);
+                                        } else {
+                                            console.log('Cypher results');
+                                            console.log(cypherData);
+                                            //return res.json(cypherData);
+                                        }
+                                    };
+
+                                    db.cypher({
+                                        query: query, 
+                                        params: params
+                                    }, cb);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }); // fs
     },
 
@@ -193,7 +276,7 @@ module.exports = {
             var versionValidityDate = parseInt(req.param('versionValidityDate'));
             versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
         } else {
-            versionMatch = " AND version.to = 9223372036854775807";
+            versionMatch = " AND version.to = 9007199254740991";
         }
         //console.log(versionMatch);
         var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
@@ -226,9 +309,9 @@ module.exports = {
             var versionValidityDate = parseInt(req.param('versionValidityDate'));
             versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
         } else {
-            versionMatch = " AND version.to = 9223372036854775807";
+            versionMatch = " AND version.to = 9007199254740991";
         }
-        var query =   'MATCH (parentNode)-->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
+        var query =   'MATCH (parentNode)-[r]->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
                     +' WHERE id(parentNode) = {id} AND version.lang = {lang}'
                     +  versionMatch
                     +' RETURN identityNode, version, versionNode, authorNode';
@@ -249,7 +332,7 @@ module.exports = {
     * @param {object} req.id - Node ID of the content object for which to get related content objects
     */
     getRelated: function(req, res) {
-        var query =  'MATCH (a)-[r]-(b), (b)-[:VERSION {to:9223372036854775807}]->(c)'
+        var query =  'MATCH (a)-[r]-(b), (b)-[:VERSION {to:9007199254740991}]->(c)'
                     +' WHERE id(a) = {id} AND NOT (a)-[r:VERSION|:CREATED|:CONTAINS]->(b) AND NOT (a)<-[r:VERSION|:CREATED|:CONTAINS]-(b)'
                     +' RETURN b as identityNode, r as relationship, c as versionNode'
         var params = {
@@ -285,7 +368,7 @@ module.exports = {
     /** Get parent */
     getParent: function(req, res) {
 
-        var query =  'MATCH (a)<-[r:CONTAINS {to:9223372036854775807}]-(parentNode)'
+        var query =  'MATCH (a)<-[r:CONTAINS {to:9007199254740991}]-(parentNode)'
                     +' WHERE id(a) = {id}'
                     +' RETURN parentNode'
         var params = {
@@ -304,10 +387,10 @@ module.exports = {
     /** Get siblings */
     getSiblings: function(req, res) {
 
-        var query =  'MATCH (a)<-[r:CONTAINS {to:9223372036854775807}]-(parent)'
+        var query =  'MATCH (a)<-[r:CONTAINS {to:9007199254740991}]-(parent)'
                     +' WHERE id(a) = {id}'
                     +' WITH parent'
-                    +' MATCH (parent)-[:CONTAINS {to:9223372036854775807}]->(c)'
+                    +' MATCH (parent)-[:CONTAINS {to:9007199254740991}]->(c)'
                     +' RETURN c as siblingNode'
         var params = {
             "id": parseInt(req.param('id'))
@@ -325,8 +408,8 @@ module.exports = {
     /** Get content type schema */
     getContentTypeSchema: function(req, res) {
 
-        var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION {to:9223372036854775807}]->(contentTypeVersion:Version {identifier:{contenttype}}),'
-                    + ' (contentTypeIdentity)-[:PROPERTY|RELATIONSHIP|CONTAINS {to:9223372036854775807}]->(propertyIdentity)-[:VERSION {to:9223372036854775807}]->(propertyVersion:Version)'
+        var query =     'MATCH (contentTypeIdentity:ContentType)-[:VERSION {to:9007199254740991}]->(contentTypeVersion:Version {identifier:{contenttype}}),'
+                    + ' (contentTypeIdentity)-[:PROPERTY|RELATIONSHIP|CONTAINS {to:9007199254740991}]->(propertyIdentity)-[:VERSION {to:9007199254740991}]->(propertyVersion:Version)'
                     + ' RETURN contentTypeIdentity, contentTypeVersion, collect(propertyIdentity) as propertyIdentities, collect(propertyVersion) as propertyVersions'
         var params = {
             "contenttype": req.param('contenttype')
@@ -370,7 +453,7 @@ module.exports = {
             matchRelated = '',
             whereRelated = '',
             createRelationships = '',
-            identityNamePattern = identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'childversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : '');
+            identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'childversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : 'name');
 
         if(relationships) {
             for (var i = relationships.length - 1; i >= 0; i--) {
@@ -393,9 +476,9 @@ module.exports = {
 
         var query =   'MATCH (parent), (author)' + matchRelated
                     +' WHERE id(parent)={parentId} AND id(author)={authorId}' + whereRelated
-                    +' CREATE parent-[:CONTAINS {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->'
+                    +' CREATE parent-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->'
                     +       '(childidentity:Identity:ContentObject {contentType:{contenttype}})'
-                    +       '-[:VERSION {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
+                    +       '-[:VERSION {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
                     +       '(childversion:Version)'
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childidentity'
                     +' CREATE author-[:CREATED {timestamp:timestamp()}]->childversion'
@@ -436,7 +519,7 @@ module.exports = {
                     +' WHERE id(from)={fromId} AND id(to)={toId}'
                     +' CREATE from-[r:' 
                     + req.body.relationshipName.split(' ').join('_').toUpperCase()
-                    + ' {from:timestamp(), to:9223372036854775807, versionNumber:1, versionName:"Initial"}]->to'
+                    + ' {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->to'
                     +' RETURN from, r, to';
         var params = {
             "fromId": req.body.direction === 'Inbound' ? parseInt(req.body.relatedNodeId) : parseInt(req.body.referenceNodeId),
@@ -462,12 +545,12 @@ module.exports = {
             identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'newversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : '');
         var query = 
             // UPDATE (CONTENT) - Add a Version node
-              ' MATCH (identitynode)-[currentversionrelationship:VERSION {to:9223372036854775807}]->(currentversion)'
+              ' MATCH (identitynode)-[currentversionrelationship:VERSION {to:9007199254740991}]->(currentversion)'
             + ' WHERE id(identitynode) = {id} AND currentversionrelationship.lang = {lang}'
             // Update the current version relationship to end validity
             + ' SET currentversionrelationship.to = timestamp()'
             // Create the new version relationship and node
-            + ' CREATE identitynode-[newversionrelationship:VERSION {from:timestamp(), to:9223372036854775807}]->(newversion:Version)'
+            + ' CREATE identitynode-[newversionrelationship:VERSION {from:timestamp(), to:9007199254740991}]->(newversion:Version)'
             // Set new version relationship properties
             + ' SET newversionrelationship.versionNumber = toInt(currentversionrelationship.versionNumber) + 1'
             + ' SET newversionrelationship.versionName = {versionName}'
@@ -505,7 +588,7 @@ module.exports = {
      */
     delete: function(req, res) {
 
-        var query =  'MATCH (child)<-[relationship:CONTAINS {to:9223372036854775807}]-(parent)'
+        var query =  'MATCH (child)<-[relationship:CONTAINS {to:9007199254740991}]-(parent)'
                     +' WHERE id(child) = {id}'
                     +' SET relationship.to = timestamp()'
                     +' RETURN parent, child';
@@ -514,8 +597,9 @@ module.exports = {
         };
         
         var cb = function(err, data) {
-            //console.log(err);
-            //console.log(data);
+            console.log(err);
+            console.log("delete: "+req.param('id'));
+            console.log(data);
             return res.json(data);
         };
         db.cypher({
