@@ -348,3 +348,44 @@ CREATE (element)-[:GEOMETRY {from:timestamp(), to:9007199254740991, versionNumbe
 CREATE (author)-[:CREATED {timestamp:timestamp()}]->(childidentity)
 CREATE (author)-[:CREATED {timestamp:timestamp()}]->(childversion)
 RETURN author, process, element, childidentity, childversion
+
+// Create parent-child relationships
+MATCH (:Folder {name:"Processes"})-[r:CONTAINS]->(b)
+WHERE NOT b:Flagged
+WITH b,r LIMIT 50
+MATCH (a:Identity {spID:toInt(b.spParentIDs)})
+SET b:Flagged
+CREATE (a)-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(b)
+DELETE r
+RETURN a,b
+
+// Create parent-child relationships - Contains
+MATCH (:Folder {name:"Processes"})-[r:CONTAINS]->(b)
+WHERE NOT b:Flagged
+WITH b,r LIMIT 100
+MATCH (a:Identity) WHERE b.spParentIDs CONTAINS toString(a.spID)
+SET b:Flagged
+CREATE (a)-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(b)
+DELETE r
+RETURN a,b
+
+// Get Processes
+MATCH (a:Folder {name:"Processes"})-[:CONTAINS*]->(b)
+RETURN a,b
+
+// Get Processes
+MATCH (a:Folder {name:"Processes"})-[:CONTAINS*]->(b)-[:GEOMETRY]->(c)
+RETURN a,b,c
+
+// Get Overrides
+MATCH (a:ContentType {name:"Override"})-->(b:PropertyType)-->(c:Version)
+RETURN a,b,c
+
+// Delete processes
+MATCH (a:Folder {name:"Processes"})-[pr:CONTAINS*]->(b)-[vr:VERSION]->(c)
+DETACH DELETE b,c
+
+// Load Processes CSV
+USING PERIODIC COMMIT
+LOAD CSV WITH HEADERS FROM 'http://146.185.147.45/datasets/PMT%20snapshot%202016-04-18-2300.csv' as line
+
