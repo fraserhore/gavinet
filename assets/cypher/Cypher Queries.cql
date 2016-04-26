@@ -389,3 +389,11 @@ DETACH DELETE b,c
 USING PERIODIC COMMIT
 LOAD CSV WITH HEADERS FROM 'http://146.185.147.45/datasets/PMT%20snapshot%202016-04-18-2300.csv' as line
 
+// Create Responsible For relationships
+MATCH (a:Activity)-[:VERSION {to:9007199254740991}]->(b:Version)
+WHERE NOT a:Flag
+WITH a,b LIMIT 200
+MATCH (c:Actor {spID:toInt(b.Responsible)})
+SET a:Flag
+CREATE (c)-[:RESPONSIBLE_FOR {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(a)
+RETURN a,c
