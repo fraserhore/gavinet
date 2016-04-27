@@ -53,7 +53,7 @@ module.exports = {
             //console.log(data);
             if(err) {
                 console.log(err);
-            } else {
+            } else if(data[0]) {
                 var identityNode = data[0].identityNode,
                     versionNode = data[0].versionNode,
                     authorNode = data[0].authorNode;
@@ -171,7 +171,7 @@ module.exports = {
         }); // fs
     },
 
-    uploadGraphXml: function(req, res) {
+    uploadMissingXmlElements: function(req, res) {
         // Add Graph Data
         fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
 
@@ -179,7 +179,7 @@ module.exports = {
 
             var data = JSON.parse(file).d.results; // 1690
 
-            for (var i = 0; i < 20; i++) {
+            for (var i = 1600; i < 1690; i++) {
                 if (data[i].GraphXML) {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
@@ -190,30 +190,116 @@ module.exports = {
                         var name = elements[j].nodeName;
                         // Add Missing Elemenents (e.g. connectors)
                         if (name === 'Text' || name === 'Image' || name === 'Connector' || name === 'OffPageReference') {
-                            console.log(name);
-                        }
+                            var attributes = elements[j].attributes;
+                            var properties = {};
+                            for (var i3 = 0; i3 < attributes.length; i3++) {
+                                properties[attributes[i3].nodeName] = attributes[i3].nodeValue;
+                            };
 
+                            var params = {
+                                "processSpId": parseInt(data[i].Id),
+                                "elementMxId": properties.id,
+                                "authorId": 126,
+                                "contenttype": name.toLowerCase(),
+                                "properties": properties
+                            };
+                            //console.log(params);
+                            var query =   'MATCH (author)'
+                                        +' WHERE id(author) = {authorId}'
+                                        +' WITH author'
+                                        +' MATCH (process:Identity)'
+                                        +' WHERE process.spId={processSpId}'
+                                        +' WITH author, process'
+                                        +' MERGE (process)-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->'
+                                        +       '(childidentity:Identity:ContentObject {contentType:{contenttype}, mxId:{elementMxId}})'
+                                        +       '-[:VERSION {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
+                                        +       '(childversion:Version)'
+                                        +' MERGE (author)-[:CREATED {timestamp:timestamp()}]->(childidentity)'
+                                        +' MERGE (author)-[:CREATED {timestamp:timestamp()}]->(childversion)'
+                                        +' SET childidentity:' + name
+                                        +' SET childversion = {properties}'
+                                        +' SET childidentity.name = childversion.label'
+                                        +' RETURN author,process,childidentity,childversion';
+                            //console.log(query);
+                            var cb = function(error, cypherData) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log('Cypher results');
+                                    console.log(cypherData);
+                                    //return res.json(cypherData);
+                                }
+                            };
+
+                            // db.cypher({
+                            //     query: query, 
+                            //     params: params
+                            // }, cb);
+                        }
+                    }
+                }
+            }
+        }); // fs
+    },
+
+    uploadGeometry: function(req, res) {
+        // Add Graph Data
+        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+
+            if (err) throw err;
+
+            var data = JSON.parse(file).d.results; // 1690
+
+            for (var i = 0; i < 5; i++) {
+                if (data[i].GraphXML) {
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(data[i].GraphXML, "text/xml");
+                    var j;
+                    var geometry = {};
+                    var elements = doc.documentElement.childNodes[0].childNodes;
+                    for (j = 0; j < elements.length; j++) {
+                        var name = elements[j].nodeName;
                         // Add Geometry
-                        if (name === 'Input' || name === 'Activity' || name === 'Output' || name === 'Outcome' || name === 'Impact' || name === 'Decision' || name === 'Role' || name === 'Actor') {
-                            if (elements[j].childNodes[0].childNodes) {
+                        if (elements[j].childNodes) {
+                            if (elements[j].childNodes[0].childNodes[0]) {
                                 if (elements[j].childNodes[0].childNodes[0].nodeName === 'mxGeometry') {
+                                    var geometryNode = elements[j].childNodes[0].childNodes[0];
+                                    if(geometryNode.childNodes[0]) {
+                                        if(geometryNode.childNodes[0].nodeName === 'Array') {
+                                            if(geometryNode.childNodes[0].childNodes[0]) {
+                                                var pointNodes = geometryNode.childNodes[0].childNodes;
+                                                var points = [];
+                                                for (var i4 = 0; i4 < pointNodes.length; i4++) {
+                                                    var pointNode = pointNodes[i4];
+                                                    var pointNodeAttributes = pointNode.attributes;
+                                                    var pointProperties = {};
+                                                    for (var i5 = 0; i5 < pointNodeAttributes.length; i5++) {
+                                                        pointProperties[pointNodeAttributes[i5].nodeName] = pointNodeAttributes[i5].nodeValue;
+                                                    };
+                                                };
+                                                points.push(pointProperties);
+                                            }
+                                        }
+                                    }
                                     geometry['processSpId'] = parseInt(data[i].Id);
                                     geometry['elementSpId'] = parseInt(elements[j].getAttribute('spId') ? elements[j].getAttribute('spId') : elements[j].getAttribute('spID'));
                                     geometry['elementMxId'] = elements[j].getAttribute('id');
                                     geometry['elementName'] = elements[j].getAttribute('label');
-                                    geometry['width'] = elements[j].childNodes[0].childNodes[0].getAttribute('width');
-                                    geometry['height'] = elements[j].childNodes[0].childNodes[0].getAttribute('height');
-                                    geometry['x'] = elements[j].childNodes[0].childNodes[0].getAttribute('x');
-                                    geometry['y'] = elements[j].childNodes[0].childNodes[0].getAttribute('y');
-
+                                    geometry['width'] = geometryNode.getAttribute('width');
+                                    geometry['height'] = geometryNode.getAttribute('height');
+                                    geometry['x'] = geometryNode.getAttribute('x');
+                                    geometry['y'] = geometryNode.getAttribute('y');
+                                    geometry['points'] = points;
+                                    console.log(points);
                                     var params = {
                                         "processSpId": geometry.processSpId,
                                         "elementSpId": geometry.elementSpId,
+                                        "elementMxId": geometry.elementMxId,
                                         "authorId": 126,
                                         "contenttype": 'geometry',
                                         "properties": geometry
                                     };
-
+                                    console.log(params);
                                     var query =   'MATCH (author)'
                                                 +' WHERE id(author) = {authorId}'
                                                 +' WITH author'
@@ -221,19 +307,18 @@ module.exports = {
                                                 +' WHERE process.spId={processSpId}'
                                                 +' WITH author, process'
                                                 +' MATCH (element:Identity)'
-                                                +' WHERE element.spId = {elementSpId}'
-                                                +' CREATE (process)-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->'
+                                                +' WHERE element.spId = {elementSpId} OR element.MxId = {elementMxId}'
+                                                +' MERGE (process)-[:CONTAINS {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->'
                                                 +       '(childidentity:Identity:ContentObject:Geometry {contentType:{contenttype}})'
                                                 +       '-[:VERSION {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial", lang:"en-gb"}]->'
                                                 +       '(childversion:Version)'
-                                                +' CREATE (element)-[:GEOMETRY {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(childidentity)'
-                                                +' CREATE (author)-[:CREATED {timestamp:timestamp()}]->(childidentity)'
-                                                +' CREATE (author)-[:CREATED {timestamp:timestamp()}]->(childversion)'
-                                                +' SET childidentity:Geometry' 
+                                                +' MERGE (element)-[:GEOMETRY {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(childidentity)'
+                                                +' MERGE (author)-[:CREATED {timestamp:timestamp()}]->(childidentity)'
+                                                +' MERGE (author)-[:CREATED {timestamp:timestamp()}]->(childversion)'
                                                 +' SET childversion = {properties}'
                                                 +' SET childidentity.name = "Geometry"'
                                                 +' RETURN author,process,element,childidentity,childversion';
-                                    //console.log(query);
+                                    console.log(query);
                                     var cb = function(error, cypherData) {
                                         if (error) {
                                             console.log(error);
@@ -244,10 +329,10 @@ module.exports = {
                                         }
                                     };
 
-                                    db.cypher({
-                                        query: query, 
-                                        params: params
-                                    }, cb);
+                                    // db.cypher({
+                                    //     query: query, 
+                                    //     params: params
+                                    // }, cb);
 
                                 }
                             }
@@ -257,6 +342,7 @@ module.exports = {
             }
         }); // fs
     },
+
 
 
     /** Get child content objects */
