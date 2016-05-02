@@ -397,3 +397,26 @@ MATCH (c:Actor {spID:toInt(b.Responsible)})
 SET a:Flag
 CREATE (c)-[:RESPONSIBLE_FOR {from:timestamp(), to:9007199254740991, versionNumber:1, versionName:"Initial"}]->(a)
 RETURN a,c
+
+// Get Process Map
+MATCH (a:Activity {name:"Receive Grant Support"})-[:CONTAINS]->(b)-[:VERSION]->(c)
+MATCH (a)-[:CONTAINS]->(d:MxCell)<-[:HAS_MXCELL]-(b)
+MATCH (d)-[:VERSION]->(e)
+WHERE NOT b:MxCell
+RETURN 
+{
+	id: id(a),
+	name: a.name,
+	contentType: a.contentType,
+	children: collect({
+		id: id(b),
+		name: b.name,
+		contentType: b.contentType,
+		properties: c,
+		mxCell: {
+    		id: id(d),
+    		name: d.name,
+    		properties: e
+    	}
+	})
+} AS result
