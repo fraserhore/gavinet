@@ -664,6 +664,60 @@ module.exports = {
         }, cb);
     },
 
+    /** Get child content objects */
+    getProcess: function(req, res) {
+        var params = {
+            "id": parseInt(req.param('id')),
+            "lang": parseInt(req.param('lang')) || "en-gb"
+        };
+        var versionMatch = "";
+
+        if(req.param('versionName')) {
+            var versionName = req.param('versionName');
+            versionMatch = " AND versionRel.versionName = " + versionName + " AND mxCellVersionRel.versionName = " + versionName;
+        } else if(req.param('versionValidityDate')) {
+            var versionValidityDate = parseInt(req.param('versionValidityDate'));
+            versionMatch = " AND versionRel.from <= " + versionValidityDate + " AND versionRel.to >= " + versionValidityDate + " AND mxCellVersionRel.from <= " + versionValidityDate + " AND mxCellVersionRel.to >= " + versionValidityDate;
+        } else {
+            versionMatch = " AND parentChildRel.to = 9007199254740991 AND versionRel.to = 9007199254740991 AND mxCellParentChildRel.to = 9007199254740991 AND mxCellVersionRel.to = 9007199254740991";
+        }
+        var query =   'MATCH (parentNode)-[parentChildRel:CONTAINS]->(identityNode)-[versionRel:VERSION]->(versionNode), (authorNode)-[createdRel:CREATED]->(identityNode)'
+                    +' MATCH (parentNode)-[mxCellParentChildRel:CONTAINS]->(mxCellIdentityNode:MxCell)<-[:HAS_MXCELL]-(identityNode)'
+                    +' MATCH (mxCellIdentityNode)-[mxCellVersionRel:VERSION]->(mxCellVersionNode)'
+                    +' WHERE id(parentNode) = {id} AND versionRel.lang = {lang}'
+                    +  versionMatch
+                    +' RETURN '
+                    +' {'
+                    +' id: id(parentNode),'
+                    +' name: parentNode.name,'
+                    +' contentType: parentNode.contentType,'
+                    +' children: collect({'
+                    +'     id: id(identityNode),'
+                    +'     name: identityNode.name,'
+                    +'     contentType: identityNode.contentType,'
+                    +'     properties: versionNode,'
+                    +'     mxCell: {'
+                    +'         id: id(mxCellIdentityNode),'
+                    +'         name: mxCellIdentityNode.name,'
+                    +'         properties: mxCellVersionNode'
+                    +'     }'
+                    +' })'
+                    +' } AS result';
+        console.log(query);
+        var cb = function(err, data) {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(data[0].result.children);
+                return res.json(data[0].result.children);
+            }
+        };
+        db.cypher({
+            query: query,
+            params: params
+        }, cb);
+    },
+
 
     /**
      * Create new content object (identityNode and versionNode)
