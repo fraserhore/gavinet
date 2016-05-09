@@ -1,11 +1,6 @@
 <mxEditor defaultGroup="group" defaultEdge="connector">
 	<include name="/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/config/editor-commons.xml"/>
-	<add as="onInit"><![CDATA[
-		function ()
-		{
-			onInit(this);
-		}
-	]]></add>
+
 	<ui>
 		<add as="graph" element="graph"/>
 		<add as="status" element="status"/>
