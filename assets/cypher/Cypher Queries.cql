@@ -420,3 +420,25 @@ RETURN
     	}
 	})
 } AS result
+
+MATCH (parentNode)-[parentChildRel:CONTAINS]->(identityNode)-[versionRel:VERSION]->(versionNode), (authorNode)-[createdRel:CREATED]->(identityNode)
+MATCH (parentNode)-[mxCellParentChildRel:CONTAINS]->(mxCellIdentityNode:MxCell)<-[:HAS_MXCELL]-(identityNode)
+MATCH (mxCellIdentityNode)-[mxCellVersionRel:VERSION]->(mxCellVersionNode)
+WHERE id(parentNode) = 6419 AND versionRel.lang = 'en-gb' AND parentChildRel.to = 9007199254740991 AND versionRel.to = 9007199254740991 AND mxCellParentChildRel.to = 9007199254740991 AND mxCellVersionRel.to = 9007199254740991
+RETURN 
+{
+	id: id(parentNode),
+	name: parentNode.name,
+	contentType: parentNode.contentType,
+	children: collect({
+	    id: id(identityNode),
+	    name: identityNode.name,
+	    contentType: identityNode.contentType,
+	    properties: versionNode,
+	    mxCell: {
+	        id: id(mxCellIdentityNode),
+	        name: mxCellIdentityNode.name,
+	        properties: mxCellVersionNode
+	    }
+	})
+} AS result;

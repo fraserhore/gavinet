@@ -36,6 +36,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       body="{{formData}}"
       handle-as="json"
       last-response="{{res}}"
+      on-response="postDataResponse"
       debounce-duration="300"></iron-ajax>
 
     <iron-ajax
@@ -50,8 +51,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <span id="mainActions" style="width:100%;padding-top:8px;padding-left:24px;padding-bottom:8px;"></span>
       <span id="selectActions" style="width:100%;padding-left:54px;padding-bottom:4px;"></span>
       <span id="zoomActions" style="width:100%;padding-left:54px;padding-top:4px;"></span>
-      <div id="toolbar" style="width:16px;padding-left:20px;" valign="top"></div>
-      <div id="graph" style="position:relative;height:480px;width:684px;overflow:hidden;cursor:default;">
+      <div id="toolbar"></div>
+      <div id="graph">
         <!-- Graph Here -->
         <center id="splash" style="padding-top:230px;">
             <img src="images/loading.gif">
@@ -88,8 +89,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-      edit: function(event) {
-        this.fire('edit', event.model.item);
+      createItem: function(parentId, contentType, properties, versionName, success, error) {
+        this.formData = {};
+        this.set('formData.action', 'create');
+        this.set('formData.authorId', 126);
+        this.set('formData.parentId', parentId);
+        this.set('formData.id', undefined);
+        this.set('formData.lang', 'en-gb');
+        this.set('formData.versionName', versionName);
+        this.set('formData.contenttype', contentType);
+        this.set('formData.properties', properties);
+        // could add a change listener to formData.contenttype to handle the following
+        //this.$.getContentTypeSchema.params = {"contenttype": this.formData.contenttype};
+        //this.$.getContentTypeSchema.generateRequest;
+        //this._initFormData();
+        console.log(this.formData);
+        //response = this.$.postData.generateRequest();
+        //console.log(response);
+        //return success(response);
+      },
+
+      update: function(event) {
+        var identityNode = event.detail.identityNode || this.identityNode,
+            versionNode = event.detail.versionNode || this.versionNode,
+            authorNode = event.detail.authorNode || this.authorNode;
+        this.set('formData.action', 'update');
+        this.set('formData.authorId', authorNode._id);
+        this.set('formData.parentId', undefined);
+        this.set('formData.id', identityNode._id);
+        this.set('formData.lang', 'en-gb');
+        this.set('formData.versionName', '');
+        this.set('formData.contenttype', identityNode.properties.contentType);
+        this.set('formData.properties', versionNode.properties);
+        // could add a change listener to formData.contenttype to handle the following
+        this.$.getContentTypeSchema.params = {"contenttype": this.formData.contenttype};
+        this.$.getContentTypeSchema.generateRequest;
+        this._initFormData();
+        this.$.editDialog.open();
       },
 
       delete: function(event) {
@@ -98,7 +134,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.deleteRequest.generateRequest();
       },
 
-      deleteResponse: function(request) {
+      postDataResponse: function(event) {
+
+      },
+
+      edit: function(event) {
+        this.fire('edit', event.model.item);
       },
 
       refresh: function() {
@@ -201,29 +242,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var hideSplash = function() {
             // Fades-out the splash screen
             var splash = document.getElementById('splash');
-            
-            if (splash != null)
-            {
-              try
-              {
+            if (splash != null) {
+              try {
                 mxEvent.release(splash);
                 mxEffects.fadeOut(splash, 100, true);
-              }
-              catch (e)
-              {
+              } catch (e) {
                 splash.parentNode.removeChild(splash);
               }
             }
           };
           
-          try
-          {
-            if (!mxClient.isBrowserSupported())
-            {
+          try {
+            if (!mxClient.isBrowserSupported()) {
               mxUtils.error('Browser is not supported!', 200, false);
-            }
-            else
-            {
+            } else {
               mxObjectCodec.allowEval = true;
               var node = mxUtils.load(config).getDocumentElement();
               var editor = new mxEditor(node);
@@ -288,7 +320,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var codec = new mxCodec(doc);
             var elt = doc.documentElement;
             var mxCell = codec.decode(elt);
-            mxCell.setValue(child.name);
+            mxCell.setValue({label:child.name});
             //console.log(mxCell);
 
             var cell = graph.addCell(mxCell, parent);
@@ -341,18 +373,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             itemGuid;
             
           // Enables rubberband selection
-          new mxRubberband(graph);
+          //new mxRubberband(graph);
 
           /*******************************************************************
-          Set the spID of the Sharepoint Parent Item that contains the graph.
+          Set the id of the Sharepoint Parent Item that contains the graph.
           All vertices (e.g. activities) added to the graph will have their
-          spParentIDs set to the spID of the parent cell in the graph,
+          spParentIDs set to the id of the parent cell in the graph,
           so the first cell added to the graph will have the current Sharepoint
           item's ID added to its spParentIDs.
            ********************************************************************/
           mxGraphMainParent = graph.model.getCell('1');
-          mxGraphMainParent.setAttribute('spID', currentItemId);
-          mxGraphMainParent.setAttribute('spGuid', itemGuid);
+          mxGraphMainParent.setAttribute('id', this.identityNodeId);
 
           /*******************************************************************
           Listen for changes to the graph in order to create new Sharepoint
@@ -360,187 +391,170 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           items when the corresponding shapes are changed, and delete these
           Sharepoint items when the corresponding shapes are deleted
            ********************************************************************/
+          var self = this;
           model.addListener(mxEvent.CHANGE, function (sender, evt) {
             changes = evt.getProperty('edit').changes;
             for (i = 0; i < changes.length; i++) {
               var change = changes[i];
-
               /*******************************************************************
               // Vertex has been added to the graph or its parent has changed
                ********************************************************************/
               if (change instanceof mxChildChange && change.child.vertex === 1 && change.parent !== null) {
                 var child = change.child,
-                childTagName = child.value.tagName,
-                childSpContentTypeID = child.getAttribute('spContentTypeID'),
-                childSpID = child.getAttribute('spID'),
-                parent = change.parent,
-                parentSpID = parent.getAttribute('spID'),
-                parentTagName = parent.value.tagName,
-                parentStyle = parent.style,
-                parentName = parent.value.attributes[1].nodeValue,
-                previous = change.previous,
-                properties = {};
+                    childTagName = child.value.tagName,
+                    contentType = child.getAttribute('contentType'),
+                    childId = child.getAttribute('id'),
+                    parent = change.parent,
+                    parentId = parent.getAttribute('id'),
+                    parentTagName = parent.value.tagName,
+                    parentStyle = parent.style,
+                    parentName = parent.getAttribute('label'),
+                    previous = change.previous,
+                    properties = {};
 
-
-                //case this value is undefined, let grab it from the href attribute
-                if(parentSpID === undefined) {
-                  // var href = parent.getAttribute('href');
-                  // if(href === undefined)
-                  // {
-                    // mxLog.debug("Internal error, please reload the graph, by not doing so your work might be lost.");
-                    // return;
-                  // }
-                  // var num  = href.search("ID=");
-                  parentSpID = currentItemId;
+                if(parentId === undefined) {
+                  parentId = self.identityNodeId;
                 }
-
+                console.log(child);
                 //For Roles - Old Swimlanes
-                if (childTagName === "Role" && previous === null) {
-                  PromptSelectRoleOrCreate(function (pObjectId) {
-                    child.setAttribute('spID', pObjectId)
-                  }, editor, graph, child, childSpContentTypeID);
+                // if (childTagName === "Role" && previous === null) {
+                //   PromptSelectRoleOrCreate(function (pObjectId) {
+                //     child.setAttribute('id', pObjectId)
+                //   }, editor, graph, child, contentType);
                   
-                  return;
-                }
+                //   return;
+                // }
                 
                 //For Off Page References
-                if (childTagName === "OffPageReference" && previous === null) {
-                  PromptSelectActivities(function (pObjectId) {
-                    child.setAttribute('spID', pObjectId)
-                  }, editor, graph, child, childSpContentTypeID);
+                // if (childTagName === "OffPageReference" && previous === null) {
+                //   PromptSelectActivities(function (pObjectId) {
+                //     child.setAttribute('id', pObjectId)
+                //   }, editor, graph, child, contentType);
                   
-                  return;
-                }
+                //   return;
+                // }
                 
                 // Vertex has been added to the graph (i.e. it is new)
                 if (previous === null) {
-                  // Clear attributes except for label and spContentTypeID
+                  // Clear attributes except for label and contentType
                   var attributes = child.value.attributes,
-                  attributesCount = attributes.length,
-                  i2 = 0;
+                      attributesCount = attributes.length,
+                      i2 = 0;
+                  properties = {};
                   for (; i2 < attributesCount; i2 += 1) {
                     var attributeName = attributes[i2].nodeName;
-
-                    if (attributeName === 'label') {
-                      child.setAttribute(attributes[i2].nodeName, child.value.nodeName + '_' + Math.floor(Math.random() * (1000 - 0)) + 0);
-                      graph.refresh();
-                    } else if (attributeName !== 'spContentTypeID') {
+                    if (attributeName !== 'label' && attributeName !== 'contentType') {
                       child.setAttribute(attributes[i2].nodeName, '');
                     }
                     graph.refresh();
+                    properties[attributes[i2].nodeName] = attributes[i2].nodeValue;
+                    if(attributeName === 'label') {
+                      properties['title'] = attributes[i2].nodeValue;
+                    }
                   }
 
-                  // If child has an spContentTypeID create an associated Sharepoint list item
-                  if (childSpContentTypeID) {
-                    properties = {
-                      "Title" : child.getAttribute('label'),
-                      "ContentTypeId" : childSpContentTypeID,
-                      "__metadata" : {
-                        "type" : spDataType
-                      }
-                    };
-
+                  // If child has an contentType create an associated Sharepoint list item
+                  if (contentType) {
+                    console.log(properties);
                     // If an item A is dropped inside of activity B, use activity
-                    // B's spID as item A's spParentIDs value. Otherwise use the
+                    // B's id as item A's spParentIDs value. Otherwise use the
                     // main parent id (i.e. the activity the current page represents)
                     if (parentTagName === 'Activity') {
-                      child.setAttribute('spParentIDs', parentSpID);
-                      properties['ParentIDs'] = parentSpID.toString();
+                      //child.setAttribute('spParentIDs', parentId);
+                      //properties['ParentIDs'] = parentId.toString();
                     } else {
-                      child.setAttribute('spParentIDs', currentItemId);
-                      properties['ParentIDs'] = currentItemId.toString();
+                      //child.setAttribute('spParentIDs', currentItemId);
+                      //properties['ParentIDs'] = currentItemId.toString();
                     }
 
                     // If the item is dropped into a Role Swimlane, add the
-                    // spID of the Role into the item's Responsible property
+                    // id of the Role into the item's Responsible property
                     if (parentStyle === "swimlane" || parentTagName === 'Role') {
                       
                       //Changed the ID to the name of the swimlane/role
                       //Fraser asked on 02/09/2015 to change back to ID
-                      child.setAttribute('spResponsible', parentSpID);
-                      properties['Responsible'] = parentSpID.toString();
+                      //child.setAttribute('spResponsible', parentId);
+                      //properties['Responsible'] = parentId.toString();
                     }
                     //If object dropped is a role (Swimlane)
 
                     /*******************************************************************
                     Create a Sharepoint list item
                      ********************************************************************/
-                    createListItem(webAbsoluteUrl, listName, properties,
+                    self.createItem(parentId, contentType, properties, "",
                       //Success callback
-                      function (listItem) {
-                      child.setAttribute('spID', listItem.Id);
-                      
-                      //keeps href only for images
-                      if (childTagName === "Image")
-                        child.setAttribute('href', webAbsoluteUrl + '/Lists/' + listName.replace(" ", "%20") + '/DispForm.aspx?ID=' + listItem.Id);
-                    },
+                      function (item) {
+                        child.setAttribute('id', item._Id);
+                        
+                        //keeps href only for images
+                        //if (childTagName === "Image")
+                          //child.setAttribute('href', webAbsoluteUrl + '/Lists/' + listName.replace(" ", "%20") + '/DispForm.aspx?ID=' + listItem.Id);
+                      },
                       function (error) {
-                      console.log(error);
-                      return;
-                    });
-                    console.log(properties);
-
+                        console.log(error);
+                        return;
+                      });
                   }
                 }
                 // Vertex has a new parent
                 else {
                   var previousTagName = previous.value.tagName;
 
-                  // If child has an spContentTypeID update its spParentIDs and/or spResponsible
+                  // If child has an contentType update its spParentIDs and/or spResponsible
                   // attributes and the associated Sharepoint list item's corresponding properties
-                  if (childSpContentTypeID) {
+                  if (contentType) {
                     // If an item A is dropped inside of activity B, add activity
-                    // B's spID to item A's spParentIDs value. If the previous parent
-                    // was an Activity, remove its spID from A's spParentIDs, otherwise
-                    // remove the main parent spID
+                    // B's id to item A's spParentIDs value. If the previous parent
+                    // was an Activity, remove its id from A's spParentIDs, otherwise
+                    // remove the main parent id
                     if (parentTagName === 'Activity') {
                       // convert child's spParentIDs into an array
                       var childSpParentIDs = child.getAttribute('spParentIDs');
                       if (childSpParentIDs) {
                         var childSpParentIDsNoSpaces = childSpParentIDs.replace(' ', ''),
                         childSpParentIDsArray = childSpParentIDsNoSpaces.split(','),
-                        previousSpID,
-                        indexOfSpID = -1;
+                        previousId,
+                        indexOfId = -1;
                         if (previousTagName === 'Activity') {
-                          previousSpID = previous.getAttribute('spID');
-                          indexOfSpID = childSpParentIDsArray.indexOf(previousSpID);
+                          previousId = previous.getAttribute('id');
+                          indexOfId = childSpParentIDsArray.indexOf(previousId);
                         } else {
-                          indexOfSpID = childSpParentIDsArray.indexOf(currentItemId);
+                          indexOfId = childSpParentIDsArray.indexOf(currentItemId);
                         }
-                        if (indexOfSpID !== -1) {
-                          childSpParentIDsArray.splice(indexOfSpID, 1);
+                        if (indexOfId !== -1) {
+                          childSpParentIDsArray.splice(indexOfId, 1);
                         }
-                        childSpParentIDsArray.push(parentSpID);
+                        childSpParentIDsArray.push(parentId);
                         childSpParentIDs = childSpParentIDsArray.toString();
                       } else {
-                        childSpParentIDs = parentSpID.toString();
+                        childSpParentIDs = parentId.toString();
                       }
                       child.setAttribute('spParentIDs', childSpParentIDs);
                       properties['ParentIDs'] = childSpParentIDs;
                     }
 
-                    // If the new parent is a Role Swimlane, add the spID
+                    // If the new parent is a Role Swimlane, add the id
                     // of the Role into the item's Responsible property and
-                    // remove the previous parent's spID if it was also a Role
+                    // remove the previous parent's id if it was also a Role
                     else if (parentTagName === 'Role') {
                       // Convert child's spResponsible ids into an array
                       var childSpResponsible = child.getAttribute('spResponsible');
                       if (childSpResponsible) {
                         var childSpResponsibleNoSpaces = childSpResponsible.replace(' ', ''),
                         childSpResponsibleArray = childSpResponsibleNoSpaces.split(','),
-                        previousSpID,
-                        indexOfSpID = -1;
+                        previousId,
+                        indexOfId = -1;
                         if (previousTagName === 'Role') {
-                          previousSpID = previous.getAttribute('spID');
-                          indexOfSpID = childSpResponsibleArray.indexOf(previousSpID);
+                          previousId = previous.getAttribute('id');
+                          indexOfId = childSpResponsibleArray.indexOf(previousId);
                         }
-                        if (indexOfSpID !== -1) {
-                          childSpResponsibleArray.splice(indexOfSpID, 1);
+                        if (indexOfId !== -1) {
+                          childSpResponsibleArray.splice(indexOfId, 1);
                         }
-                        childSpResponsibleArray.push(parentSpID);
+                        childSpResponsibleArray.push(parentId);
                         childSpResponsible = childSpResponsibleArray.toString();
                       } else {
-                        childSpResponsible = parentSpID;
+                        childSpResponsible = parentId;
                       }
                       //child.setAttribute('spResponsible', parentName);
                       //properties['Responsible'] = parentName;
@@ -556,11 +570,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     /********************************************************
                     Update the Sharepoint list item
                      ********************************************************/
-                    if (properties && childSpID) {
+                    if (properties && childId) {
                       properties['__metadata'] = {
                         "type" : spDataType
                       };
-                      UpdateListItem(webAbsoluteUrl, listName, childSpID, properties);
+                      UpdateListItem(webAbsoluteUrl, listName, childId, properties);
                     }
                   }
 
@@ -593,7 +607,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                ********************************************************************/
               if (change instanceof mxCellAttributeChange || change instanceof mxValueChange) {
                 var changedCell = change.cell,
-                changedCellSpContentTypeID = changedCell.getAttribute('spContentTypeID'),
+                changedCellContentType = changedCell.getAttribute('contentType'),
                 changedAttribute = change instanceof mxValueChange ? 'label' : change.attribute;
 
                 console.log(change);
@@ -613,56 +627,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   graph.refresh();
                 }
 
-                // If the changed cell has a spContentTypeID and either the label or an attribute starting with
-                // sp has changed, update the corresponding Sharepoint list item
-                if (changedCellSpContentTypeID) {
-                  var changedCellSpID = changedCell.getAttribute('spID'),
-                  properties = {
-                    __metadata : {
-                      "type" : spDataType
-                      }
-                  };
-                  if (changedAttribute === 'label') {
-                    properties['Title'] = change.value;
-                  } else if (changedAttribute.substr(0, 2) === 'sp' && changedAttribute !== 'spPersonDays') {
-                    if (changedAttribute === 'spDescription')
-                      properties['ProcessItemDescription'] = String(change.value);
-                    else if (changedAttribute === 'spStatus')
-                      properties['spStatus'] = String(change.value);
-                    else if (changedAttribute === 'spDuration')
-                      properties[durationField] = String(change.value);
-                    else
-                      properties[changedAttribute.substring(2)] = String(change.value);
-                  } else if (changedAttribute === 'spPersonDays') {
-                    if (IsNumeric(change.value)) {
-                      properties[changedAttribute.substring(2)] = change.value;
-                    } else {
-                      mxLog.debug("spPersonDays value must be numeric. Ex: '123', '12.3', '-10.3'");
-
-                      return;
-                    }
-
-                  }
-                  
+                // If the changed cell has a contentType update the corresponding Sharepoint list item
+                if (changedCellContentType) {
+                  var changedCellId = changedCell.getAttribute('id'),
+                      //properties = {},
+                      properties = changedCell.attributes;
+                  //properties[changedAttribute] = change.value;
 
                   /*************************************************************
                   Update the corresponding Sharepoint List item
                    ********************************************************************/
-                  UpdateListItem(webAbsoluteUrl, listName, changedCellSpID, properties);
+                  UpdateListItem(webAbsoluteUrl, listName, changedCellId, properties);
                 }
               }
             }
-
-            /*******************************************************************
-            Update the current Sharepoint item's GraphXML
-            ********************************************************************/
-            var updateProperties = {
-              __metadata : {
-                "type" : spDataType
-              },
-              "GraphXML" : editor.writeGraphModel()
-            };
-            UpdateListItem(webAbsoluteUrl, listName, currentItemId, updateProperties);
           });
 
           /*******************************************************************
@@ -672,7 +650,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //alert('This object will be deleted.');
             for (i = 0; i < evt.properties.cells.length; i++) {
                if (evt.properties.cells[i].value.nodeName !== "Connector") {
-                 var itemId = evt.properties.cells[i].getAttribute('spID');
+                 var itemId = evt.properties.cells[i].getAttribute('id');
                  
                  
                  // var confirm = confirm('This object will be deleted.');
@@ -695,16 +673,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                  // }
                  
               }
-            }
-            /*******************************************************************
-            Update the current Sharepoint item's GraphXML
-             ********************************************************************/
-             // var properties = {
-             // __metadata: { "type": spDataType },
-             // "GraphXML" : editor.writeGraphModel()
-              // };
-             // UpdateListItem(webAbsoluteUrl, listName, currentItemId, properties);
-             
+            }             
           });
 
           // Allows new connections but no dangling edges
@@ -830,7 +799,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           
           // Defines an icon for creating new connections in the connection handler.
           // This will automatically disable the highlighting of the source vertex.
-          mxConnectionHandler.prototype.connectImage = new mxImage('polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/connector.gif', 16, 16);
+          mxConnectionHandler.prototype.connectImage = new mxImage('/polymer-starter-kit/app/elements/mxgraph-import/mxgraph/images/connector.gif', 16, 16);
 
           // Create main actions in page
           var node = document.getElementById('mainActions');
@@ -972,13 +941,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         graph.addListener(mxEvent.DOUBLE_CLICK, function(sender, evt) {
           // SingleClick = false;
           doubleClick = true;
-          selectionChanged(graph, doubleClick);
+          //selectionChanged(graph, doubleClick);
         });
 
         graph.getSelectionModel().addListener(mxEvent.CHANGE, function (sender, evt) {
           console.log("before single click: doubleClick = " + doubleClick);
           doubleClick = false;
-          selectionChanged(graph, doubleClick);
+          //selectionChanged(graph, doubleClick);
           doubleClick = false;
         });
         //selectionChanged(graph);
