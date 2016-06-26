@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-dialog> -->
 
     <div>Version validity date: <moment-element datetime="{{versionSliderValue}}" output-format="MMM DD[,] YYYY"></moment-element></div>
-    <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged" editable></paper-slider>
+    <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged"></paper-slider>
 
 
     <paper-button raised on-click="update">Edit</paper-button>
