@@ -10,7 +10,8 @@
     "polymer": "Polymer/polymer#^1.2.0",
     "vaadin-core-elements": "^0.3.0",
     "paper-typeahead-input": "^1.3.6",
-    "vaadin-date-picker": "^1.0.0-beta1"
+    "vaadin-date-picker": "^1.0.0-beta1",
+    "moment-element": "^0.4.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
