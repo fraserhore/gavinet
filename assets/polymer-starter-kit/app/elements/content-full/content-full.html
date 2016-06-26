@@ -102,6 +102,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      listeners: {
+        'contentEdit.contentEdited': '_refreshAllContent'
+      },
+
       ready: function() {
         var today = new Date();
         this.versionSliderValue = Date.now();
@@ -200,6 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _refreshAllContent: function() {
+        console.log("test");
         this.$.contentChildren.refresh();
       },
 
