@@ -215,7 +215,6 @@
 					return null;
 				};
 				
-				
 				//------------Carlos ADD END
 
 				// Updates the window title after opening new files

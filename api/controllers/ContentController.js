@@ -20,6 +20,8 @@ var db = new neo4j.GraphDatabase({
 });
 var request = require("request");
 var fs = require("fs");
+//var processFile = "/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json";
+var processFile = "C:/apps/gavinet/assets/datasets/pmt_top_all.json";
 var DOMParser = require('xmldom').DOMParser;
 var XMLSerializer = require('xmldom').XMLSerializer;
 
@@ -108,7 +110,7 @@ module.exports = {
      */
     uploadProcessData: function(req, res) {
 
-        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+        fs.readFile(processFile, (err, file) => {
           
           if (err) throw err;
 
@@ -174,7 +176,7 @@ module.exports = {
 
     uploadMissingXmlElements: function(req, res) {
         // Add Graph Data
-        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+        fs.readFile(processFile, (err, file) => {
 
             if (err) throw err;
 
@@ -271,7 +273,7 @@ module.exports = {
 
     uploadMxCell: function(req, res) {
         // Add Graph Data
-        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+        fs.readFile(processFile, (err, file) => {
 
             if (err) throw err;
 
@@ -375,7 +377,7 @@ module.exports = {
 
     uploadGeometry: function(req, res) {
         // Add Graph Data
-        fs.readFile('/Fraser/webapps/gavinet/assets/datasets/pmt_top_all.json', (err, file) => {
+        fs.readFile(processFile, (err, file) => {
 
             if (err) throw err;
 
@@ -707,7 +709,7 @@ module.exports = {
         var cb = function(err, data) {
             if(err) {
                 console.log(err);
-            } else {
+            } else if(data[0]) {
                 console.log(data[0].result.children);
                 return res.json(data[0].result.children);
             }
