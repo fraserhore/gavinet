@@ -1,16 +1,7 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="/polymer-starter-kit/app/bower_components/polymer/polymer.html">
 
-<dom-module id="content-children">
+<dom-module id="content-children-grid">
   <template>
     <style>
       :host {
@@ -35,29 +26,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
-    <!-- <vaadin-grid id="childrenGrid">
       <table>
         <colgroup>
-          <col name="versionNode.properties.name">
-          <col name="versionNode.properties.term">
-          <col name="versionNode.properties.description">
+          <col>
+          <col>
+          <col>
         </colgroup>
-      </table>
-    </vaadin-grid> -->
-
-    <template is="dom-repeat" items="[[children]]">
-      <div class="horizontal-section">
-        <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
-        <template is="dom-repeat" items="[[_toArray(item.versionNode.properties)]]">
-          <template is="dom-if" if="{{item.value}}">
-            <p>[[item.name]]: [[item.value]]</p>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <template is="dom-repeat" items="[[children]]">
+            <tr>
+              <td>
+                <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
+              </td>
+              <td>{{item.versionNode.properties.description}}</td>
+              <td>
+                <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
+                <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
+              </td>
+            </tr>
           </template>
-        </template>
-        
-        <paper-button on-click="edit"><iron-icon icon="create"></iron-icon></paper-button>
-        <paper-button on-click="delete"><iron-icon icon="delete"></iron-icon></paper-button>
-      </div>
-    </template>
+        </tbody>
+      </table>
 
   </template>
   <script>
@@ -65,7 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'content-children',
+      is: 'content-children-grid',
 
       properties: {
         identityNodeId: {
@@ -82,7 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
 
-      //grid: document.querySelector('vaadin-grid'),
+      grid: document.querySelector('vaadin-grid'),
 
       ready: function() {
         //this.grid = this.grid || this.$.childrenGrid;
@@ -111,11 +107,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _updateChildren: function(event) {
-        //this.grid = this.grid || this.$.childrenGrid;
+        // this.grid = this.grid || this.$.childrenGrid;
         // this.grid.items = this.children;
         // this.grid.size = this.children.length;
         // this.grid.refreshItems();
-        //console.log(this.children);
+        // console.log(this.children);
       },
 
       _toArray: function(obj) {

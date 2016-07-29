@@ -53,7 +53,7 @@ module.exports = {
                     +  versionMatch
                     +' RETURN identityNode, version, versionNode, authorNode';
         var cb = function(err, data) {
-            //console.log(data);
+            console.log(data);
             if(err) {
                 console.log(err);
             } else if(data[0]) {
@@ -63,7 +63,10 @@ module.exports = {
 
                 module.exports.getViewTemplate(view, identityNode, versionNode, authorNode, function(viewTemplate) {
                     console.log('viewTemplate: ' + viewTemplate);
-                    return res.view(viewTemplate, data[0]);
+                    var props = {};
+                    props['app'] = data[0];
+                    props.app['viewTemplate'] = viewTemplate;
+                    return res.view("template", props);
                 });
             }
         }
@@ -89,7 +92,7 @@ module.exports = {
         var cb = function(err, data) {
             if(err || data.length === 0) {
                 console.log(err);
-                callback('full');
+                callback('content-full');
             } else {
                 console.log(data[0].override.properties.matchFile);
                 callback(data[0].override.properties.matchFile);   

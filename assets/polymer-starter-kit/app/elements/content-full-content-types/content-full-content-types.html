@@ -1,8 +1,16 @@
-
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
 
 <link rel="import" href="/polymer-starter-kit/app/bower_components/polymer/polymer.html">
 
-<dom-module id="content-full">
+<dom-module id="content-full-content-types">
   <template>
     <style>
       :host {
@@ -38,17 +46,8 @@
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
-    <!-- <paper-button raised on-click="openDialog" data-dialog="relationshipDialog">Create Relationship</paper-button>
-    <paper-dialog id="relationshipDialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" autoFitOnAttach="true">
-      <h2>Create Relationship</h2>
-      <paper-dialog-scrollable>
-        <content-relationship reference-node-id="{{app.identityNode._id}}" direction="outbound" parent-node-id="{{app.identityNode._id}}"></content-relationship>
-      </paper-dialog-scrollable>
-    </paper-dialog> -->
-
     <div>Version validity date: <moment-element datetime="{{versionSliderValue}}" output-format="MMM DD[,] YYYY"></moment-element></div>
     <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged"></paper-slider>
-
 
     <paper-button raised on-click="update">Edit</paper-button>
     <paper-button raised on-click="create">New</paper-button>
@@ -64,8 +63,7 @@
       </div>
     </paper-dialog>
       
-    <h3>Child Content</h3>
-    <content-children id="contentChildren" identity-node-id="{{app.identityNode._id}}" on-edit="update"></content-children>
+    <content-children-grid id="contentChildren" identity-node-id="{{app.identityNode._id}}" on-edit="update"></content-children-grid>
 
     <h3>Related Content</h3>
     <content-related identity-node-id="{{app.identityNode._id}}"></content-related>
@@ -76,7 +74,7 @@
     'use strict';
 
     Polymer({
-      is: 'content-full',
+      is: 'content-full-content-types',
 
       properties: {
         app: {
@@ -115,7 +113,6 @@
       },
 
       update: function(event) {
-        console.log(event.detail);
         var identityNode = event.detail.identityNode || this.app.identityNode,
             versionNode = event.detail.versionNode || this.app.versionNode,
             authorNode = event.detail.authorNode || this.app.authorNode;
