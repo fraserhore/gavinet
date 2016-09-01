@@ -51,7 +51,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var el,
             viewTemplate = this.viewTemplate || this.app.viewTemplate,
             props = {};
-        props[app] = this.app;
+        props['app'] = this.app;
+        props['identityNodeId'] = this.app.identityNode._id;
         el = Polymer.Base.create(this.viewTemplate, props);
         this.appendChild(el);
       }

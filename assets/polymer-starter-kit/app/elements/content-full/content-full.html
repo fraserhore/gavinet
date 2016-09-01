@@ -66,6 +66,7 @@
       
     <h3>Child Content</h3>
     <content-children id="contentChildren" identity-node-id="{{app.identityNode._id}}" on-edit="update"></content-children>
+    <template-match app="{{app}}" view-template="content-children-grid"></template-match>
 
     <h3>Related Content</h3>
     <content-related identity-node-id="{{app.identityNode._id}}"></content-related>
