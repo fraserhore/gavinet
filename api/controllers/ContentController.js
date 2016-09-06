@@ -66,7 +66,11 @@ module.exports = {
                     var props = {};
                     props['app'] = data[0];
                     props.app['viewTemplate'] = viewTemplate;
-                    return res.view("template", props);
+                    module.exports.getViewTemplateOverrides(function(viewTemplateOverrides) {
+                        props.app['viewTemplateOverrides'] = viewTemplateOverrides;
+                        console.log('props: ' + props.app.viewTemplateOverrides);
+                        return res.view("template", props);
+                    });
                 });
             }
         }
@@ -104,8 +108,16 @@ module.exports = {
         }, cb);
     },
 
-    getViewTemplateOverrides: function() {
-
+    getViewTemplateOverrides: function(callback) {
+        var query =  'MATCH (a:Override)-[r:VERSION {to:9007199254740991}]->(b:Version)'
+                    +' RETURN b as Override';
+        var cb = function(err, data) {
+            //console.log(data);
+            return callback(JSON.stringify(data));
+        };
+        db.cypher({
+            query: query
+        }, cb);
     },
 
     /**
@@ -577,7 +589,7 @@ module.exports = {
     /** Get content types */
     getContentTypes: function(req, res) {
 
-        var query =  'MATCH (a:ContentType)-[:VERSION]->(b:Version)'
+        var query =  'MATCH (a:ContentType)-[:VERSION {to:9007199254740991}]->(b:Version)'
                     +' RETURN a as contentTypeIdentity, b as contentTypeVersion'
         var params = {
             "id": ''

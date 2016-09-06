@@ -1,5 +1,4 @@
 
-
 <link rel="import" href="/polymer-starter-kit/app/bower_components/polymer/polymer.html">
 
 <dom-module id="content-full">
@@ -49,7 +48,6 @@
     <div>Version validity date: <moment-element datetime="{{versionSliderValue}}" output-format="MMM DD[,] YYYY"></moment-element></div>
     <paper-slider id="versionSlider" value="{{versionSliderValue}}" min="{{versionSliderMin}}" max="{{versionSliderMax}}" step="60000" pin on-change="_versionSliderChanged"></paper-slider>
 
-
     <paper-button raised on-click="update">Edit</paper-button>
     <paper-button raised on-click="create">New</paper-button>
     
@@ -65,8 +63,8 @@
     </paper-dialog>
       
     <h3>Child Content</h3>
-    <content-children id="contentChildren" identity-node-id="{{app.identityNode._id}}" on-edit="update"></content-children>
-    <template-match app="{{app}}" view-template="content-children-grid"></template-match>
+    <!-- <content-children id="contentChildren" identity-node-id="{{app.identityNode._id}}" on-edit="update"></content-children> -->
+    <template-match id="contentChildren" app="{{app}}" view-template="content-children" on-edit="update"></template-match>
 
     <h3>Related Content</h3>
     <content-related identity-node-id="{{app.identityNode._id}}"></content-related>
@@ -116,7 +114,6 @@
       },
 
       update: function(event) {
-        console.log(event.detail);
         var identityNode = event.detail.identityNode || this.app.identityNode,
             versionNode = event.detail.versionNode || this.app.versionNode,
             authorNode = event.detail.authorNode || this.app.authorNode;
@@ -133,6 +130,7 @@
         this.$.getContentTypeSchema.generateRequest;
         this._initFormData();
         this.$.editDialog.open();
+        // this.$.editDialog.refit(); this didn't work. need to try something else.
       },
 
       delete: function(event) {
@@ -191,14 +189,17 @@
 
       _refreshAllContent: function() {
         console.log("test");
-        this.$.contentChildren.refresh();
+        // this.$.contentChildren.refresh();
+        this.$.contentChildren.firstElementChild.refresh();
       },
 
       _versionSliderChanged: function(event) {
         this.$.getContent.params["versionValidityDate"] = event.target.value;
         this.$.getContent.generateRequest();
-        this.$.contentChildren.versionValidityDate = event.target.value;
-        this.$.contentChildren.refresh();
+        // this.$.contentChildren.versionValidityDate = event.target.value;
+        // this.$.contentChildren.refresh();
+        this.$.contentChildren.firstElementChild.versionValidityDate = event.target.value;
+        this.$.contentChildren.firstElementChild.refresh();
       },
 
       _submit: function(event) {

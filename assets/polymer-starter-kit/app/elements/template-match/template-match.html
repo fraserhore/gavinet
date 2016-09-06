@@ -50,11 +50,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready: function() {
         var el,
             viewTemplate = this.viewTemplate || this.app.viewTemplate,
+            viewTemplateOverride = this.getViewTemplate(viewTemplate, JSON.parse(this.app.viewTemplateOverrides)),
             props = {};
+
+        viewTemplate = viewTemplateOverride || viewTemplate;
+
         props['app'] = this.app;
         props['identityNodeId'] = this.app.identityNode._id;
-        el = Polymer.Base.create(this.viewTemplate, props);
+        el = Polymer.Base.create(viewTemplate, props);
         this.appendChild(el);
+      },
+
+      getViewTemplate: function(viewTemplate, overrides) {
+        var viewTemplateOverride = "";
+        for (var i = 0; i < overrides.length; i++) {
+          var source = overrides[i].Override.properties.source,
+              matchFile = overrides[i].Override.properties.matchFile,
+              contentTypeIdentifier = overrides[i].Override.properties.contentTypeIdentifier,
+              identityNodeId = overrides[i].Override.properties.identityNodeId;
+
+          if(viewTemplate === source) {
+            if(parseInt(identityNodeId) === parseInt(this.app.identityNode._id) ||
+               contentTypeIdentifier === this.app.identityNode.properties.contentType) {
+              viewTemplateOverride = matchFile;
+            }
+          }
+        };
+        return viewTemplateOverride;
       }
 
 

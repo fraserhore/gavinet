@@ -35,16 +35,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="deleteResponse"
       debounce-duration="300"></iron-ajax>
 
-    <!-- <vaadin-grid id="childrenGrid">
-      <table>
-        <colgroup>
-          <col name="versionNode.properties.name">
-          <col name="versionNode.properties.term">
-          <col name="versionNode.properties.description">
-        </colgroup>
-      </table>
-    </vaadin-grid> -->
-
     <template is="dom-repeat" items="[[children]]">
       <div class="horizontal-section">
         <h4><a href="/content/view?id={{item.identityNode._id}}">[[item.identityNode.properties.name]]</a></h4>
@@ -80,13 +70,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         }
 
-      },
-
-      //grid: document.querySelector('vaadin-grid'),
-
-      ready: function() {
-        //this.grid = this.grid || this.$.childrenGrid;
-        //this.grid.items = this.children || [];
       },
 
       edit: function(event) {
