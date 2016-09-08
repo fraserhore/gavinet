@@ -213,6 +213,7 @@
         var id = button.getAttribute('data-form');
         var form = document.getElementById(id);
         if (form) {
+          console.log(form);
           form._submit();
         }
         this.$.editDialog.close();

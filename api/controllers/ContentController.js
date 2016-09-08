@@ -53,7 +53,7 @@ module.exports = {
                     +  versionMatch
                     +' RETURN identityNode, version, versionNode, authorNode';
         var cb = function(err, data) {
-            console.log(data);
+            //console.log(data);
             if(err) {
                 console.log(err);
             } else if(data[0]) {
@@ -62,13 +62,13 @@ module.exports = {
                     authorNode = data[0].authorNode;
 
                 module.exports.getViewTemplate(view, identityNode, versionNode, authorNode, function(viewTemplate) {
-                    console.log('viewTemplate: ' + viewTemplate);
+                    //console.log('viewTemplate: ' + viewTemplate);
                     var props = {};
                     props['app'] = data[0];
                     props.app['viewTemplate'] = viewTemplate;
                     module.exports.getViewTemplateOverrides(function(viewTemplateOverrides) {
                         props.app['viewTemplateOverrides'] = viewTemplateOverrides;
-                        console.log('props: ' + props.app.viewTemplateOverrides);
+                        //console.log('props: ' + props.app.viewTemplateOverrides);
                         return res.view("template", props);
                     });
                 });
@@ -98,7 +98,7 @@ module.exports = {
                 console.log(err);
                 callback('content-full');
             } else {
-                console.log(data[0].override.properties.matchFile);
+                //console.log(data[0].override.properties.matchFile);
                 callback(data[0].override.properties.matchFile);   
             }
         };
@@ -835,6 +835,7 @@ module.exports = {
     */
     update: function(req, res) {
         var properties = req.body.properties,
+            relationships = req.body.relationships,
             identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'newversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : '');
         var query = 
             // UPDATE (CONTENT) - Add a Version node
@@ -864,10 +865,11 @@ module.exports = {
             "identityNamePattern": req.body.identityNamePattern,
             "properties": req.body.properties
         };
-        console.log(query);
+        console.log(properties);
+        console.log(relationships);
         var cb = function(err, data) {
-            console.log(err);
-            console.log(data);
+            //console.log(err);
+            //console.log(data);
             return res.json(data);
         };
         db.cypher({
