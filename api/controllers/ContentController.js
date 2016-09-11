@@ -44,19 +44,20 @@ module.exports = {
             versionMatch = " AND version.name = " + versionName;
         } else if(req.param('versionValidityDate')) {
             var versionValidityDate = parseInt(req.param('versionValidityDate'));
-            versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate;
+            versionMatch = " AND version.from <= " + versionValidityDate + " AND version.to >= " + versionValidityDate + " AND relatedVersion.from <= " + versionValidityDate + " AND relatedVersion.to >= " + versionValidityDate;
         } else {
-            versionMatch = " AND version.to = 9007199254740991";
+            versionMatch = " AND version.to = 9007199254740991 AND relatedVersion.to = 9007199254740991";
         }
-        var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
-                    +' WHERE id(identityNode) = {id} AND version.lang = {lang}'
+        var query =   'MATCH (identityNode)-[version:VERSION]->(versionNode), (identityNode)-[relatedRelationship]-(relatedIdentityNode)-[relatedVersion:VERSION]->(relatedVersionNode), (authorNode)-[created:CREATED]->(identityNode)'
+                    +' WHERE id(identityNode) = {id} AND version.lang = {lang} AND relatedVersion.lang = {lang} AND Not (identityNode)-[relatedRelationship:VERSION|:CREATED|:CONTAINS]-(relatedIdentityNode)'
                     +  versionMatch
-                    +' RETURN identityNode, version, versionNode, authorNode';
+                    +' RETURN identityNode, version, versionNode, collect(relatedVersionNode) as relationships, authorNode';
         var cb = function(err, data) {
             //console.log(data);
             if(err) {
                 console.log(err);
             } else if(data[0]) {
+                //console.log(data[0].relationships);
                 var identityNode = data[0].identityNode,
                     versionNode = data[0].versionNode,
                     authorNode = data[0].authorNode;
@@ -550,7 +551,7 @@ module.exports = {
         } else {
             versionMatch = " AND parentChildRel.to = 9007199254740991 AND version.to = 9007199254740991";
         }
-        var query =   'MATCH (parentNode)-[parentChildRel]->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
+        var query =   'MATCH (parentNode)-[parentChildRel:CONTAINS]->(identityNode)-[version:VERSION]->(versionNode), (authorNode)-[created:CREATED]->(identityNode)'
                     +' WHERE id(parentNode) = {id} AND version.lang = {lang}'
                     +  versionMatch
                     +' RETURN identityNode, version, versionNode, authorNode';
@@ -740,7 +741,6 @@ module.exports = {
      * Create new content object (identityNode and versionNode)
      */
     create: function(req, res) {
-        console.log(req.body.properties);
         var properties = req.body.properties,
             relationships = req.body.relationships,
             matchRelated = '',
@@ -761,7 +761,7 @@ module.exports = {
 
                 matchRelated += ', (' + relatedIdentifier + ')';
                 whereRelated += ' AND id(' + relatedIdentifier + ') = ' + relatedNodeId;
-                createRelationships += ' CREATE (childidentity)' + inboundSymbol + '-[:' + relationshipName + ']-' + outboundSymbol + '(' + relatedIdentifier + ')';
+                createRelationships += ' CREATE (childidentity)' + inboundSymbol + '-[:' + relationshipName + ' {from:timestamp(), to:9007199254740991}]-' + outboundSymbol + '(' + relatedIdentifier + ')';
 
                 //console.log(matchRelated);
             };
@@ -836,15 +836,37 @@ module.exports = {
     update: function(req, res) {
         var properties = req.body.properties,
             relationships = req.body.relationships,
+            matchRelated = '',
+            whereRelated = '',
+            createRelationships = '',
             identityNamePattern = req.body.identityNamePattern ? req.body.identityNamePattern : 'newversion.' + (properties.name ? 'name' : properties.title ? 'title' : properties.term ? 'term' : properties.identifier ? 'identifier' : '');
+        
+        if(relationships) {
+            for (var i = relationships.length - 1; i >= 0; i--) {
+                console.log(relationships[i]);
+                var relationshipName = relationships[i].relationshipName.toUpperCase(),
+                    direction = relationships[i].direction,
+                    inboundSymbol = direction === 'inbound' ? '<' : '',
+                    outboundSymbol = direction === 'outbound' ? '>' : '',
+                    relatedNode = relationships[i].relatedNode,
+                    relatedNodeId = relatedNode._id,
+                    relatedIdentifier = 'node' + relatedNodeId;
+
+                matchRelated += ', (' + relatedIdentifier + ')';
+                whereRelated += ' AND id(' + relatedIdentifier + ') = ' + relatedNodeId;
+                createRelationships += ' CREATE (identitynode)' + inboundSymbol + '-[:' + relationshipName + ' {from:timestamp(), to:9007199254740991}]-' + outboundSymbol + '(' + relatedIdentifier + ')';
+            };
+        }
+
         var query = 
             // UPDATE (CONTENT) - Add a Version node
-              ' MATCH (identitynode)-[currentversionrelationship:VERSION {to:9007199254740991}]->(currentversion)'
-            + ' WHERE id(identitynode) = {id} AND currentversionrelationship.lang = {lang}'
+              ' MATCH (identitynode)-[currentversionrelationship:VERSION {to:9007199254740991}]->(currentversion)' + matchRelated
+            + ' WHERE id(identitynode) = {id} AND currentversionrelationship.lang = {lang}' + whereRelated
             // Update the current version relationship to end validity
             + ' SET currentversionrelationship.to = timestamp()'
             // Create the new version relationship and node
             + ' CREATE identitynode-[newversionrelationship:VERSION {from:timestamp(), to:9007199254740991}]->(newversion:Version)'
+            + createRelationships
             // Set new version relationship properties
             + ' SET newversionrelationship.versionNumber = toInt(currentversionrelationship.versionNumber) + 1'
             + ' SET newversionrelationship.versionName = {versionName}'
@@ -867,6 +889,7 @@ module.exports = {
         };
         console.log(properties);
         console.log(relationships);
+        console.log(query);
         var cb = function(err, data) {
             //console.log(err);
             //console.log(data);

@@ -95,6 +95,7 @@
         this.versionSliderMax = Date.now();
         this.versionSliderMin = Date.now() - 2629746000; // one day = 86400000, one week = 604800000, One month = 2629746000, one year = 31556952000
         console.log(today.toISOString());
+        console.log(this.app);
       },
 
       create: function(event) {
@@ -116,6 +117,7 @@
       update: function(event) {
         var identityNode = event.detail.identityNode || this.app.identityNode,
             versionNode = event.detail.versionNode || this.app.versionNode,
+            relationships = event.detail.relationships || this.app.relationships,
             authorNode = event.detail.authorNode || this.app.authorNode;
         this.set('formData.action', 'update');
         this.set('formData.authorId', authorNode._id);
@@ -125,6 +127,7 @@
         this.set('formData.versionName', '');
         this.set('formData.contenttype', identityNode.properties.contentType);
         this.set('formData.properties', versionNode.properties);
+        //this.set('formData.relationships', relationships);
         // could add a change listener to formData.contenttype to handle the following
         this.$.getContentTypeSchema.params = {"contenttype": this.formData.contenttype};
         this.$.getContentTypeSchema.generateRequest;
