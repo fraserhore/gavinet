@@ -15,8 +15,8 @@ var db = new neo4j.GraphDatabase({
     //auth: process.env['NEO4J_AUTH'],
     //url: 'http://gavigraph.sb06.stations.graphenedb.com:24789',
     //auth: 'GaviGraph:DNWxlYkxIFzktTxSDGGS'
-    url: 'http://146.185.147.45:7474',
-    auth: 'neo4j:gavinet-graph'
+    url: 'http://95.85.38.9:7474',
+    auth: 'neo4j:ns9%N%j20gf8'
 });
 var request = require("request");
 var fs = require("fs");
